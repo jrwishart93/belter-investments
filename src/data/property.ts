@@ -1,68 +1,53 @@
-export type PropertyData = {
+export type RentalPeriod = '1–3 months' | '3–6 months' | '6–12 months' | '1–2 years' | '2+ years';
+
+export type PropertyListing = {
+  id: string;
+  slug: string;
+  featured: boolean;
+  title: string;
   addressLine1: string;
   city: string;
-  country: string;
-  fullAddress: string;
   monthlyRent: number;
   monthlyRentDisplay: string;
-  propertyType: string;
-  bedrooms: string;
-  suitability: string;
+  status: string;
   summary: string;
   description: string;
-  keyHighlights: string[];
   keyFeatures: string[];
-  locationBenefits: string[];
-  transportLinks: string[];
-  amenities: string[];
-  contactEmail: string;
-  contactPhone: string;
+  locationFacts: string[];
+  suitability: string;
 };
 
-// Central editable configuration for property listing content.
-export const propertyData: PropertyData = {
-  addressLine1: '61/1 Caledonian Crescent',
-  city: 'Edinburgh',
-  country: 'Scotland',
-  fullAddress: '61/1 Caledonian Crescent, Edinburgh, Scotland',
-  monthlyRent: 1655,
-  monthlyRentDisplay: '£1,655 per month',
-  propertyType: 'Flat / Apartment',
-  bedrooms: 'TBC',
-  suitability: 'Suitable for professionals or students',
-  summary:
-    'A well-positioned long-term rental apartment in Edinburgh, offering practical, comfortable living with straightforward access to key transport links and city amenities.',
-  description:
-    'This well-located Edinburgh apartment offers comfortable living within easy reach of the city centre, making it ideal for professionals or students. The property is presented as a long-term residential let with a professional and straightforward tenancy approach.',
-  keyHighlights: [
-    'Long-term residential letting',
-    'Located west of Edinburgh city centre',
-    'Near Fountain Park and Haymarket station',
-    'Clear and professional enquiry process'
-  ],
-  keyFeatures: [
-    'Property type: Flat / Apartment',
-    'Bedrooms: TBC (editable)',
-    'Long-term tenancy focus',
-    'Professional management and direct communication',
-    'Floorplan available on request (placeholder)'
-  ],
-  locationBenefits: [
-    'Situated west of Edinburgh city centre',
-    'Close to Fountain Park for shopping, dining and leisure',
-    'Convenient access to Haymarket train station',
-    'Well-suited for commuting to nearby offices and campuses'
-  ],
-  transportLinks: [
-    'Haymarket train station within easy reach',
-    'Frequent local bus routes across Edinburgh',
-    'Straightforward access to the west end and city centre'
-  ],
-  amenities: [
-    'Shops, supermarkets and cafes nearby',
-    'Fitness and leisure facilities around Fountain Park',
-    'Local services suitable for day-to-day long-term living'
-  ],
-  contactEmail: 'hello@belterinvestments.co.uk',
-  contactPhone: '+44 (0)131 000 0000'
-};
+export const propertyListings: PropertyListing[] = [
+  {
+    id: 'caledonian-crescent-61-1',
+    slug: '61-1-caledonian-crescent',
+    featured: true,
+    title: '61/1 Caledonian Crescent',
+    addressLine1: '61/1 Caledonian Crescent',
+    city: 'Edinburgh',
+    monthlyRent: 1655,
+    monthlyRentDisplay: '£1,655 per month',
+    status: 'Available as a long-term rental',
+    summary:
+      'A well-presented long-term rental in west Edinburgh, ideally located for professionals or students seeking a reliable and straightforward tenancy.',
+    description:
+      'This property offers practical, comfortable living in a strong city location. It is suitable for professionals or students who need convenient access to transport, local amenities and key office or university routes. Belter Investments manages the tenancy with a clear, professional approach focused on long-term residents.',
+    keyFeatures: [
+      'Long-term let',
+      '£1,655 per month',
+      'West of Edinburgh city centre',
+      'Near Fountain Park',
+      'Close to Haymarket train station',
+      'Suitable for professionals or students'
+    ],
+    locationFacts: [
+      'Located west of Edinburgh city centre with quick links into central districts.',
+      'Near Fountain Park for shops, dining, fitness and day-to-day convenience.',
+      'Close to Haymarket train station for local and regional travel.',
+      'Well placed for nearby offices, commuting and university access.'
+    ],
+    suitability: 'Professionals or students'
+  }
+];
+
+export const featuredProperty = propertyListings.find((property) => property.featured) ?? propertyListings[0];
