@@ -1,0 +1,266 @@
+:root {
+  color-scheme: dark;
+  color: #1f2937;
+  background: #f7fafc;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f7fafc;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: #0f172a;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+nav {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: #334155;
+  font-weight: 600;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 4rem 2rem;
+}
+
+.hero-copy {
+  max-width: 40rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #0f172a;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.hero h2 {
+  font-size: clamp(2.3rem, 3vw, 3.35rem);
+  margin: 0;
+  line-height: 1.05;
+  color: #0f172a;
+}
+
+.hero p {
+  margin: 1.5rem 0;
+  color: #475569;
+  max-width: 36rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.4rem;
+  border-radius: 1rem;
+  background: #0f172a;
+  color: #fff;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background: #111827;
+}
+
+.button-secondary {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.hero-card,
+.property-cta,
+.contact-card {
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.25rem;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.hero-card h3,
+.property-cta h4 {
+  margin-top: 0;
+  color: #0f172a;
+}
+
+.hero-card ul,
+.property-preview ul {
+  padding-left: 1.2rem;
+  margin: 1rem 0 0;
+  color: #475569;
+}
+
+.section-light,
+.section-dark {
+  padding: 4rem 2rem;
+}
+
+.section-light {
+  background: #f8fafc;
+}
+
+.section-dark {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.section-content {
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.section-content h2 {
+  margin-top: 0;
+  font-size: 2.5rem;
+  line-height: 1.05;
+}
+
+.section-content p {
+  color: inherit;
+  max-width: 50rem;
+}
+
+.feature-grid,
+.contact-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feature-grid > div,
+.property-preview > div {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.feature-grid h3,
+.property-preview h3 {
+  margin-top: 0;
+}
+
+.property-preview {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.contact-section {
+  background: #ffffff;
+}
+
+.contact-grid {
+  grid-template-columns: 1fr 320px;
+  align-items: start;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.site-footer {
+  margin-top: auto;
+  padding: 2rem;
+  text-align: center;
+  background: #111827;
+  color: #e2e8f0;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .property-preview,
+  .contact-grid,
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header,
+  .hero,
+  .section-light,
+  .section-dark,
+  .contact-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .hero h2 {
+    font-size: 2.1rem;
+  }
+}
