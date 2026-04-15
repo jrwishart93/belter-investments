@@ -513,7 +513,112 @@ h4 {
   }
 }
 
+
+.hero--property {
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.hero__content--property p {
+  max-width: 56ch;
+}
+
+.property-hero-media {
+  padding: 0.95rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.property-hero-media__featured {
+  margin: 0;
+  border-radius: 0.9rem;
+  overflow: hidden;
+}
+
+.property-hero-media__featured img {
+  width: 100%;
+  height: min(32rem, 55vh);
+  object-fit: cover;
+  display: block;
+}
+
+.property-hero-media__thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.property-hero-media__thumbs img {
+  width: 100%;
+  height: 6.5rem;
+  object-fit: cover;
+  border-radius: 0.7rem;
+  display: block;
+}
+
+.property-feature-grid {
+  align-items: stretch;
+}
+
+.panel--image {
+  padding: 0.75rem;
+  overflow: hidden;
+}
+
+.panel--image img {
+  width: 100%;
+  height: 100%;
+  min-height: 19rem;
+  object-fit: cover;
+  border-radius: 0.9rem;
+  display: block;
+}
+
+.property-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.property-gallery__item {
+  margin: 0;
+  border-radius: 0.95rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 16px 30px rgba(31, 53, 99, 0.16);
+}
+
+.property-gallery__item img {
+  width: 100%;
+  height: 14rem;
+  object-fit: cover;
+  display: block;
+}
+
+.location-image-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.location-image-stack__item {
+  margin: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 12px 28px rgba(31, 53, 99, 0.14);
+}
+
+.location-image-stack__item img {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+  display: block;
+}
+
 @media (max-width: 1000px) {
+  .property-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .details-grid,
   .cards-grid,
   .cards-grid--three {
@@ -522,6 +627,9 @@ h4 {
 }
 
 @media (max-width: 900px) {
+  .property-hero-media__featured img {
+    height: 24rem;
+  }
   .hero {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -578,6 +686,18 @@ h4 {
 }
 
 @media (max-width: 600px) {
+  .property-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .property-gallery__item img,
+  .location-image-stack__item img {
+    height: 12rem;
+  }
+
+  .property-hero-media__thumbs img {
+    height: 5rem;
+  }
   .hero,
   .section,
   .site-header {
