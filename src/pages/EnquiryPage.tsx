@@ -40,17 +40,17 @@ export function EnquiryPage() {
         email: String(form.get('email') ?? ''),
         contactNumber: String(form.get('contactNumber') ?? ''),
         rentalPeriod: String(form.get('rentalPeriod') ?? ''),
-        employed: String(form.get('employed') ?? 'No') as 'Yes' | 'No',
-        student: String(form.get('student') ?? 'No') as 'Yes' | 'No',
+        employed: String(form.get('employed') ?? '') as 'Yes' | 'No',
+        student: String(form.get('student') ?? '') as 'Yes' | 'No',
         occupants: String(form.get('occupants') ?? ''),
-        pets: String(form.get('pets') ?? 'No') as 'Yes' | 'No',
+        pets: String(form.get('pets') ?? '') as 'Yes' | 'No',
         petsNotes: String(form.get('petsNotes') ?? ''),
-        smoking: String(form.get('smoking') ?? 'No') as 'Yes' | 'No',
+        smoking: String(form.get('smoking') ?? '') as 'Yes' | 'No',
         locationStatus: String(form.get('locationStatus') ?? ''),
-        viewingPreference: String(form.get('viewingPreference') ?? 'In-person viewing') as 'In-person viewing' | 'Virtual viewing',
+        viewingPreference: String(form.get('viewingPreference') ?? '') as 'In-person viewing' | 'Virtual viewing',
         viewingInformation: String(form.get('viewingInformation') ?? ''),
         moveInDate: String(form.get('moveInDate') ?? ''),
-        references: String(form.get('references') ?? 'No') as 'Yes' | 'No',
+        references: String(form.get('references') ?? '') as 'Yes' | 'No',
         furtherQuestions: String(form.get('furtherQuestions') ?? ''),
         leadSource: String(form.get('leadSource') ?? ''),
         leadSourceOther: String(form.get('leadSourceOther') ?? '')
@@ -117,14 +117,16 @@ export function EnquiryPage() {
 
             <label htmlFor="employed">Are you employed?</label>
             <select id="employed" name="employed" required>
-              <option>Yes</option>
-              <option>No</option>
+              <option value="">Select an option</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
 
             <label htmlFor="student">Are you a student?</label>
             <select id="student" name="student" required>
-              <option>Yes</option>
-              <option>No</option>
+              <option value="">Select an option</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
 
             <label htmlFor="occupants">Occupants</label>
@@ -142,8 +144,9 @@ export function EnquiryPage() {
             <legend>Additional preferences</legend>
             <label htmlFor="pets">Pets</label>
             <select id="pets" name="pets" required>
-              <option>Yes</option>
-              <option>No</option>
+              <option value="">Select an option</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
 
             <label htmlFor="petsNotes">If yes, please provide brief details (optional)</label>
@@ -151,8 +154,9 @@ export function EnquiryPage() {
 
             <label htmlFor="smoking">Do you smoke?</label>
             <select id="smoking" name="smoking" required>
-              <option>Yes</option>
-              <option>No</option>
+              <option value="">Select an option</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
 
             <label htmlFor="locationStatus">Location status</label>
@@ -167,8 +171,9 @@ export function EnquiryPage() {
             <legend>Viewing and references</legend>
             <label htmlFor="viewingPreference">Viewing preference</label>
             <select id="viewingPreference" name="viewingPreference" required>
-              <option>In-person viewing</option>
-              <option>Virtual viewing</option>
+              <option value="">Select preference</option>
+              <option value="In-person viewing">In-person viewing</option>
+              <option value="Virtual viewing">Virtual viewing</option>
             </select>
 
             <label htmlFor="viewingInformation">Please provide any further information on when you would like to arrange this</label>
@@ -179,8 +184,9 @@ export function EnquiryPage() {
 
             <label htmlFor="references">Do you have references from previous landlords?</label>
             <select id="references" name="references" required>
-              <option>Yes</option>
-              <option>No</option>
+              <option value="">Select an option</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
           </fieldset>
 
