@@ -13,15 +13,19 @@ export function PropertyDetailsPage() {
 
   const [heroImage, ...galleryImages] = property.images;
   const locationImages = property.images.filter((image) => image.category === 'location' || image.category === 'outdoor');
+  const amenityImages = property.images.filter((image) => image.category === 'amenity');
 
   return (
     <>
       <section className="hero hero--property" aria-labelledby="property-hero-title">
         <div className="hero__content hero__content--property">
           <p className="eyebrow">Property details</p>
-          <h1 id="property-hero-title">2 Bedroom Ground Floor Flat – Caledonian Crescent, Edinburgh</h1>
+          <h1 id="property-hero-title">{property.title}</h1>
           <p>Private garden, leisure facilities, and excellent access to the city centre.</p>
-          <p className="hero__price">£1,655 per month</p>
+          <p className="hero__price">{property.monthlyRentDisplay}</p>
+          <p className="property-meta">
+            <strong>{property.addressLine1}, Edinburgh, EH11 2AT</strong> · {property.propertyType} · Approx. 56m²
+          </p>
           <div className="hero__actions">
             <CtaButton to="/enquiry">Enquire Now</CtaButton>
             <CtaButton to="/enquiry" variant="secondary">
@@ -46,6 +50,16 @@ export function PropertyDetailsPage() {
         <article className="panel">
           <p>{property.overview}</p>
         </article>
+      </Section>
+
+      <Section title="Key features" intro="Everything that makes this home stand out in today’s Edinburgh rental market.">
+        <div className="cards-grid cards-grid--three" role="list" aria-label="Key property features">
+          {property.keyFeatures.map((feature) => (
+            <article className="info-card" role="listitem" key={feature}>
+              <h3>{feature}</h3>
+            </article>
+          ))}
+        </div>
       </Section>
 
       <Section title="Full description" intro="A flowing layout designed for practical city living.">
@@ -74,10 +88,17 @@ export function PropertyDetailsPage() {
       </Section>
 
       <Section title="Outdoor space and facilities" intro="Lifestyle benefits that elevate day-to-day renting.">
-        <div className="details-grid details-grid--single">
+        <div className="details-grid">
           <article className="panel">
             <p>{property.outdoorAndFacilities}</p>
           </article>
+          <div className="location-image-stack" role="list" aria-label="Leisure facility images">
+            {amenityImages.slice(0, 2).map((image) => (
+              <figure key={image.src} className="location-image-stack__item" role="listitem">
+                <img src={image.src} alt={image.alt} loading="lazy" />
+              </figure>
+            ))}
+          </div>
         </div>
       </Section>
 
@@ -114,7 +135,7 @@ export function PropertyDetailsPage() {
         </div>
       </Section>
 
-      <Section title="Why this rental stands out" intro="A strong Edinburgh option at £1,655 per month.">
+      <Section title="Enquire today" intro="Arrange a viewing and secure a high-quality Dalry rental that delivers more than a standard flat.">
         <div className="panel">
           <p>{property.closingValueStatement}</p>
           <div className="hero__actions">

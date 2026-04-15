@@ -15,6 +15,7 @@ export type PropertyListing = {
   city: string;
   monthlyRent: number;
   monthlyRentDisplay: string;
+  propertyType: string;
   status: string;
   summary: string;
   description: string;
@@ -98,24 +99,29 @@ export const propertyListings: PropertyListing[] = [
     city: 'Edinburgh',
     monthlyRent: 1655,
     monthlyRentDisplay: '£1,655 per month',
+    propertyType: '2 bedroom ground floor flat',
     status: 'Available as a long-term rental',
     summary:
       'A polished, well-proportioned ground floor rental in Dalry with private outdoor space and resident leisure access, ideal for tenants wanting both convenience and comfort.',
     description:
       'This modern two-bedroom ground floor flat offers practical single-level living in Dalry, just west of Edinburgh city centre. With French doors to private garden space, well-balanced room sizes, and resident access to pool, gym and sauna facilities, it combines day-to-day comfort with strong local connectivity at £1,655 per month.',
     overview:
-      'Set within a modern four-storey residential block in Dalry, this well-proportioned two-bedroom ground floor flat provides a practical single-level layout with excellent natural flow. Alongside its own private outdoor area, residents enjoy access to communal garden grounds and on-site leisure facilities, creating a rental option that feels both functional and lifestyle-led.',
+      'This is a well-proportioned two-bedroom ground floor flat within a modern four-storey residential development in the Dalry area of Edinburgh. Extending to approximately 56m², the property combines a practical single-level layout with private outdoor space and access to communal leisure facilities, making it an attractive rental opportunity for professionals seeking both convenience and comfort.',
     fullDescription:
-      'A welcoming entrance hallway connects each room and gives the home an easy, efficient layout. The bright living room forms the heart of the property, with French doors opening directly to a private garden area that extends the living space outdoors. A separate kitchen offers good worktop space and practical storage for everyday use. Both bedrooms are well-proportioned and adaptable for sleeping, home working or guest accommodation, while the shower room with WC is finished for straightforward daily comfort.',
+      'Entered from a secure shared stair, the flat opens into a central entrance hallway that links each room in a practical single-level arrangement. The bright living room is a standout feature, with French doors leading directly to a private garden area and allowing excellent natural light through the day. The separate kitchen offers generous storage and useful workspace for regular cooking and day-to-day use. There are two well-proportioned bedrooms that can comfortably support sleeping, home working or guest needs, and the shower room with WC is neatly finished for simple, modern living. Altogether, the layout feels efficient, comfortable and well suited to life in the city.',
     outdoorAndFacilities:
       'French doors from the living room open onto a private garden area, ideal for morning coffee, summer dining or simply enjoying outdoor space at home. In addition, the development includes communal garden grounds and resident leisure facilities with pool, gym and sauna access, adding a premium lifestyle element that is increasingly hard to find in central Edinburgh rentals.',
     keyFeatures: [
-      '2 bedroom ground floor flat',
-      '£1,655 per month',
-      'Private garden access via French doors',
-      'Resident pool, gym and sauna',
-      'Separate kitchen with practical storage',
-      'Excellent links to Haymarket and city centre'
+      '2 Bedrooms',
+      'Ground Floor Position',
+      'Private Garden Access',
+      'Bright Living Room',
+      'Separate Kitchen',
+      'Shower Room',
+      'Secure Entry System',
+      'Pool, Gym & Sauna Access',
+      'Dalry / West Edinburgh Location',
+      'Close to Haymarket and Tram Links'
     ],
     locationFacts: [
       'Situated in Dalry, west of Edinburgh city centre, with a quick commute into central business districts.',
@@ -127,7 +133,16 @@ export const propertyListings: PropertyListing[] = [
     suitability: 'Professional couples, two professionals sharing, and city-based tenants seeking more space with strong amenities.',
     whoItSuits:
       'This home is particularly well suited to professional couples, two professionals sharing, and city-based tenants who want more space without sacrificing convenience. It also appeals to renters who value access to amenities such as a pool, gym and sauna while staying within easy reach of major transport links and central Edinburgh.',
-    additionalInformation: ['Electric heating', 'Double glazing', 'Secure entry system', 'Mains water, drainage and electricity', 'On-street parking available nearby'],
+    additionalInformation: [
+      'Rent: £1,655 pcm',
+      '2 bedrooms',
+      'Ground floor flat',
+      'Electric heating',
+      'Double glazing',
+      'Secure entry',
+      'Mains services',
+      'On-street parking nearby'
+    ],
     closingValueStatement:
       'At £1,655 per month, this is a compelling long-term rental opportunity in Edinburgh, offering a rare blend of ground floor practicality, private garden access, on-site leisure facilities and excellent local connectivity, all within a well-established residential setting in Dalry.',
     images: caledonianImages

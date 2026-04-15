@@ -523,6 +523,12 @@ h4 {
   max-width: 56ch;
 }
 
+.property-meta {
+  margin: 0.1rem 0 0;
+  font-size: 0.96rem;
+  color: #33456f;
+}
+
 .property-hero-media {
   padding: 0.95rem;
   display: grid;
