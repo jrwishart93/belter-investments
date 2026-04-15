@@ -11,9 +11,7 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <NavLink className="brand" to="/" aria-label="Go to Belter Investments homepage" onClick={closeMenu}>
-        <span className="brand__mark" aria-hidden="true">
-          BI
-        </span>
+        <img className="brand__logo" src="/images/Belter-logo.png" alt="Belter Investments logo" />
         <span>
           <strong>Belter Investments</strong>
           <small>{siteConfig.tagline}</small>
