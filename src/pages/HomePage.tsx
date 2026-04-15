@@ -9,48 +9,61 @@ export function HomePage() {
   return (
     <>
       <PageHero
-        eyebrow="Belter Investments · Edinburgh"
-        title="Professional long-term rentals, managed with clarity and care"
-        subtitle="Featured Property: 61/1 Caledonian Crescent, Edinburgh · £1,655 per month"
+        eyebrow="Belter Investments Ltd · Edinburgh"
+        title="Carefully selected and well-managed Edinburgh property"
+        subtitle="Property Investment & Letting, Edinburgh."
         actions={
           <>
-            <CtaButton to={`/property/${featuredProperty.slug}`}>View Property Details</CtaButton>
+            <CtaButton to={`/property/${featuredProperty.slug}`}>View featured property</CtaButton>
             <CtaButton to="/enquiry" variant="secondary">
-              Make an Enquiry
+              Make an enquiry
             </CtaButton>
           </>
         }
-        aside={
-          <>
-            <h2>Featured Property</h2>
-            <p>
-              <strong>{featuredProperty.addressLine1}</strong>
-              <br />
-              {featuredProperty.monthlyRentDisplay}
-            </p>
-            <p>{featuredProperty.status}</p>
-          </>
-        }
+        aside={<div className="image-block image-block--hero" role="img" aria-label="Edinburgh skyline at golden hour" />}
       />
 
-      <Section
-        title="A family-run property business"
-        intro="Belter Investments is a professional, family-run business focused on well-presented long-term rental homes in Edinburgh."
-      >
-        <p>
-          We provide a clear and reliable rental experience for tenants and maintain high standards across management, communication and
-          presentation.
-        </p>
+      <Section title="What we do" intro="Simple, focused services delivered with care.">
+        <div className="cards-grid cards-grid--three">
+          <article className="info-card">
+            <h3>Property Acquisition</h3>
+            <p>Well-located Edinburgh homes selected for long-term value.</p>
+          </article>
+          <article className="info-card">
+            <h3>Renovation</h3>
+            <p>Practical improvements that keep properties bright, calm, and durable.</p>
+          </article>
+          <article className="info-card">
+            <h3>Letting</h3>
+            <p>Straightforward tenancy management with clear communication.</p>
+          </article>
+        </div>
       </Section>
 
       <Section
-        title="Featured property preview"
-        intro="A concise overview of our current listing, with full details available on the dedicated property page."
+        title="Edinburgh focus"
+        intro="Rooted locally, with properties chosen for strong location and day-to-day livability."
       >
+        <div className="location-feature">
+          <div className="image-block image-block--location" role="img" aria-label="Canal-side walkway in Edinburgh" />
+          <p>Properties in and around Edinburgh’s established neighbourhoods, with reliable access to transport and amenities.</p>
+        </div>
+      </Section>
+
+      <Section title="Featured property" intro="Current listing from our portfolio.">
         <PropertyPreviewCard property={featuredProperty} />
       </Section>
 
-      <Section title="Explore the website" intro="Use these pathways to move directly to the information you need.">
+      <Section title="About Belter Investments" intro="A calm, hands-on approach to property investment and letting.">
+        <div className="panel">
+          <p>
+            We are a small Edinburgh property business focused on sensible acquisitions, good upkeep, and dependable letting. We keep
+            things straightforward for tenants and manage properties to a consistent standard.
+          </p>
+        </div>
+      </Section>
+
+      <Section title="Explore the website" intro="Find what you need quickly.">
         <div className="cards-grid cards-grid--three">
           <NavigationCard
             title="Property Details"
@@ -66,10 +79,14 @@ export function HomePage() {
         </div>
       </Section>
 
-      <Section title="Future portfolio" intro="This section is intentionally lightweight and ready to grow as more properties are added.">
+      <Section title="Enquiry" intro="If you’re interested in a property, send a quick message or complete a full enquiry form.">
         <div className="panel">
-          <h3>Portfolio expansion placeholder</h3>
-          <p>Future categories can include Other Properties, Available Soon, and wider portfolio updates.</p>
+          <div className="hero__actions">
+            <CtaButton to="/enquiry">Start enquiry</CtaButton>
+            <CtaButton to="/enquiry" variant="secondary">
+              Detailed form
+            </CtaButton>
+          </div>
         </div>
       </Section>
     </>

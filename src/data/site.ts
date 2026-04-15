@@ -1,7 +1,7 @@
 export const siteConfig = {
   companyName: 'Belter Investments',
   city: 'Edinburgh',
-  tagline: 'Family-run long-term rental property business',
+  tagline: 'Property Investment & Letting, Edinburgh',
   contactEmail: 'hello@belterinvestments.co.uk',
   contactPhone: '+44 (0)131 000 0000'
 };
