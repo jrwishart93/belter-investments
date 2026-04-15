@@ -1,16 +1,17 @@
 import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
 type CtaButtonProps = {
-  href: string;
+  to: string;
   children: ReactNode;
   variant?: 'primary' | 'secondary';
   ariaLabel?: string;
 };
 
-export function CtaButton({ href, children, variant = 'primary', ariaLabel }: CtaButtonProps) {
+export function CtaButton({ to, children, variant = 'primary', ariaLabel }: CtaButtonProps) {
   return (
-    <a className={`cta-button ${variant === 'secondary' ? 'cta-button--secondary' : ''}`} href={href} aria-label={ariaLabel}>
+    <Link className={`cta-button ${variant === 'secondary' ? 'cta-button--secondary' : ''}`} to={to} aria-label={ariaLabel}>
       {children}
-    </a>
+    </Link>
   );
 }
