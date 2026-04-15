@@ -1,208 +1,232 @@
-const featuredProperties = [
-  {
-    id: 'BI-101',
-    title: 'New Town One-Bedroom Apartment',
-    location: 'Northumberland Street, Edinburgh EH3',
-    rent: '£1,250 pcm',
-    beds: '1 bed',
-    baths: '1 bath',
-    status: 'Available now',
-    summary:
-      'Recently refurbished first-floor flat with bright bay-window lounge, modern kitchen and excellent city-centre transport links.'
-  },
-  {
-    id: 'BI-214',
-    title: 'West End Two-Bedroom Flat',
-    location: 'Morrison Street, Edinburgh EH3',
-    rent: '£1,650 pcm',
-    beds: '2 bed',
-    baths: '1 bath',
-    status: 'Viewings open',
-    summary:
-      'Spacious two-bedroom property close to Haymarket with secure entry, generous storage and dedicated work-from-home space.'
-  },
-  {
-    id: 'BI-307',
-    title: 'Shore Apartment with Balcony',
-    location: 'The Shore, Leith EH6',
-    rent: '£1,450 pcm',
-    beds: '1 bed',
-    baths: '1 bath',
-    status: 'Coming soon',
-    summary:
-      'Contemporary waterside apartment finished to a high standard, featuring open-plan living and short walk access to tram routes.'
-  }
+import { useEffect, useState } from 'react';
+import { CtaButton } from './components/CtaButton';
+import { InfoCard } from './components/InfoCard';
+import { Section } from './components/Section';
+import { propertyData } from './data/property';
+
+const navItems = [
+  { id: 'home', label: 'Home' },
+  { id: 'property-details', label: 'Property Details' },
+  { id: 'location', label: 'Location' },
+  { id: 'enquiries', label: 'Enquiries' }
 ];
 
 function App() {
+  const [activeSection, setActiveSection] = useState<string>('home');
+
+  useEffect(() => {
+    const updateSectionFromHash = () => {
+      const nextHash = window.location.hash.replace('#', '');
+      if (nextHash) {
+        setActiveSection(nextHash);
+      }
+    };
+
+    updateSectionFromHash();
+    window.addEventListener('hashchange', updateSectionFromHash);
+
+    return () => {
+      window.removeEventListener('hashchange', updateSectionFromHash);
+    };
+  }, []);
+
   return (
-    <div className="app-shell">
+    <div className="page-shell" id="home">
       <header className="site-header">
-        <a href="#top" className="brand" id="top" aria-label="Belter Investments Ltd home">
-          <span className="logo">BI</span>
-          <div>
-            <h1>Belter Investments Ltd</h1>
-            <p>Professional property investment and lettings in Scotland</p>
-          </div>
+        <a className="brand" href="#home" aria-label="Go to home section">
+          <span className="brand__mark" aria-hidden="true">
+            CC
+          </span>
+          <span>
+            <strong>{propertyData.addressLine1}</strong>
+            <small>Long-term rental listing in Edinburgh</small>
+          </span>
         </a>
 
-        <nav aria-label="Primary navigation">
-          <a href="#about">About</a>
-          <a href="#properties">Properties</a>
-          <a href="#enquiry">Enquiry</a>
+        <nav aria-label="Primary navigation" className="site-nav">
+          {navItems.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={activeSection === item.id || (item.id === 'home' && activeSection === '') ? 'is-active' : ''}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
       </header>
 
       <main>
-        <section className="hero">
-          <div className="hero-copy">
-            <p className="eyebrow">Scotland-based property investment company</p>
-            <h2>High-quality rental homes managed with integrity, clarity and local expertise.</h2>
-            <p>
-              Belter Investments Ltd is headquartered in Edinburgh and focuses on acquiring, improving and managing
-              residential property across Scotland. We provide dependable rental opportunities for tenants and a
-              professional, compliance-led service across every stage of tenancy.
-            </p>
-            <div className="hero-actions">
-              <a className="button" href="#properties">
-                View homes to rent
-              </a>
-              <a className="button button-secondary" href="#enquiry">
-                Send an enquiry
-              </a>
+        <section className="hero" aria-labelledby="home-heading">
+          <div className="hero__content">
+            <p className="eyebrow">Long-term residential letting</p>
+            <h1 id="home-heading">{propertyData.addressLine1}, Edinburgh</h1>
+            <p className="hero__price">{propertyData.monthlyRentDisplay}</p>
+            <p>{propertyData.summary}</p>
+
+            <div className="hero__actions">
+              <CtaButton href="#enquiries" ariaLabel="Enquire now about this property">
+                Enquire Now
+              </CtaButton>
+              <CtaButton href="#enquiries" variant="secondary" ariaLabel="Arrange a viewing for this property">
+                Arrange Viewing
+              </CtaButton>
             </div>
           </div>
 
-          <aside className="hero-card" aria-label="Company highlights">
-            <h3>Why tenants and partners choose us</h3>
-            <ul>
-              <li>Focused exclusively on long-term, well-maintained homes</li>
-              <li>Clear communication and responsive property management</li>
-              <li>Transparent application and referencing processes</li>
-              <li>Local knowledge across Edinburgh and the wider Scottish market</li>
-            </ul>
+          <aside className="panel" aria-label="Property snapshot">
+            <h2>Property snapshot</h2>
+            <dl className="snapshot-grid">
+              <div>
+                <dt>Rent</dt>
+                <dd>{propertyData.monthlyRentDisplay}</dd>
+              </div>
+              <div>
+                <dt>Property type</dt>
+                <dd>{propertyData.propertyType}</dd>
+              </div>
+              <div>
+                <dt>Bedrooms</dt>
+                <dd>{propertyData.bedrooms}</dd>
+              </div>
+              <div>
+                <dt>Suitable for</dt>
+                <dd>{propertyData.suitability}</dd>
+              </div>
+            </dl>
           </aside>
         </section>
 
-        <section id="about" className="section section-light">
-          <div className="section-content">
-            <h2>About Belter Investments Ltd</h2>
-            <p>
-              Belter Investments Ltd is a Scottish property investment and lettings company committed to creating safe,
-              attractive and professionally managed homes. Our investment strategy prioritises established residential
-              neighbourhoods, efficient refurbishment and long-term rental quality.
-            </p>
-
-            <div className="feature-grid">
-              <article>
-                <h3>Our mission</h3>
-                <p>
-                  To provide dependable rental housing that meets modern tenant expectations while delivering sustainable
-                  long-term value through responsible investment.
-                </p>
-              </article>
-              <article>
-                <h3>Our standards</h3>
-                <p>
-                  Every property is prepared to a professional specification with attention to safety, functionality,
-                  comfort and maintenance planning.
-                </p>
-              </article>
-              <article>
-                <h3>Our location</h3>
-                <p>
-                  Based in Edinburgh, we operate throughout Scotland with particular focus on Edinburgh,
-                  Midlothian and high-demand commuter areas.
-                </p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section id="properties" className="section section-dark">
-          <div className="section-content">
-            <h2>Properties for rent</h2>
-            <p>
-              Browse our current and upcoming rental listings. Availability and details are updated regularly;
-              use the enquiry form below to request full brochures, virtual tours or viewing appointments.
-            </p>
-
-            <div className="property-grid" role="list" aria-label="Rental property listings">
-              {featuredProperties.map((property) => (
-                <article className="property-card" key={property.id} role="listitem">
-                  <p className="property-id">Ref: {property.id}</p>
-                  <h3>{property.title}</h3>
-                  <p className="property-location">{property.location}</p>
-                  <p className="property-summary">{property.summary}</p>
-                  <div className="property-meta" aria-label="Property details">
-                    <span>{property.rent}</span>
-                    <span>{property.beds}</span>
-                    <span>{property.baths}</span>
-                  </div>
-                  <p className="property-status">{property.status}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="enquiry" className="section section-light">
-          <div className="section-content enquiry-layout">
-            <div>
-              <h2>Enquiry form</h2>
+        <Section
+          id="property-details"
+          title="Property Details"
+          intro="Full property information for prospective long-term tenants."
+          tone="light"
+        >
+          <div className="details-grid">
+            <article className="panel">
+              <h3>Overview</h3>
+              <p>{propertyData.description}</p>
               <p>
-                Interested in one of our properties or would like to discuss future rental opportunities?
-                Complete the form and our team will respond promptly.
+                <strong>Monthly rent:</strong> {propertyData.monthlyRentDisplay}
               </p>
               <p>
-                You can also email us directly at{' '}
-                <a href="mailto:hello@belterinvestments.co.uk">hello@belterinvestments.co.uk</a>.
+                <strong>Property type:</strong> {propertyData.propertyType}
               </p>
-            </div>
+              <p>
+                <strong>Bedrooms:</strong> {propertyData.bedrooms}
+              </p>
+            </article>
 
+            <article className="panel">
+              <h3>Key features</h3>
+              <ul className="list-clean">
+                {propertyData.keyFeatures.map((feature) => (
+                  <li key={feature}>{feature}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+
+          <div className="cards-grid" role="list" aria-label="Key highlights">
+            {propertyData.keyHighlights.map((item) => (
+              <InfoCard key={item} title="Highlight" body={item} />
+            ))}
+          </div>
+        </Section>
+
+        <Section
+          id="location"
+          title="Location"
+          intro="Helpful area information for people relocating within Edinburgh for work or study."
+          tone="dark"
+        >
+          <div className="location-grid">
+            <article className="panel panel--dark">
+              <h3>Area benefits</h3>
+              <ul className="list-clean">
+                {propertyData.locationBenefits.map((benefit) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="panel panel--dark">
+              <h3>Transport links</h3>
+              <ul className="list-clean">
+                {propertyData.transportLinks.map((link) => (
+                  <li key={link}>{link}</li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="panel panel--dark">
+              <h3>Nearby amenities</h3>
+              <ul className="list-clean">
+                {propertyData.amenities.map((amenity) => (
+                  <li key={amenity}>{amenity}</li>
+                ))}
+              </ul>
+              <p className="floorplan-note">Floorplan placeholder: available on request.</p>
+            </article>
+          </div>
+        </Section>
+
+        <Section
+          id="enquiries"
+          title="Enquiries"
+          intro="Send your details and preferred move-in date, and the landlord or property manager will respond directly."
+          tone="light"
+        >
+          <div className="enquiry-layout">
+            <article className="panel">
+              <h3>Contact path</h3>
+              <p>
+                For questions about tenancy terms, availability or viewings, complete the form or email{' '}
+                <a href={`mailto:${propertyData.contactEmail}`}>{propertyData.contactEmail}</a>.
+              </p>
+              <p>
+                <strong>Phone:</strong> <a href={`tel:${propertyData.contactPhone}`}>{propertyData.contactPhone}</a>
+              </p>
+              <p>Responses are provided directly by the landlord or property manager.</p>
+            </article>
+
+            {/* TODO: connect this form to backend enquiry endpoint when API is available. */}
             <form className="enquiry-form" action="mailto:hello@belterinvestments.co.uk" method="post" encType="text/plain">
-              <label htmlFor="full-name">Full name</label>
-              <input id="full-name" name="fullName" type="text" autoComplete="name" required />
+              <label htmlFor="name">Name</label>
+              <input id="name" name="name" type="text" autoComplete="name" required />
 
-              <label htmlFor="email">Email address</label>
+              <label htmlFor="email">Email</label>
               <input id="email" name="email" type="email" autoComplete="email" required />
 
-              <label htmlFor="phone">Phone number</label>
-              <input id="phone" name="phone" type="tel" autoComplete="tel" placeholder="Optional" />
+              <label htmlFor="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autoComplete="tel" required />
 
-              <label htmlFor="property-interest">Property of interest</label>
-              <select id="property-interest" name="propertyInterest" defaultValue="">
-                <option value="" disabled>
-                  Select a property reference
-                </option>
-                {featuredProperties.map((property) => (
-                  <option key={property.id} value={property.id}>
-                    {property.id} - {property.title}
-                  </option>
-                ))}
-                <option value="future-listings">Future listings</option>
-              </select>
+              <label htmlFor="moveInDate">Preferred move-in date (optional)</label>
+              <input id="moveInDate" name="moveInDate" type="date" />
 
-              <label htmlFor="message">Your message</label>
+              <label htmlFor="message">Message</label>
               <textarea
                 id="message"
                 name="message"
                 rows={5}
-                placeholder="Tell us about your move-in timeframe, preferred area and any questions."
                 required
+                placeholder="Please include your preferred viewing times and any key tenancy questions."
               />
 
-              <button type="submit" className="button">
-                Submit enquiry
+              <button type="submit" className="cta-button">
+                Enquire about this property
               </button>
             </form>
           </div>
-        </section>
+        </Section>
       </main>
 
       <footer className="site-footer">
-        <p>Belter Investments Ltd © {new Date().getFullYear()}</p>
-        <p>Professional property investment and rental homes across Scotland.</p>
+        <p>{propertyData.fullAddress}</p>
+        <p>
+          Contact: <a href={`mailto:${propertyData.contactEmail}`}>{propertyData.contactEmail}</a>
+        </p>
       </footer>
     </div>
   );
