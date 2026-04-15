@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { mainNavigation } from '../data/site';
+import { mainNavigation, siteConfig } from '../data/site';
 
 export function SiteHeader() {
   return (
@@ -10,7 +10,7 @@ export function SiteHeader() {
         </span>
         <span>
           <strong>Belter Investments</strong>
-          <small>Edinburgh long-term rental properties</small>
+          <small>{siteConfig.tagline}</small>
         </span>
       </NavLink>
 
