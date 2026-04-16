@@ -20,7 +20,7 @@ export function HomePage() {
             </CtaButton>
           </>
         }
-        aside={<div className="image-block image-block--hero" role="img" aria-label="Edinburgh skyline at golden hour" />}
+        aside={<div className="image-block image-block--hero" role="img" aria-label="Belter Investments Edinburgh property" />}
       />
 
       <Section title="What we do" intro="Simple, focused services delivered with care.">
