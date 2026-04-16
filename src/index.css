@@ -231,13 +231,73 @@ h4 {
   width: 100%;
   margin: 0 auto;
   min-height: min(82vh, 52rem);
+  position: relative;
+}
+
+.hero__orbs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+}
+
+.hero__orb--1 {
+  width: 36rem;
+  height: 36rem;
+  top: -10rem;
+  left: -8rem;
+  background: var(--orb-1);
+  animation: orbFloat 20s ease-in-out infinite;
+}
+
+.hero__orb--2 {
+  width: 30rem;
+  height: 30rem;
+  bottom: -8rem;
+  left: 20%;
+  background: var(--orb-2);
+  animation: orbFloat 24s ease-in-out infinite;
+  animation-delay: -9s;
+}
+
+.hero__orb--3 {
+  width: 22rem;
+  height: 22rem;
+  top: 10%;
+  right: 8%;
+  background: var(--orb-3);
+  animation: orbDrift 28s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.hero__orb--4 {
+  width: 18rem;
+  height: 18rem;
+  bottom: 8%;
+  right: 22%;
+  background: var(--orb-4);
+  animation: orbPulse 16s ease-in-out infinite;
+  animation-delay: -11s;
 }
 
 .hero__content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  animation: fadeSlideUp 550ms ease both;
+  position: relative;
+  z-index: 1;
+}
+
+.hero__content .eyebrow {
+  animation: fadeSlideUp 600ms ease both;
+  animation-delay: 50ms;
 }
 
 .hero__content h1 {
@@ -245,6 +305,20 @@ h4 {
   font-size: clamp(2.4rem, 6vw, 4rem);
   line-height: 1.05;
   max-width: 17ch;
+  animation: fadeSlideUp 650ms ease both;
+  animation-delay: 150ms;
+}
+
+.hero__content .hero__subtitle {
+  max-width: 42rem;
+  font-size: 1.05rem;
+  animation: fadeSlideUp 600ms ease both;
+  animation-delay: 260ms;
+}
+
+.hero__content .hero__actions {
+  animation: fadeSlideUp 600ms ease both;
+  animation-delay: 380ms;
 }
 
 .hero__content p {
@@ -258,7 +332,7 @@ h4 {
   font-size: 0.75rem;
   letter-spacing: 0.16em;
   font-weight: 700;
-  color: #4f5c7f;
+  color: var(--color-accent);
 }
 
 .hero__price {
@@ -266,6 +340,11 @@ h4 {
   font-size: clamp(1.25rem, 3vw, 1.8rem);
   font-weight: 700;
   color: var(--color-charcoal);
+}
+
+.hero > aside {
+  position: relative;
+  z-index: 1;
 }
 
 .hero__actions {
@@ -279,22 +358,25 @@ h4 {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
-  background: linear-gradient(130deg, rgba(32, 49, 90, 0.9), rgba(47, 72, 120, 0.86));
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
   color: var(--color-off-white);
   font-weight: 600;
-  padding: 0.82rem 1.25rem;
+  padding: 0.82rem 1.6rem;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 14px 30px rgba(40, 58, 99, 0.26);
-  transition: transform 190ms ease, box-shadow 190ms ease, filter 190ms ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 190ms ease, box-shadow 190ms ease, background-color 190ms ease, border-color 190ms ease;
 }
 
-.cta-button:hover:enabled {
+.cta-button:hover {
   transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 18px 35px rgba(40, 58, 99, 0.33);
-  filter: brightness(1.05);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 .cta-button:disabled {
@@ -303,15 +385,16 @@ h4 {
 }
 
 .cta-button--secondary {
-  background: rgba(255, 255, 255, 0.45);
-  border-color: rgba(255, 255, 255, 0.62);
-  color: #25314f;
-  box-shadow: 0 10px 24px rgba(40, 58, 99, 0.18);
+  background: rgba(201, 180, 134, 0.10);
+  border-color: rgba(201, 180, 134, 0.30);
+  color: var(--color-accent);
+  box-shadow: 0 4px 20px rgba(201, 180, 134, 0.08), inset 0 1px 0 rgba(201, 180, 134, 0.14);
 }
 
 .cta-button--secondary:hover {
-  background: rgba(255, 255, 255, 0.65);
-  border-color: rgba(255, 255, 255, 0.75);
+  background: rgba(201, 180, 134, 0.18);
+  border-color: rgba(201, 180, 134, 0.48);
+  box-shadow: 0 8px 28px rgba(201, 180, 134, 0.16), inset 0 1px 0 rgba(201, 180, 134, 0.20);
 }
 
 .section {

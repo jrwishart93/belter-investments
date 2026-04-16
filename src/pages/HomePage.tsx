@@ -10,8 +10,8 @@ export function HomePage() {
     <>
       <PageHero
         eyebrow="Belter Investments Ltd · Edinburgh"
-        title="Carefully selected and well-managed Edinburgh property"
-        subtitle="Property Investment & Letting, Edinburgh."
+        title="Edinburgh property, expertly curated."
+        subtitle="Long-term investment and dependable letting — quality homes across Edinburgh's most livable neighbourhoods."
         actions={
           <>
             <CtaButton to={`/property/${featuredProperty.slug}`}>View featured property</CtaButton>
