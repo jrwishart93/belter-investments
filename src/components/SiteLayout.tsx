@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { siteConfig } from '../data/site';
 import { SiteHeader } from './SiteHeader';
+import { StickyCtaBar } from './StickyCtaBar';
 
 type SiteLayoutProps = {
   children: ReactNode;
@@ -19,6 +20,7 @@ export function SiteLayout({ children }: SiteLayoutProps) {
           Contact: <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
         </p>
       </footer>
+      <StickyCtaBar />
     </div>
   );
 }
