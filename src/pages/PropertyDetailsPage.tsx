@@ -1,4 +1,5 @@
 import { Navigate, useParams } from 'react-router-dom';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { CtaButton } from '../components/CtaButton';
 import { Section } from '../components/Section';
 import { propertyListings } from '../data/property';
@@ -6,6 +7,14 @@ import { propertyListings } from '../data/property';
 export function PropertyDetailsPage() {
   const { slug } = useParams<{ slug: string }>();
   const property = propertyListings.find((item) => item.slug === slug);
+
+  const featuresStripRef = useScrollReveal<HTMLDivElement>();
+  const keyFeaturesGridRef = useScrollReveal<HTMLDivElement>();
+  const fullDescGridRef = useScrollReveal<HTMLDivElement>();
+  const galleryRef = useScrollReveal<HTMLDivElement>();
+  const outdoorGridRef = useScrollReveal<HTMLDivElement>();
+  const locationGridRef = useScrollReveal<HTMLDivElement>();
+  const additionalInfoGridRef = useScrollReveal<HTMLDivElement>();
 
   if (!property) {
     return <Navigate to="/" replace />;
@@ -48,9 +57,9 @@ export function PropertyDetailsPage() {
         </aside>
       </section>
 
-      <div className="features-strip" role="list" aria-label="Property highlights">
+      <div ref={featuresStripRef} className="features-strip reveal" role="list" aria-label="Property highlights">
         {property.keyFeatures.map((feature) => (
-          <span className="feature-badge" role="listitem" key={feature}>{feature}</span>
+          <span className="feature-badge reveal-child" role="listitem" key={feature}>{feature}</span>
         ))}
       </div>
 
@@ -60,10 +69,10 @@ export function PropertyDetailsPage() {
         </article>
       </Section>
 
-      <Section title="Key features" intro="Everything that makes this home stand out in today’s Edinburgh rental market.">
-        <div className="cards-grid cards-grid--three" role="list" aria-label="Key property features">
+      <Section title="Key features" intro="Everything that makes this home stand out in today's Edinburgh rental market.">
+        <div ref={keyFeaturesGridRef} className="cards-grid cards-grid--three reveal" role="list" aria-label="Key property features">
           {property.keyFeatures.map((feature) => (
-            <article className="info-card" role="listitem" key={feature}>
+            <article className="info-card reveal-child" role="listitem" key={feature}>
               <h3>{feature}</h3>
             </article>
           ))}
@@ -71,11 +80,11 @@ export function PropertyDetailsPage() {
       </Section>
 
       <Section title="Full description" intro="A flowing layout designed for practical city living.">
-        <div className="details-grid property-feature-grid">
-          <article className="panel">
+        <div ref={fullDescGridRef} className="details-grid property-feature-grid reveal">
+          <article className="panel reveal-child">
             <p>{property.fullDescription}</p>
           </article>
-          <article className="panel panel--image">
+          <article className="panel panel--image reveal-child">
             <img
               src="/images/properties/caledonian-crescent/living-room-1.jpg"
               alt="Living room leading to private outdoor space"
@@ -86,9 +95,9 @@ export function PropertyDetailsPage() {
       </Section>
 
       <Section title="Property gallery" intro="A clear view of the space, finish, and setting.">
-        <div className="property-gallery" role="list" aria-label="Property image gallery">
+        <div ref={galleryRef} className="property-gallery reveal" role="list" aria-label="Property image gallery">
           {property.images.slice(0, 6).map((image) => (
-            <figure className="property-gallery__item" role="listitem" key={image.src}>
+            <figure className="property-gallery__item reveal-child" role="listitem" key={image.src}>
               <img src={image.src} alt={image.alt} loading="lazy" />
             </figure>
           ))}
@@ -96,11 +105,11 @@ export function PropertyDetailsPage() {
       </Section>
 
       <Section title="Outdoor space and facilities" intro="Lifestyle benefits that elevate day-to-day renting.">
-        <div className="details-grid">
-          <article className="panel">
+        <div ref={outdoorGridRef} className="details-grid reveal">
+          <article className="panel reveal-child">
             <p>{property.outdoorAndFacilities}</p>
           </article>
-          <div className="location-image-stack" role="list" aria-label="Leisure facility images">
+          <div className="location-image-stack reveal-child" role="list" aria-label="Leisure facility images">
             {amenityImages.slice(0, 2).map((image) => (
               <figure key={image.src} className="location-image-stack__item" role="listitem">
                 <img src={image.src} alt={image.alt} loading="lazy" />
@@ -111,13 +120,13 @@ export function PropertyDetailsPage() {
       </Section>
 
       <Section title="Location" intro="Well connected Dalry living with strong amenities and transport.">
-        <div className="details-grid">
-          <article className="panel">
+        <div ref={locationGridRef} className="details-grid reveal">
+          <article className="panel reveal-child">
             {property.locationFacts.map((fact) => (
               <p key={fact}>{fact}</p>
             ))}
           </article>
-          <div className="location-image-stack" role="list" aria-label="Local area and exterior images">
+          <div className="location-image-stack reveal-child" role="list" aria-label="Local area and exterior images">
             {locationImages.slice(0, 2).map((image) => (
               <figure key={image.src} className="location-image-stack__item" role="listitem">
                 <img src={image.src} alt={image.alt} loading="lazy" />
@@ -134,9 +143,9 @@ export function PropertyDetailsPage() {
       </Section>
 
       <Section title="Additional information" intro="Useful details at a glance.">
-        <div className="cards-grid cards-grid--three" role="list" aria-label="Additional rental information">
+        <div ref={additionalInfoGridRef} className="cards-grid cards-grid--three reveal" role="list" aria-label="Additional rental information">
           {property.additionalInformation.map((item) => (
-            <article className="info-card" role="listitem" key={item}>
+            <article className="info-card reveal-child" role="listitem" key={item}>
               <h3>{item}</h3>
             </article>
           ))}

@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { PageHero } from '../components/PageHero';
 import { Section } from '../components/Section';
 import { submitDetailedEnquiry, submitQuickMessage } from '../lib/forms';
@@ -10,6 +11,9 @@ const leadSources = ['Facebook', 'Instagram', 'Gumtree', 'OpenRent', 'Zoopla', '
 export function EnquiryPage() {
   const [quickStatus, setQuickStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [detailedStatus, setDetailedStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const quickFormRef = useScrollReveal<HTMLFormElement>();
+  const detailedFormRef = useScrollReveal<HTMLFormElement>();
 
   async function handleQuickMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -71,27 +75,27 @@ export function EnquiryPage() {
       />
 
       <Section title="Quick Message" intro="A low-friction form for initial questions.">
-        <form className="enquiry-form" onSubmit={handleQuickMessage}>
-          <label htmlFor="quick-name">Name</label>
-          <input id="quick-name" name="name" type="text" required autoComplete="name" />
+        <form ref={quickFormRef} className="enquiry-form reveal" onSubmit={handleQuickMessage}>
+          <label className="reveal-child" htmlFor="quick-name">Name</label>
+          <input className="reveal-child" id="quick-name" name="name" type="text" required autoComplete="name" />
 
-          <label htmlFor="quick-email">Email</label>
-          <input id="quick-email" name="email" type="email" required autoComplete="email" />
+          <label className="reveal-child" htmlFor="quick-email">Email</label>
+          <input className="reveal-child" id="quick-email" name="email" type="email" required autoComplete="email" />
 
-          <label htmlFor="quick-message">Message</label>
-          <textarea id="quick-message" name="message" rows={5} required />
+          <label className="reveal-child" htmlFor="quick-message">Message</label>
+          <textarea className="reveal-child" id="quick-message" name="message" rows={5} required />
 
-          <button type="submit" className="cta-button" disabled={quickStatus === 'loading'}>
+          <button type="submit" className="cta-button reveal-child" disabled={quickStatus === 'loading'}>
             {quickStatus === 'loading' ? 'Sending...' : 'Send Quick Message'}
           </button>
-          {quickStatus === 'success' ? <p className="success-text">Thanks, we’ll be in touch shortly.</p> : null}
+          {quickStatus === 'success' ? <p className="success-text">Thanks, we'll be in touch shortly.</p> : null}
           {quickStatus === 'error' ? <p className="error-text">Unable to send right now. Please try again shortly.</p> : null}
         </form>
       </Section>
 
       <Section title="Detailed Enquiry" intro="For serious applicants, this form helps us understand your tenancy profile and viewing preferences.">
-        <form className="enquiry-form" onSubmit={handleDetailedEnquiry}>
-          <fieldset>
+        <form ref={detailedFormRef} className="enquiry-form reveal" onSubmit={handleDetailedEnquiry}>
+          <fieldset className="reveal-child">
             <legend>Basic information</legend>
             <label htmlFor="fullName">Full Name</label>
             <input id="fullName" name="fullName" type="text" required autoComplete="name" />
@@ -103,7 +107,7 @@ export function EnquiryPage() {
             <input id="contactNumber" name="contactNumber" type="tel" required autoComplete="tel" />
           </fieldset>
 
-          <fieldset>
+          <fieldset className="reveal-child">
             <legend>Tenancy profile</legend>
             <label htmlFor="rentalPeriod">Rental Period</label>
             <select id="rentalPeriod" name="rentalPeriod" required>
@@ -140,7 +144,7 @@ export function EnquiryPage() {
             </select>
           </fieldset>
 
-          <fieldset>
+          <fieldset className="reveal-child">
             <legend>Additional preferences</legend>
             <label htmlFor="pets">Pets</label>
             <select id="pets" name="pets" required>
@@ -167,7 +171,7 @@ export function EnquiryPage() {
             </select>
           </fieldset>
 
-          <fieldset>
+          <fieldset className="reveal-child">
             <legend>Viewing and references</legend>
             <label htmlFor="viewingPreference">Viewing preference</label>
             <select id="viewingPreference" name="viewingPreference" required>
@@ -190,7 +194,7 @@ export function EnquiryPage() {
             </select>
           </fieldset>
 
-          <fieldset>
+          <fieldset className="reveal-child">
             <legend>Final details</legend>
             <label htmlFor="furtherQuestions">Do you have any further questions about the property?</label>
             <textarea id="furtherQuestions" name="furtherQuestions" rows={4} />
@@ -209,10 +213,10 @@ export function EnquiryPage() {
             <input id="leadSourceOther" name="leadSourceOther" type="text" />
           </fieldset>
 
-          <button type="submit" className="cta-button" disabled={detailedStatus === 'loading'}>
+          <button type="submit" className="cta-button reveal-child" disabled={detailedStatus === 'loading'}>
             {detailedStatus === 'loading' ? 'Sending...' : 'Submit Detailed Enquiry'}
           </button>
-          {detailedStatus === 'success' ? <p className="success-text">Thanks, we’ll be in touch shortly.</p> : null}
+          {detailedStatus === 'success' ? <p className="success-text">Thanks, we'll be in touch shortly.</p> : null}
           {detailedStatus === 'error' ? <p className="error-text">Unable to send right now. Please try again shortly.</p> : null}
         </form>
       </Section>
