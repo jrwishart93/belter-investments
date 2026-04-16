@@ -21,8 +21,10 @@ export function PropertyDetailsPage() {
         <div className="hero__content hero__content--property">
           <p className="eyebrow">Property details</p>
           <h1 id="property-hero-title">{property.title}</h1>
-          <p>Private garden, leisure facilities, and excellent access to the city centre.</p>
-          <p className="hero__price">{property.monthlyRentDisplay}</p>
+          <p className="hero__subtitle">{property.summary}</p>
+          <div className="hero__price-block">
+            <span className="hero__price">{property.monthlyRentDisplay}</span>
+          </div>
           <p className="property-meta">
             <strong>{property.addressLine1}, Edinburgh, EH11 2AT</strong> · {property.propertyType} · Approx. 56m²
           </p>
@@ -45,6 +47,12 @@ export function PropertyDetailsPage() {
           </div>
         </aside>
       </section>
+
+      <div className="features-strip" role="list" aria-label="Property highlights">
+        {property.keyFeatures.map((feature) => (
+          <span className="feature-badge" role="listitem" key={feature}>{feature}</span>
+        ))}
+      </div>
 
       <Section title="Property overview" intro="A premium long-term rental opportunity in Dalry.">
         <article className="panel">
@@ -79,7 +87,7 @@ export function PropertyDetailsPage() {
 
       <Section title="Property gallery" intro="A clear view of the space, finish, and setting.">
         <div className="property-gallery" role="list" aria-label="Property image gallery">
-          {property.images.map((image) => (
+          {property.images.slice(0, 6).map((image) => (
             <figure className="property-gallery__item" role="listitem" key={image.src}>
               <img src={image.src} alt={image.alt} loading="lazy" />
             </figure>
