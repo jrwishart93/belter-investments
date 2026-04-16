@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useParallax } from '../hooks/useParallax';
 import { CtaButton } from '../components/CtaButton';
 import { NavigationCard } from '../components/NavigationCard';
 import { PageHero } from '../components/PageHero';
@@ -9,12 +10,13 @@ import { featuredProperty } from '../data/property';
 export function HomePage() {
   const whatWeDoRef = useScrollReveal<HTMLDivElement>();
   const exploreRef = useScrollReveal<HTMLDivElement>();
+  const parallaxOffset = useParallax();
 
   return (
     <>
       <PageHero
         eyebrow="Belter Investments Ltd · Edinburgh"
-        title="Edinburgh property, expertly curated."
+        title="Edinburgh property, thoughtfully curated."
         subtitle="Long-term investment and dependable letting — quality homes across Edinburgh's most livable neighbourhoods."
         actions={
           <>
@@ -24,7 +26,19 @@ export function HomePage() {
             </CtaButton>
           </>
         }
-        aside={<div className="image-block image-block--hero" role="img" aria-label="Belter Investments Edinburgh property" />}
+        aside={
+          <figure className="image-frame" style={{ ['--parallax-offset' as string]: `${parallaxOffset}px` }}>
+            <img
+              className="media-image media-image--hero"
+              src="/images/properties/caledonian-crescent/front-exterior.jpg"
+              width={1080}
+              height={1350}
+              loading="eager"
+              decoding="async"
+              alt="Contemporary exterior of 61/1 Caledonian Crescent in Edinburgh"
+            />
+          </figure>
+        }
       />
 
       <Section title="What we do" intro="Simple, focused services delivered with care.">
@@ -49,7 +63,17 @@ export function HomePage() {
         intro="Rooted locally, with properties chosen for strong location and day-to-day livability."
       >
         <div className="location-feature">
-          <div className="image-block image-block--location" role="img" aria-label="Canal-side walkway in Edinburgh" />
+          <figure className="panel--image">
+            <img
+              className="media-image"
+              src="/images/properties/caledonian-crescent/local-area.jpg"
+              width={1600}
+              height={1000}
+              loading="lazy"
+              decoding="async"
+              alt="Canal-side local area near Dalry and Haymarket in Edinburgh"
+            />
+          </figure>
           <p>Properties in and around Edinburgh's established neighbourhoods, with reliable access to transport and amenities.</p>
         </div>
       </Section>

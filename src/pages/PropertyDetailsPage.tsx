@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useParallax } from '../hooks/useParallax';
 import { CtaButton } from '../components/CtaButton';
 import { Section } from '../components/Section';
 import { propertyListings } from '../data/property';
@@ -7,6 +9,7 @@ import { propertyListings } from '../data/property';
 export function PropertyDetailsPage() {
   const { slug } = useParams<{ slug: string }>();
   const property = propertyListings.find((item) => item.slug === slug);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
 
   const featuresStripRef = useScrollReveal<HTMLDivElement>();
   const keyFeaturesGridRef = useScrollReveal<HTMLDivElement>();
@@ -15,6 +18,7 @@ export function PropertyDetailsPage() {
   const outdoorGridRef = useScrollReveal<HTMLDivElement>();
   const locationGridRef = useScrollReveal<HTMLDivElement>();
   const additionalInfoGridRef = useScrollReveal<HTMLDivElement>();
+  const parallaxOffset = useParallax(0.1, 20);
 
   if (!property) {
     return <Navigate to="/" replace />;
@@ -45,13 +49,15 @@ export function PropertyDetailsPage() {
           </div>
         </div>
 
-        <aside className="property-hero-media panel">
-          <figure className="property-hero-media__featured">
-            <img src={heroImage.src} alt={heroImage.alt} loading="eager" />
+        <aside className="property-hero-media" style={{ ['--parallax-offset' as string]: `${parallaxOffset}px` }}>
+          <figure className="property-hero-media__featured image-frame">
+            <img className="media-image media-image--hero" src={heroImage.src} alt={heroImage.alt} width={1280} height={960} loading="eager" />
           </figure>
           <div className="property-hero-media__thumbs" aria-hidden="true">
             {galleryImages.slice(0, 3).map((image) => (
-              <img key={image.src} src={image.src} alt="" loading="lazy" />
+              <figure key={image.src}>
+                <img className="media-image" src={image.src} alt="" width={400} height={300} loading="lazy" decoding="async" />
+              </figure>
             ))}
           </div>
         </aside>
@@ -86,9 +92,13 @@ export function PropertyDetailsPage() {
           </article>
           <article className="panel panel--image reveal-child">
             <img
+              className="media-image"
               src="/images/properties/caledonian-crescent/living-room-1.jpg"
               alt="Living room leading to private outdoor space"
+              width={1200}
+              height={750}
               loading="lazy"
+              decoding="async"
             />
           </article>
         </div>
@@ -97,8 +107,13 @@ export function PropertyDetailsPage() {
       <Section title="Property gallery" intro="A clear view of the space, finish, and setting.">
         <div ref={galleryRef} className="property-gallery reveal" role="list" aria-label="Property image gallery">
           {property.images.slice(0, 6).map((image) => (
-            <figure className="property-gallery__item reveal-child" role="listitem" key={image.src}>
-              <img src={image.src} alt={image.alt} loading="lazy" />
+            <figure className="property-gallery__item reveal-child" role="listitem" key={image.src} tabIndex={0} onClick={() => setActiveImage(image.src)} onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                setActiveImage(image.src);
+              }
+            }}>
+              <img className="media-image" src={image.src} alt={image.alt} width={1000} height={800} loading="lazy" decoding="async" />
             </figure>
           ))}
         </div>
@@ -112,7 +127,7 @@ export function PropertyDetailsPage() {
           <div className="location-image-stack reveal-child" role="list" aria-label="Leisure facility images">
             {amenityImages.slice(0, 2).map((image) => (
               <figure key={image.src} className="location-image-stack__item" role="listitem">
-                <img src={image.src} alt={image.alt} loading="lazy" />
+                <img className="media-image" src={image.src} alt={image.alt} width={1200} height={750} loading="lazy" decoding="async" />
               </figure>
             ))}
           </div>
@@ -129,7 +144,7 @@ export function PropertyDetailsPage() {
           <div className="location-image-stack reveal-child" role="list" aria-label="Local area and exterior images">
             {locationImages.slice(0, 2).map((image) => (
               <figure key={image.src} className="location-image-stack__item" role="listitem">
-                <img src={image.src} alt={image.alt} loading="lazy" />
+                <img className="media-image" src={image.src} alt={image.alt} width={1200} height={750} loading="lazy" decoding="async" />
               </figure>
             ))}
           </div>
@@ -163,6 +178,18 @@ export function PropertyDetailsPage() {
           </div>
         </div>
       </Section>
+
+      {activeImage ? (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label="Expanded property photo" onClick={() => setActiveImage(null)}>
+          <figure className="lightbox__panel" onClick={(event) => event.stopPropagation()}>
+            <img src={activeImage} alt="Expanded property view" width={1600} height={1000} />
+            <figcaption className="lightbox__meta">
+              <span>Tap outside to close</span>
+              <button type="button" className="cta-button cta-button--secondary" onClick={() => setActiveImage(null)}>Close</button>
+            </figcaption>
+          </figure>
+        </div>
+      ) : null}
     </>
   );
 }

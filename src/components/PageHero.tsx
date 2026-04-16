@@ -17,13 +17,13 @@ export function PageHero({ eyebrow, title, subtitle, actions, aside }: PageHeroP
         <div className="hero__orb hero__orb--3" />
         <div className="hero__orb hero__orb--4" />
       </div>
-      <div className="hero__content">
-        {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-        <h1 id="page-hero-heading">{title}</h1>
-        <p className="hero__subtitle">{subtitle}</p>
-        {actions ? <div className="hero__actions">{actions}</div> : null}
+      <div className="hero__content reveal reveal--visible">
+        {eyebrow ? <p className="eyebrow reveal-child">{eyebrow}</p> : null}
+        <h1 id="page-hero-heading" className="reveal-child">{title}</h1>
+        <p className="hero__subtitle reveal-child">{subtitle}</p>
+        {actions ? <div className="hero__actions reveal-child">{actions}</div> : null}
       </div>
-      {aside ? <aside className="panel">{aside}</aside> : null}
+      {aside ? <aside className="hero__media reveal reveal--visible">{aside}</aside> : null}
     </section>
   );
 }
