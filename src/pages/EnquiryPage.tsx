@@ -8,6 +8,7 @@ const occupants = ['1 person', '2 persons', '3 persons', '4 persons', 'More'];
 const leadSources = ['Facebook', 'Instagram', 'Gumtree', 'OpenRent', 'Zoopla', 'Other'];
 
 export function EnquiryPage() {
+  const [activeTab, setActiveTab] = useState<'quick' | 'detailed'>('quick');
   const [quickStatus, setQuickStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [detailedStatus, setDetailedStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -70,151 +71,180 @@ export function EnquiryPage() {
         subtitle="Use the quick message form for a fast question, or submit a detailed enquiry to help us assess your requirements."
       />
 
-      <Section title="Quick Message" intro="A low-friction form for initial questions.">
-        <form className="enquiry-form" onSubmit={handleQuickMessage}>
-          <label htmlFor="quick-name">Name</label>
-          <input id="quick-name" name="name" type="text" required autoComplete="name" />
+      <Section title="Send an Enquiry" intro="Choose how you'd like to get in touch.">
+        <div className="enquiry-tabs-wrapper">
+          <div className="form-tabs" role="tablist" aria-label="Enquiry type">
+            <button
+              role="tab"
+              type="button"
+              id="tab-quick"
+              aria-selected={activeTab === 'quick'}
+              aria-controls="panel-quick"
+              className={`form-tab${activeTab === 'quick' ? ' form-tab--active' : ''}`}
+              onClick={() => setActiveTab('quick')}
+            >
+              Quick Message
+            </button>
+            <button
+              role="tab"
+              type="button"
+              id="tab-detailed"
+              aria-selected={activeTab === 'detailed'}
+              aria-controls="panel-detailed"
+              className={`form-tab${activeTab === 'detailed' ? ' form-tab--active' : ''}`}
+              onClick={() => setActiveTab('detailed')}
+            >
+              Detailed Enquiry
+            </button>
+          </div>
 
-          <label htmlFor="quick-email">Email</label>
-          <input id="quick-email" name="email" type="email" required autoComplete="email" />
+          <div id="panel-quick" role="tabpanel" aria-labelledby="tab-quick" hidden={activeTab !== 'quick'}>
+            <form className="enquiry-form" onSubmit={handleQuickMessage}>
+              <label htmlFor="quick-name">Name</label>
+              <input id="quick-name" name="name" type="text" required autoComplete="name" />
 
-          <label htmlFor="quick-message">Message</label>
-          <textarea id="quick-message" name="message" rows={5} required />
+              <label htmlFor="quick-email">Email</label>
+              <input id="quick-email" name="email" type="email" required autoComplete="email" />
 
-          <button type="submit" className="cta-button" disabled={quickStatus === 'loading'}>
-            {quickStatus === 'loading' ? 'Sending...' : 'Send Quick Message'}
-          </button>
-          {quickStatus === 'success' ? <p className="success-text">Thanks, we’ll be in touch shortly.</p> : null}
-          {quickStatus === 'error' ? <p className="error-text">Unable to send right now. Please try again shortly.</p> : null}
-        </form>
-      </Section>
+              <label htmlFor="quick-message">Message</label>
+              <textarea id="quick-message" name="message" rows={5} required />
 
-      <Section title="Detailed Enquiry" intro="For serious applicants, this form helps us understand your tenancy profile and viewing preferences.">
-        <form className="enquiry-form" onSubmit={handleDetailedEnquiry}>
-          <fieldset>
-            <legend>Basic information</legend>
-            <label htmlFor="fullName">Full Name</label>
-            <input id="fullName" name="fullName" type="text" required autoComplete="name" />
+              <button type="submit" className="cta-button cta-button--shimmer" disabled={quickStatus === 'loading'}>
+                {quickStatus === 'loading' ? 'Sending...' : 'Send Quick Message'}
+              </button>
+              {quickStatus === 'success' ? <p className="success-text">Thanks, we'll be in touch shortly.</p> : null}
+              {quickStatus === 'error' ? <p className="error-text">Unable to send right now. Please try again shortly.</p> : null}
+            </form>
+          </div>
 
-            <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="email" required autoComplete="email" />
+          <div id="panel-detailed" role="tabpanel" aria-labelledby="tab-detailed" hidden={activeTab !== 'detailed'}>
+            <form className="enquiry-form" onSubmit={handleDetailedEnquiry}>
+              <fieldset>
+                <legend>Basic information</legend>
+                <label htmlFor="fullName">Full Name</label>
+                <input id="fullName" name="fullName" type="text" required autoComplete="name" />
 
-            <label htmlFor="contactNumber">Contact Number</label>
-            <input id="contactNumber" name="contactNumber" type="tel" required autoComplete="tel" />
-          </fieldset>
+                <label htmlFor="email">Email</label>
+                <input id="email" name="email" type="email" required autoComplete="email" />
 
-          <fieldset>
-            <legend>Tenancy profile</legend>
-            <label htmlFor="rentalPeriod">Rental Period</label>
-            <select id="rentalPeriod" name="rentalPeriod" required>
-              <option value="">Select period</option>
-              {rentalPeriods.map((period) => (
-                <option key={period} value={period}>
-                  {period}
-                </option>
-              ))}
-            </select>
+                <label htmlFor="contactNumber">Contact Number</label>
+                <input id="contactNumber" name="contactNumber" type="tel" required autoComplete="tel" />
+              </fieldset>
 
-            <label htmlFor="employed">Are you employed?</label>
-            <select id="employed" name="employed" required>
-              <option value="">Select an option</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
+              <fieldset>
+                <legend>Tenancy profile</legend>
+                <label htmlFor="rentalPeriod">Rental Period</label>
+                <select id="rentalPeriod" name="rentalPeriod" required>
+                  <option value="">Select period</option>
+                  {rentalPeriods.map((period) => (
+                    <option key={period} value={period}>
+                      {period}
+                    </option>
+                  ))}
+                </select>
 
-            <label htmlFor="student">Are you a student?</label>
-            <select id="student" name="student" required>
-              <option value="">Select an option</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
+                <label htmlFor="employed">Are you employed?</label>
+                <select id="employed" name="employed" required>
+                  <option value="">Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
 
-            <label htmlFor="occupants">Occupants</label>
-            <select id="occupants" name="occupants" required>
-              <option value="">Select occupancy</option>
-              {occupants.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </fieldset>
+                <label htmlFor="student">Are you a student?</label>
+                <select id="student" name="student" required>
+                  <option value="">Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
 
-          <fieldset>
-            <legend>Additional preferences</legend>
-            <label htmlFor="pets">Pets</label>
-            <select id="pets" name="pets" required>
-              <option value="">Select an option</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
+                <label htmlFor="occupants">Occupants</label>
+                <select id="occupants" name="occupants" required>
+                  <option value="">Select occupancy</option>
+                  {occupants.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </fieldset>
 
-            <label htmlFor="petsNotes">If yes, please provide brief details (optional)</label>
-            <input id="petsNotes" name="petsNotes" type="text" />
+              <fieldset>
+                <legend>Additional preferences</legend>
+                <label htmlFor="pets">Pets</label>
+                <select id="pets" name="pets" required>
+                  <option value="">Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
 
-            <label htmlFor="smoking">Do you smoke?</label>
-            <select id="smoking" name="smoking" required>
-              <option value="">Select an option</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
+                <label htmlFor="petsNotes">If yes, please provide brief details (optional)</label>
+                <input id="petsNotes" name="petsNotes" type="text" />
 
-            <label htmlFor="locationStatus">Location status</label>
-            <select id="locationStatus" name="locationStatus" required>
-              <option value="">Select status</option>
-              <option value="Live or work in Edinburgh">I live or work in Edinburgh already</option>
-              <option value="Moving to Edinburgh">I am newly moving to the area</option>
-            </select>
-          </fieldset>
+                <label htmlFor="smoking">Do you smoke?</label>
+                <select id="smoking" name="smoking" required>
+                  <option value="">Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
 
-          <fieldset>
-            <legend>Viewing and references</legend>
-            <label htmlFor="viewingPreference">Viewing preference</label>
-            <select id="viewingPreference" name="viewingPreference" required>
-              <option value="">Select preference</option>
-              <option value="In-person viewing">In-person viewing</option>
-              <option value="Virtual viewing">Virtual viewing</option>
-            </select>
+                <label htmlFor="locationStatus">Location status</label>
+                <select id="locationStatus" name="locationStatus" required>
+                  <option value="">Select status</option>
+                  <option value="Live or work in Edinburgh">I live or work in Edinburgh already</option>
+                  <option value="Moving to Edinburgh">I am newly moving to the area</option>
+                </select>
+              </fieldset>
 
-            <label htmlFor="viewingInformation">Please provide any further information on when you would like to arrange this</label>
-            <textarea id="viewingInformation" name="viewingInformation" rows={3} />
+              <fieldset>
+                <legend>Viewing and references</legend>
+                <label htmlFor="viewingPreference">Viewing preference</label>
+                <select id="viewingPreference" name="viewingPreference" required>
+                  <option value="">Select preference</option>
+                  <option value="In-person viewing">In-person viewing</option>
+                  <option value="Virtual viewing">Virtual viewing</option>
+                </select>
 
-            <label htmlFor="moveInDate">Move-in Date</label>
-            <input id="moveInDate" name="moveInDate" type="date" required />
+                <label htmlFor="viewingInformation">Please provide any further information on when you would like to arrange this</label>
+                <textarea id="viewingInformation" name="viewingInformation" rows={3} />
 
-            <label htmlFor="references">Do you have references from previous landlords?</label>
-            <select id="references" name="references" required>
-              <option value="">Select an option</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </fieldset>
+                <label htmlFor="moveInDate">Move-in Date</label>
+                <input id="moveInDate" name="moveInDate" type="date" required />
 
-          <fieldset>
-            <legend>Final details</legend>
-            <label htmlFor="furtherQuestions">Do you have any further questions about the property?</label>
-            <textarea id="furtherQuestions" name="furtherQuestions" rows={4} />
+                <label htmlFor="references">Do you have references from previous landlords?</label>
+                <select id="references" name="references" required>
+                  <option value="">Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </fieldset>
 
-            <label htmlFor="leadSource">Lead source</label>
-            <select id="leadSource" name="leadSource" required>
-              <option value="">Select source</option>
-              {leadSources.map((source) => (
-                <option key={source} value={source}>
-                  {source}
-                </option>
-              ))}
-            </select>
+              <fieldset>
+                <legend>Final details</legend>
+                <label htmlFor="furtherQuestions">Do you have any further questions about the property?</label>
+                <textarea id="furtherQuestions" name="furtherQuestions" rows={4} />
 
-            <label htmlFor="leadSourceOther">If Other, please specify</label>
-            <input id="leadSourceOther" name="leadSourceOther" type="text" />
-          </fieldset>
+                <label htmlFor="leadSource">Lead source</label>
+                <select id="leadSource" name="leadSource" required>
+                  <option value="">Select source</option>
+                  {leadSources.map((source) => (
+                    <option key={source} value={source}>
+                      {source}
+                    </option>
+                  ))}
+                </select>
 
-          <button type="submit" className="cta-button" disabled={detailedStatus === 'loading'}>
-            {detailedStatus === 'loading' ? 'Sending...' : 'Submit Detailed Enquiry'}
-          </button>
-          {detailedStatus === 'success' ? <p className="success-text">Thanks, we’ll be in touch shortly.</p> : null}
-          {detailedStatus === 'error' ? <p className="error-text">Unable to send right now. Please try again shortly.</p> : null}
-        </form>
+                <label htmlFor="leadSourceOther">If Other, please specify</label>
+                <input id="leadSourceOther" name="leadSourceOther" type="text" />
+              </fieldset>
+
+              <button type="submit" className="cta-button cta-button--shimmer" disabled={detailedStatus === 'loading'}>
+                {detailedStatus === 'loading' ? 'Sending...' : 'Submit Detailed Enquiry'}
+              </button>
+              {detailedStatus === 'success' ? <p className="success-text">Thanks, we'll be in touch shortly.</p> : null}
+              {detailedStatus === 'error' ? <p className="error-text">Unable to send right now. Please try again shortly.</p> : null}
+            </form>
+          </div>
+        </div>
       </Section>
     </>
   );

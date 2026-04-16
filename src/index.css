@@ -544,65 +544,161 @@ h4 {
   max-width: 52rem;
 }
 
-.enquiry-form {
-  margin-top: 1.2rem;
-  padding: 1.35rem;
+/* ── Enquiry tab switcher ────────────────────────────────────────────────── */
+
+.enquiry-tabs-wrapper {
   display: grid;
-  gap: 0.75rem;
+  gap: 1.5rem;
+}
+
+.form-tabs {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.3rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.form-tab {
+  padding: 0.58rem 1.55rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.form-tab:hover {
+  color: var(--color-text);
+}
+
+.form-tab--active {
+  background: var(--glass-strong);
+  border-color: var(--glass-border);
+  color: var(--color-heading);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ── Enquiry form ─────────────────────────────────────────────────────────── */
+
+.enquiry-form {
+  margin-top: 0;
+  padding: 1.6rem;
+  display: grid;
+  gap: 0.6rem;
 }
 
 .enquiry-form fieldset {
-  border: 1px solid rgba(255, 255, 255, 0.58);
-  border-radius: 0.9rem;
-  padding: 1rem 1rem 0.8rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  padding: 1.2rem 1.2rem 0.85rem;
   display: grid;
-  gap: 0.5rem;
-  margin: 0 0 0.75rem;
-  background: rgba(255, 255, 255, 0.22);
+  gap: 0.45rem;
+  margin: 0 0 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .enquiry-form legend {
-  padding: 0 0.3rem;
+  padding: 0 0.45rem;
   font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
 }
 
 .enquiry-form label {
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.01em;
 }
 
 .enquiry-form input,
 .enquiry-form textarea,
 .enquiry-form select {
   width: 100%;
-  margin-bottom: 0.45rem;
-  border-radius: 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  padding: 0.68rem 0.78rem;
-  background: rgba(255, 255, 255, 0.56);
-  color: var(--color-charcoal);
+  margin-bottom: 0.35rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  padding: 0.72rem 0.9rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text);
   font: inherit;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 1px 4px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.enquiry-form select option {
+  background: var(--color-surface-2);
+  color: var(--color-text);
 }
 
 .enquiry-form input:focus,
 .enquiry-form textarea:focus,
 .enquiry-form select:focus {
-  outline: 2px solid rgba(86, 127, 216, 0.65);
-  outline-offset: 1px;
+  outline: none;
+  border-color: rgba(201, 180, 134, 0.55);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 0 3px rgba(201, 180, 134, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .enquiry-form textarea {
   resize: vertical;
 }
 
+/* ── Submit button shimmer ───────────────────────────────────────────────── */
+
+@keyframes btnShimmer {
+  0%, 60%  { transform: translateX(-120%) skewX(-12deg); opacity: 0; }
+  65%      { opacity: 1; }
+  95%      { opacity: 1; }
+  100%     { transform: translateX(300%)  skewX(-12deg); opacity: 0; }
+}
+
+.cta-button--shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button--shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.20),
+    transparent
+  );
+  animation: btnShimmer 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
 .success-text {
-  color: #1f6a41;
+  color: #6ee7a8;
   font-weight: 600;
 }
 
 .error-text {
-  color: #8d2338;
+  color: #f87171;
   font-weight: 600;
 }
 
