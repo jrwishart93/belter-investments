@@ -127,28 +127,33 @@ h4 {
   align-items: center;
   gap: 1rem;
   padding: 1.25rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.48);
-  background: rgba(250, 252, 255, 0.53);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 8, 16, 0.72);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  box-shadow: none;
+  transition: box-shadow 300ms ease;
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .menu-toggle {
   display: none;
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 8px 20px rgba(42, 57, 92, 0.15);
+  background: rgba(255, 255, 255, 0.08);
   padding: 0.5rem;
-  width: 2.8rem;
-  height: 2.6rem;
+  width: 2.75rem;
+  height: 2.75rem;
   cursor: pointer;
   transition: transform 180ms ease, background-color 180ms ease;
 }
 
 .menu-toggle:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .menu-toggle span {
@@ -156,7 +161,7 @@ h4 {
   width: 100%;
   height: 2px;
   margin: 0.22rem 0;
-  background: #25314f;
+  background: var(--color-off-white);
 }
 
 .brand {
@@ -182,10 +187,11 @@ h4 {
 .brand strong {
   display: block;
   font-size: 1rem;
+  color: var(--color-white);
 }
 
 .brand small {
-  color: #4f5f85;
+  color: var(--color-text-muted);
 }
 
 .site-nav {
@@ -198,7 +204,7 @@ h4 {
 .site-nav a {
   text-decoration: none;
   font-weight: 600;
-  color: #2d3b5f;
+  color: var(--color-text);
   padding: 0.45rem 0.75rem;
   border-radius: 999px;
   transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
@@ -206,8 +212,8 @@ h4 {
 
 .site-nav a:hover,
 .site-nav a.is-active {
-  background: rgba(255, 255, 255, 0.62);
-  color: var(--color-charcoal);
+  background: rgba(255, 255, 255, 0.10);
+  color: var(--color-white);
   transform: translateY(-1px);
 }
 
@@ -750,8 +756,8 @@ h4 {
   .site-nav a {
     text-align: center;
     padding: 0.65rem 0.8rem;
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.06);
   }
 }
 
