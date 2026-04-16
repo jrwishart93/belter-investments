@@ -32,11 +32,13 @@ export type PropertyListing = {
 };
 
 const caledonianImages: PropertyImage[] = [
+  // ── Hero ─────────────────────────────────────────────────────────────────
   {
     src: '/images/properties/caledonian-crescent/front-exterior.jpg',
     alt: 'Front exterior of 61/1 Caledonian Crescent in Edinburgh',
     category: 'hero'
   },
+  // ── Gallery-first six (indices 1–6 feed the 6-image gallery) ─────────────
   {
     src: '/images/properties/caledonian-crescent/living-room-1.jpg',
     alt: 'Bright living room with seating area and natural light',
@@ -48,18 +50,8 @@ const caledonianImages: PropertyImage[] = [
     category: 'interior'
   },
   {
-    src: '/images/properties/caledonian-crescent/hallway.jpg',
-    alt: 'Entrance hallway giving access to the main rooms',
-    category: 'interior'
-  },
-  {
     src: '/images/properties/caledonian-crescent/bedroom-two.jpg',
     alt: 'Well-proportioned bedroom suitable for double bed furniture',
-    category: 'interior'
-  },
-  {
-    src: '/images/properties/caledonian-crescent/shower-room-1.jpg',
-    alt: 'Modern shower room with WC and vanity storage',
     category: 'interior'
   },
   {
@@ -68,24 +60,50 @@ const caledonianImages: PropertyImage[] = [
     category: 'outdoor'
   },
   {
+    src: '/images/properties/caledonian-crescent/swimming-pool.jpg',
+    alt: 'Residents leisure facility including swimming pool access',
+    category: 'amenity'
+  },
+  {
     src: '/images/properties/caledonian-crescent/building-exterior.jpg',
     alt: 'Exterior view of the modern four-storey residential block',
     category: 'outdoor'
   },
+  // ── Supporting images ────────────────────────────────────────────────────
   {
-    src: '/images/properties/caledonian-crescent/local-area.jpg',
-    alt: 'Local Dalry area view near Caledonian Crescent',
-    category: 'location'
+    src: '/images/properties/caledonian-crescent/hallway.jpg',
+    alt: 'Entrance hallway giving access to the main rooms',
+    category: 'interior'
   },
   {
-    src: '/images/properties/caledonian-crescent/swimming-pool.jpg',
-    alt: 'Residents leisure facility including swimming pool access',
+    src: '/images/properties/caledonian-crescent/shower-room-1.jpg',
+    alt: 'Modern shower room with WC and vanity storage',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/shower-room-2.jpg',
+    alt: 'Second bathroom view showing tiling and fixtures',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/private-garden-2.jpg',
+    alt: 'Private garden with outdoor seating space',
+    category: 'outdoor'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/leisure-facilities.jpg',
+    alt: 'Communal leisure and wellness facilities within the development',
     category: 'amenity'
   },
   {
     src: '/images/properties/caledonian-crescent/gym.jpg',
     alt: 'On-site resident gym and wellness facilities',
     category: 'amenity'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/local-area.jpg',
+    alt: 'Local Dalry area view near Caledonian Crescent',
+    category: 'location'
   }
 ];
 
@@ -102,7 +120,7 @@ export const propertyListings: PropertyListing[] = [
     propertyType: '2 bedroom ground floor flat',
     status: 'Available as a long-term rental',
     summary:
-      'A polished, well-proportioned ground floor rental in Dalry with private outdoor space and resident leisure access, ideal for tenants wanting both convenience and comfort.',
+      'A well-appointed ground floor flat in Dalry — private garden, pool & gym access, and excellent transport links. Available now for long-term occupancy.',
     description:
       'This modern two-bedroom ground floor flat offers practical single-level living in Dalry, just west of Edinburgh city centre. With French doors to private garden space, well-balanced room sizes, and resident access to pool, gym and sauna facilities, it combines day-to-day comfort with strong local connectivity at £1,655 per month.',
     overview:
