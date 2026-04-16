@@ -1,20 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
 
 :root {
-  --color-charcoal: #161b2f;
-  --color-off-white: #eef2fb;
-  --color-muted-gold: #c9b486;
-  --color-soft-grey: #dbe3f5;
-  --color-ink: #1f2840;
-  --color-white: #ffffff;
-  --glass-bg: rgba(255, 255, 255, 0.46);
-  --glass-strong: rgba(255, 255, 255, 0.64);
-  --glass-border: rgba(255, 255, 255, 0.55);
-  --glass-shadow: 0 18px 45px rgba(36, 58, 109, 0.16);
+  /* ── Background & surfaces ─────────────────────────── */
+  --color-bg:          #080810;
+  --color-surface:     #0d0d1a;
+  --color-surface-2:   #12121f;
+
+  /* ── Legacy palette (compatibility) ────────────────── */
+  --color-charcoal:    #161b2f;
+  --color-off-white:   #eef2fb;
+  --color-muted-gold:  #c9b486;
+  --color-soft-grey:   #dbe3f5;
+  --color-ink:         #1f2840;
+  --color-white:       #ffffff;
+
+  /* ── Text ─────────────────────────────────────────── */
+  --color-text:        #e8eaf6;
+  --color-text-muted:  rgba(232, 234, 246, 0.55);
+  --color-text-dim:    rgba(232, 234, 246, 0.35);
+  --color-heading:     #f0f2ff;
+
+  /* ── Accent / gold ────────────────────────────────── */
+  --color-accent:      #c9b486;
+  --color-accent-glow: rgba(201, 180, 134, 0.35);
+  --color-gold-bright: #e2c97e;
+
+  /* ── Orb colours ──────────────────────────────────── */
+  --orb-1: rgba( 99, 102, 241, 0.55);
+  --orb-2: rgba(139,  92, 246, 0.45);
+  --orb-3: rgba(  6, 182, 212, 0.35);
+  --orb-4: rgba(201, 180, 134, 0.28);
+
+  /* ── Glass morphism ───────────────────────────────── */
+  --glass-bg:        rgba(255, 255, 255, 0.04);
+  --glass-strong:    rgba(255, 255, 255, 0.07);
+  --glass-border:    rgba(255, 255, 255, 0.08);
+  --glass-shadow:    0 18px 45px rgba(0, 0, 0, 0.55);
+  --glass-inset:     inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --glass-blur:      18px;
+  --glass-saturate:  160%;
 
   font-family: Inter, Helvetica, Arial, sans-serif;
-  color: var(--color-ink);
-  background: var(--color-off-white);
+  color: var(--color-text);
+  background: var(--color-bg);
   line-height: 1.75;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -32,12 +60,12 @@ body,
 
 body {
   margin: 0;
-  color: var(--color-ink);
+  color: var(--color-text);
   background:
-    radial-gradient(circle at 12% 12%, rgba(174, 208, 255, 0.44), transparent 45%),
-    radial-gradient(circle at 86% 10%, rgba(244, 211, 255, 0.34), transparent 40%),
-    radial-gradient(circle at 80% 84%, rgba(164, 235, 223, 0.28), transparent 38%),
-    linear-gradient(160deg, #edf2ff 0%, #e9f4ff 45%, #f0f7ff 100%);
+    radial-gradient(ellipse at 15% 10%, rgba( 99, 102, 241, 0.10), transparent 50%),
+    radial-gradient(ellipse at 85%  8%, rgba(139,  92, 246, 0.08), transparent 45%),
+    radial-gradient(ellipse at 78% 90%, rgba(  6, 182, 212, 0.06), transparent 42%),
+    var(--color-bg);
   background-attachment: fixed;
 }
 
@@ -50,7 +78,7 @@ h2,
 h3,
 h4 {
   font-family: 'Playfair Display', 'Libre Baskerville', Georgia, serif;
-  color: var(--color-charcoal);
+  color: var(--color-heading);
   letter-spacing: 0.01em;
 }
 
@@ -67,27 +95,27 @@ h4 {
   content: '';
   position: absolute;
   border-radius: 50%;
-  filter: blur(12px);
+  filter: blur(80px);
   pointer-events: none;
   z-index: -1;
-  animation: floatCloud 14s ease-in-out infinite;
+  animation: orbFloat 20s ease-in-out infinite;
 }
 
 .page-shell::before {
-  width: 24rem;
-  height: 24rem;
-  top: -6rem;
-  left: -5rem;
-  background: rgba(154, 196, 255, 0.38);
+  width: 40rem;
+  height: 40rem;
+  top: -12rem;
+  left: -10rem;
+  background: var(--orb-1);
 }
 
 .page-shell::after {
-  width: 20rem;
-  height: 20rem;
-  bottom: -7rem;
-  right: -5rem;
-  background: rgba(205, 162, 255, 0.24);
-  animation-delay: 3s;
+  width: 34rem;
+  height: 34rem;
+  bottom: -10rem;
+  right: -8rem;
+  background: var(--orb-2);
+  animation-delay: -7s;
 }
 
 .site-header {
@@ -511,6 +539,42 @@ h4 {
   50% {
     transform: translateY(10px) translateX(4px);
   }
+}
+
+@keyframes orbFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  30% {
+    transform: translate(12px, -20px) scale(1.04);
+  }
+
+  60% {
+    transform: translate(-8px, 14px) scale(0.97);
+  }
+}
+
+@keyframes orbPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.10);
+  }
+}
+
+@keyframes orbDrift {
+  0%   { transform: translate(  0px,   0px) rotate(  0deg); }
+  25%  { transform: translate( 20px, -14px) rotate(  5deg); }
+  50%  { transform: translate(  8px,  22px) rotate( -4deg); }
+  75%  { transform: translate(-16px,   8px) rotate(  7deg); }
+  100% { transform: translate(  0px,   0px) rotate(  0deg); }
 }
 
 
