@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { CtaButton } from '../components/CtaButton';
 import { NavigationCard } from '../components/NavigationCard';
 import { PageHero } from '../components/PageHero';
@@ -6,6 +7,9 @@ import { Section } from '../components/Section';
 import { featuredProperty } from '../data/property';
 
 export function HomePage() {
+  const whatWeDoRef = useScrollReveal<HTMLDivElement>();
+  const exploreRef = useScrollReveal<HTMLDivElement>();
+
   return (
     <>
       <PageHero
@@ -24,16 +28,16 @@ export function HomePage() {
       />
 
       <Section title="What we do" intro="Simple, focused services delivered with care.">
-        <div className="cards-grid cards-grid--three">
-          <article className="info-card">
+        <div ref={whatWeDoRef} className="cards-grid cards-grid--three reveal">
+          <article className="info-card reveal-child">
             <h3>Property Acquisition</h3>
             <p>Well-located Edinburgh homes selected for long-term value.</p>
           </article>
-          <article className="info-card">
+          <article className="info-card reveal-child">
             <h3>Renovation</h3>
             <p>Practical improvements that keep properties bright, calm, and durable.</p>
           </article>
-          <article className="info-card">
+          <article className="info-card reveal-child">
             <h3>Letting</h3>
             <p>Straightforward tenancy management with clear communication.</p>
           </article>
@@ -46,7 +50,7 @@ export function HomePage() {
       >
         <div className="location-feature">
           <div className="image-block image-block--location" role="img" aria-label="Canal-side walkway in Edinburgh" />
-          <p>Properties in and around Edinburgh’s established neighbourhoods, with reliable access to transport and amenities.</p>
+          <p>Properties in and around Edinburgh's established neighbourhoods, with reliable access to transport and amenities.</p>
         </div>
       </Section>
 
@@ -64,22 +68,29 @@ export function HomePage() {
       </Section>
 
       <Section title="Explore the website" intro="Find what you need quickly.">
-        <div className="cards-grid cards-grid--three">
+        <div ref={exploreRef} className="cards-grid cards-grid--three reveal">
           <NavigationCard
+            className="reveal-child"
             title="Property Details"
             description="View the full listing profile, key features, and location details."
             to={`/property/${featuredProperty.slug}`}
           />
           <NavigationCard
+            className="reveal-child"
             title="Enquiry Page"
             description="Send a quick message or complete a detailed rental enquiry form."
             to="/enquiry"
           />
-          <NavigationCard title="About Us" description="Learn about Belter Investments and our professional approach." to="/about" />
+          <NavigationCard
+            className="reveal-child"
+            title="About Us"
+            description="Learn about Belter Investments and our professional approach."
+            to="/about"
+          />
         </div>
       </Section>
 
-      <Section title="Enquiry" intro="If you’re interested in a property, send a quick message or complete a full enquiry form.">
+      <Section title="Enquiry" intro="If you're interested in a property, send a quick message or complete a full enquiry form.">
         <div className="panel">
           <div className="hero__actions">
             <CtaButton to="/enquiry">Start enquiry</CtaButton>
