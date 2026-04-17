@@ -1028,14 +1028,6 @@ p {
   visibility: hidden;
 }
 
-.checkbox-required-proxy {
-  position: absolute;
-  width: 1px !important;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .field-label {
   margin: 0;
   font-weight: 600;

@@ -215,6 +215,7 @@ function FieldGroup({ title, children }: { title: string; children: ReactNode })
 
 function TextInput({
   id,
+  name,
   label,
   value,
   onChange,
@@ -223,6 +224,7 @@ function TextInput({
   autoComplete
 }: {
   id: string;
+  name?: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
@@ -233,13 +235,14 @@ function TextInput({
   return (
     <div className="field-group">
       <label htmlFor={id}>{label}{required ? <span aria-hidden="true"> *</span> : null}</label>
-      <input id={id} name={id} type={type} value={value} onChange={(event) => onChange(event.target.value)} required={required} autoComplete={autoComplete} />
+      <input id={id} name={name ?? id} type={type} value={value} onChange={(event) => onChange(event.target.value)} required={required} autoComplete={autoComplete} />
     </div>
   );
 }
 
 function TextAreaField({
   id,
+  name,
   label,
   value,
   onChange,
@@ -248,6 +251,7 @@ function TextAreaField({
   helper
 }: {
   id: string;
+  name?: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
@@ -258,7 +262,7 @@ function TextAreaField({
   return (
     <div className="field-group">
       <label htmlFor={id}>{label}{required ? <span aria-hidden="true"> *</span> : null}</label>
-      <textarea id={id} name={id} rows={rows} value={value} onChange={(event) => onChange(event.target.value)} required={required} />
+      <textarea id={id} name={name ?? id} rows={rows} value={value} onChange={(event) => onChange(event.target.value)} required={required} />
       {helper ? <p className="form-helper">{helper}</p> : null}
     </div>
   );
@@ -266,6 +270,7 @@ function TextAreaField({
 
 function SelectField({
   id,
+  name,
   label,
   value,
   onChange,
@@ -273,6 +278,7 @@ function SelectField({
   required = false
 }: {
   id: string;
+  name?: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
@@ -282,7 +288,7 @@ function SelectField({
   return (
     <div className="field-group">
       <label htmlFor={id}>{label}{required ? <span aria-hidden="true"> *</span> : null}</label>
-      <select id={id} name={id} value={value} onChange={(event) => onChange(event.target.value)} required={required}>
+      <select id={id} name={name ?? id} value={value} onChange={(event) => onChange(event.target.value)} required={required}>
         <option value="">Select an option</option>
         {options.map((option) => (
           <option key={option} value={option}>{option}</option>
@@ -337,12 +343,9 @@ function CheckboxGroup({
   options: string[];
   required?: boolean;
 }) {
-  const requiredMessage = required && values.length === 0 ? 'Choose at least one option.' : '';
-
   return (
     <div className="field-group">
       <p className="field-label">{label}{required ? <span aria-hidden="true"> *</span> : null}</p>
-      <input className="checkbox-required-proxy" tabIndex={-1} aria-hidden="true" value={values.length > 0 ? 'selected' : ''} onChange={() => undefined} required={required} />
       <div className="choice-grid">
         {options.map((option) => (
           <label className="choice-option" key={option}>
@@ -359,7 +362,7 @@ function CheckboxGroup({
           </label>
         ))}
       </div>
-      {requiredMessage ? <p className="form-helper">{requiredMessage}</p> : null}
+      {required && values.length === 0 ? <p className="form-helper">Choose at least one option.</p> : null}
     </div>
   );
 }
@@ -610,23 +613,23 @@ export function EnquiryPage() {
       >
         <form ref={quickFormRef} className="enquiry-form reveal" onSubmit={handleQuickMessage}>
           <div className="field-group">
-            <label htmlFor="name">Full Name <span aria-hidden="true">*</span></label>
-            <input id="name" name="name" type="text" required autoComplete="name" />
+            <label htmlFor="quick-name">Full Name <span aria-hidden="true">*</span></label>
+            <input id="quick-name" name="name" type="text" required autoComplete="name" />
           </div>
 
           <div className="field-group">
-            <label htmlFor="email">Email Address <span aria-hidden="true">*</span></label>
-            <input id="email" name="email" type="email" required autoComplete="email" />
+            <label htmlFor="quick-email">Email Address <span aria-hidden="true">*</span></label>
+            <input id="quick-email" name="email" type="email" required autoComplete="email" />
           </div>
 
           <div className="field-group">
-            <label htmlFor="contactNumber">Contact Number <span aria-hidden="true">*</span></label>
-            <input id="contactNumber" name="contactNumber" type="tel" required autoComplete="tel" />
+            <label htmlFor="quick-contactNumber">Contact Number <span aria-hidden="true">*</span></label>
+            <input id="quick-contactNumber" name="contactNumber" type="tel" required autoComplete="tel" />
           </div>
 
           <div className="field-group">
-            <label htmlFor="message">Message <span aria-hidden="true">*</span></label>
-            <textarea id="message" name="message" rows={5} required />
+            <label htmlFor="quick-message">Message <span aria-hidden="true">*</span></label>
+            <textarea id="quick-message" name="message" rows={5} required />
           </div>
 
           <button type="submit" className="cta-button reveal-child" disabled={quickStatus === 'loading'}>
@@ -645,9 +648,9 @@ export function EnquiryPage() {
         <span id="property-enquiry" className="anchor-offset" aria-hidden="true" />
         <form ref={detailedFormRef} className="enquiry-form enquiry-form--detailed reveal" onSubmit={handleDetailedEnquiry}>
           <FieldGroup title="A. Personal Details">
-            <TextInput id="fullName" label="Full Name" value={detailedForm.fullName} onChange={(value) => setField('fullName', value)} required autoComplete="name" />
-            <TextInput id="email" label="Email Address" value={detailedForm.email} onChange={(value) => setField('email', value)} type="email" required autoComplete="email" />
-            <TextInput id="contactNumber" label="Contact Number" value={detailedForm.contactNumber} onChange={(value) => setField('contactNumber', value)} type="tel" required autoComplete="tel" />
+            <TextInput id="detailed-fullName" name="fullName" label="Full Name" value={detailedForm.fullName} onChange={(value) => setField('fullName', value)} required autoComplete="name" />
+            <TextInput id="detailed-email" name="email" label="Email Address" value={detailedForm.email} onChange={(value) => setField('email', value)} type="email" required autoComplete="email" />
+            <TextInput id="detailed-contactNumber" name="contactNumber" label="Contact Number" value={detailedForm.contactNumber} onChange={(value) => setField('contactNumber', value)} type="tel" required autoComplete="tel" />
             <RadioGroup name="preferredContact" label="Preferred Method of Contact" value={detailedForm.preferredContact} onChange={(value) => setField('preferredContact', value)} options={['Email', 'Phone', 'Either']} required />
             {usesPhoneContact ? (
               <ConditionalBlock>
