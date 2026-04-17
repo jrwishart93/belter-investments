@@ -186,17 +186,11 @@ p {
   text-decoration: none;
 }
 
-.brand__mark {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.8rem;
-  background: linear-gradient(145deg, rgba(34, 56, 98, 0.92), rgba(26, 34, 68, 0.8));
-  color: var(--color-off-white);
-  font-weight: 700;
-  box-shadow: 0 10px 22px rgba(18, 31, 57, 0.35);
+.brand__logo {
+  display: block;
+  width: 2.6rem;
+  height: 2.6rem;
+  object-fit: contain;
 }
 
 .brand strong {
