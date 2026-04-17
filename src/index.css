@@ -520,6 +520,30 @@ p {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+
+.property-preview-grid {
+  display: grid;
+  gap: 1.35rem;
+}
+
+.brand-pillars {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.brand-pillars li {
+  border: 1px solid rgba(39, 48, 59, 0.14);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  width: fit-content;
+  background: rgba(255, 255, 255, 0.62);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
 .property-preview-card {
   max-width: 56rem;
   overflow: hidden;
@@ -554,6 +578,12 @@ p {
 .property-preview-card__highlights li::marker {
   color: var(--color-accent);
 }
+.property-preview-card__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 
 .nav-card {
   display: grid;
@@ -605,8 +635,12 @@ p {
   min-height: min(85vh, 56rem);
 }
 
-.portfolio-placeholder p {
-  margin: 0;
+.portfolio-placeholder .eyebrow {
+  margin-bottom: 0.55rem;
+}
+
+.portfolio-placeholder p:last-child {
+  margin-bottom: 0;
 }
 
 .image-block--location {

@@ -18,7 +18,7 @@ export function PropertyPreviewCard({ property, highlights = [] }: PropertyPrevi
           {property.addressLine1}, {property.city}
         </h3>
         <p className="hero__price">{property.monthlyRentDisplay}</p>
-        <p>{property.description}</p>
+        <p>{property.summary}</p>
 
         {highlights.length > 0 ? (
           <ul className="property-preview-card__highlights">
@@ -28,9 +28,14 @@ export function PropertyPreviewCard({ property, highlights = [] }: PropertyPrevi
           </ul>
         ) : null}
 
-        <Link className="text-link" to={`/property/${property.slug}`}>
-          View full property details
-        </Link>
+        <div className="property-preview-card__actions">
+          <Link className="text-link" to={`/property/${property.slug}`}>
+            View full property advert
+          </Link>
+          <Link className="text-link" to="/enquiry">
+            Make an enquiry
+          </Link>
+        </div>
       </div>
     </article>
   );
