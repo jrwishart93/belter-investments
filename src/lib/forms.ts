@@ -30,7 +30,9 @@ async function postForm(path: '/api/quick-message' | '/api/detailed-enquiry', pa
   });
 
   if (!response.ok) {
-    throw new Error('Unable to send form right now.');
+    const errorBody = await response.json().catch(() => null);
+    const message = response.status === 400 && typeof errorBody?.message === 'string' ? errorBody.message : 'Unable to send form right now.';
+    throw new Error(message);
   }
 }
 

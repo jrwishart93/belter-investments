@@ -370,6 +370,7 @@ function CheckboxGroup({
 export function EnquiryPage() {
   const [quickStatus, setQuickStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [detailedStatus, setDetailedStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [detailedError, setDetailedError] = useState('');
   const [detailedForm, setDetailedForm] = useState<DetailedFormState>(initialDetailedState);
 
   const quickFormRef = useScrollReveal<HTMLFormElement>();
@@ -386,6 +387,41 @@ export function EnquiryPage() {
   const dogOrCat = detailedForm.petType === 'Dog' || detailedForm.petType === 'Cat';
   const smallPet = ['Rabbit', 'Guinea pig', 'Hamster', 'Bird', 'Fish', 'Reptile', 'Other'].includes(detailedForm.petType);
   const wantsViewing = detailedForm.viewingPreference === 'Yes, in person' || detailedForm.viewingPreference === 'Yes, virtual';
+
+  function validateDetailedForm() {
+    const requiredChecks: Array<[string, string]> = [
+      [detailedForm.fullName, 'Please add your full name.'],
+      [detailedForm.email, 'Please add your email address.'],
+      [detailedForm.contactNumber, 'Please add your contact number.'],
+      [detailedForm.preferredContact, 'Please choose a preferred contact method.'],
+      [detailedForm.propertyInterest, 'Please choose which property you are enquiring about.'],
+      [detailedForm.enquiringForSelf, 'Please tell us whether you are enquiring for yourself.'],
+      [detailedForm.moveInDate, 'Please add your ideal move-in date.'],
+      [detailedForm.rentalPeriod, 'Please choose how long you would like to rent for.']
+    ];
+
+    if (usesPhoneContact) {
+      requiredChecks.push([detailedForm.preferredContactTime, 'Please choose a preferred time to contact you.']);
+    }
+
+    if (detailedForm.propertyInterest === 'More than one property' && detailedForm.selectedProperties.length === 0) {
+      return 'Please choose at least one property you are interested in.';
+    }
+
+    if (detailedForm.propertyInterest === 'Not sure yet') {
+      requiredChecks.push([detailedForm.propertySearchDetails, 'Please tell us what type of property you are looking for.']);
+    }
+
+    if (detailedForm.enquiringForSelf === 'No') {
+      requiredChecks.push(
+        [detailedForm.enquiryOnBehalfOf, 'Please tell us who you are enquiring on behalf of.'],
+        [detailedForm.relationshipToApplicant, 'Please tell us your relationship to them.']
+      );
+    }
+
+    const missing = requiredChecks.find(([value]) => !value.trim());
+    return missing?.[1] ?? '';
+  }
 
   async function handleQuickMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -559,7 +595,16 @@ export function EnquiryPage() {
 
   async function handleDetailedEnquiry(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const validationMessage = validateDetailedForm();
+
+    if (validationMessage) {
+      setDetailedStatus('error');
+      setDetailedError(validationMessage);
+      return;
+    }
+
     setDetailedStatus('loading');
+    setDetailedError('');
 
     try {
       await submitDetailedEnquiry({
@@ -570,7 +615,8 @@ export function EnquiryPage() {
       });
       setDetailedForm(initialDetailedState);
       setDetailedStatus('success');
-    } catch {
+    } catch (error) {
+      setDetailedError(error instanceof Error ? error.message : 'Unable to send right now. Please try again shortly.');
       setDetailedStatus('error');
     }
   }
@@ -646,7 +692,7 @@ export function EnquiryPage() {
         intro="A guided rental enquiry that gathers useful pre-screening information without showing every question at once."
       >
         <span id="property-enquiry" className="anchor-offset" aria-hidden="true" />
-        <form ref={detailedFormRef} className="enquiry-form enquiry-form--detailed reveal" onSubmit={handleDetailedEnquiry}>
+        <form ref={detailedFormRef} className="enquiry-form enquiry-form--detailed reveal" onSubmit={handleDetailedEnquiry} noValidate>
           <FieldGroup title="A. Personal Details">
             <TextInput id="detailed-fullName" name="fullName" label="Full Name" value={detailedForm.fullName} onChange={(value) => setField('fullName', value)} required autoComplete="name" />
             <TextInput id="detailed-email" name="email" label="Email Address" value={detailedForm.email} onChange={(value) => setField('email', value)} type="email" required autoComplete="email" />
@@ -907,7 +953,7 @@ export function EnquiryPage() {
             {detailedStatus === 'loading' ? 'Sending...' : 'Submit Detailed Rental Enquiry'}
           </button>
           {detailedStatus === 'success' ? <p className="success-text">Thanks, we'll be in touch shortly.</p> : null}
-          {detailedStatus === 'error' ? <p className="error-text">Unable to send right now. Please try again shortly.</p> : null}
+          {detailedStatus === 'error' ? <p className="error-text">{detailedError || 'Unable to send right now. Please try again shortly.'}</p> : null}
         </form>
       </Section>
     </>
