@@ -6,6 +6,12 @@ export type PropertyImage = {
   category: 'hero' | 'interior' | 'outdoor' | 'location' | 'amenity';
 };
 
+export type AdvertSection = {
+  title: string;
+  body?: string[];
+  items?: string[];
+};
+
 export type PropertyListing = {
   id: string;
   slug: string;
@@ -15,6 +21,7 @@ export type PropertyListing = {
   city: string;
   monthlyRent: number;
   monthlyRentDisplay: string;
+  availabilityDisplay?: string;
   propertyType: string;
   status: string;
   summary: string;
@@ -27,6 +34,7 @@ export type PropertyListing = {
   outdoorAndFacilities: string;
   whoItSuits: string;
   additionalInformation: string[];
+  advertSections: AdvertSection[];
   closingValueStatement: string;
   images: PropertyImage[];
 };
@@ -107,63 +115,385 @@ const caledonianImages: PropertyImage[] = [
   }
 ];
 
+const montgomeryStreetImages: PropertyImage[] = [
+  {
+    src: '/images/properties/montgomery-st/09-building_from_outside.jpg',
+    alt: 'Exterior of a traditional Edinburgh residential building on Montgomery Street',
+    category: 'hero'
+  },
+  {
+    src: '/images/properties/montgomery-st/01-lounge_seat_bay_window.jpg',
+    alt: 'Lounge with bay window and seating',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/montgomery-st/07-kitchen_dining_table_window.jpg',
+    alt: 'Kitchen and dining area with natural light',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/montgomery-st/04-bedroom_with_wardrobe_01.jpg',
+    alt: 'Bedroom with wardrobe storage',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/montgomery-st/06-kitchen_dining_table.jpg',
+    alt: 'Spacious dining kitchen at Montgomery Street',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/montgomery-st/05-bathroom.jpg',
+    alt: 'Bathroom at Montgomery Street',
+    category: 'interior'
+  }
+];
+
+const royalCrescentImages: PropertyImage[] = [
+  {
+    src: '/images/properties/royal-crescent/01-royal_crescent_building_from_outside.jpg',
+    alt: 'Royal Crescent building exterior in Edinburgh',
+    category: 'hero'
+  },
+  {
+    src: '/images/properties/royal-crescent/03-living_lounge.jpg',
+    alt: 'Living room in Royal Crescent property',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/royal-crescent/11-kitchen.jpg',
+    alt: 'Kitchen in Royal Crescent property',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/royal-crescent/05-bedroom_01.jpg',
+    alt: 'Bedroom in Royal Crescent property',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/royal-crescent/04-dining_table.jpg',
+    alt: 'Dining area in Royal Crescent property',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/royal-crescent/13-window_view.jpg',
+    alt: 'Open view from Royal Crescent towards the Firth of Forth',
+    category: 'location'
+  }
+];
+
 export const propertyListings: PropertyListing[] = [
   {
     id: 'caledonian-crescent-61-1',
     slug: '61-1-caledonian-crescent',
     featured: true,
-    title: '2 Bedroom Ground Floor Flat – Caledonian Crescent, Edinburgh',
+    title: 'Two-Bedroom Main Door Apartment – Caledonian Crescent, Edinburgh',
     addressLine1: '61/1 Caledonian Crescent',
     city: 'Edinburgh',
-    monthlyRent: 1655,
-    monthlyRentDisplay: '£1,655 per month',
-    propertyType: '2 bedroom ground floor flat',
-    status: 'Available as a long-term rental',
+    monthlyRent: 1695,
+    monthlyRentDisplay: '£1,695 per month',
+    propertyType: '2 bedroom main door apartment',
+    status: 'Available from September 2026',
     summary:
-      'A well-appointed ground floor flat in Dalry — private garden, pool & gym access, and excellent transport links. Available now for long-term occupancy.',
+      'A bright and spacious two-bedroom main door apartment in the James Square development, with private garden, allocated parking, and residents’ leisure facilities.',
     description:
-      'This modern two-bedroom ground floor flat offers practical single-level living in Dalry, just west of Edinburgh city centre. With French doors to private garden space, well-balanced room sizes, and resident access to pool, gym and sauna facilities, it combines day-to-day comfort with strong local connectivity at £1,655 per month.',
+      'Set within the popular James Square development in Dalry, this well-presented ground floor apartment offers generous internal space, private outdoor space, allocated parking, and exclusive access to a swimming pool, gym, and sauna.',
     overview:
-      'This is a well-proportioned two-bedroom ground floor flat within a modern four-storey residential development in the Dalry area of Edinburgh. Extending to approximately 56m², the property combines a practical single-level layout with private outdoor space and access to communal leisure facilities, making it an attractive rental opportunity for professionals seeking both convenience and comfort.',
+      'This is a bright and spacious two-bedroom main door apartment within the popular James Square development in Dalry. The home combines generous internal space with a convenient central location, making it an excellent choice for professionals, couples, or small families.',
     fullDescription:
-      'Entered from a secure shared stair, the flat opens into a central entrance hallway that links each room in a practical single-level arrangement. The bright living room is a standout feature, with French doors leading directly to a private garden area and allowing excellent natural light through the day. The separate kitchen offers generous storage and useful workspace for regular cooking and day-to-day use. There are two well-proportioned bedrooms that can comfortably support sleeping, home working or guest needs, and the shower room with WC is neatly finished for simple, modern living. Altogether, the layout feels efficient, comfortable and well suited to life in the city.',
+      'The property is accessed through its own private front door into a welcoming hallway with neutral decor and wooden flooring. The spacious living room opens directly to the private rear garden, while the galley kitchen, two double bedrooms, and upgraded shower room create a practical, well-balanced home.',
     outdoorAndFacilities:
-      'French doors from the living room open onto a private garden area, ideal for morning coffee, summer dining or simply enjoying outdoor space at home. In addition, the development includes communal garden grounds and resident leisure facilities with pool, gym and sauna access, adding a premium lifestyle element that is increasingly hard to find in central Edinburgh rentals.',
+      'The apartment includes a private enclosed rear garden and an allocated private parking space within a secure gated residents’ car park. Residents also enjoy access to private leisure facilities including a swimming pool, gym, and sauna, with factoring costs and garden maintenance included in the rent.',
     keyFeatures: [
-      '2 Bedrooms',
-      'Ground Floor Position',
-      'Private Garden Access',
+      '2 Double Bedrooms',
+      'Main Door Ground Floor Apartment',
+      'Private Enclosed Garden',
+      'Allocated Secure Parking',
       'Bright Living Room',
-      'Separate Kitchen',
-      'Shower Room',
-      'Secure Entry System',
+      'Galley Kitchen',
+      'Recently Upgraded Shower Room',
       'Pool, Gym & Sauna Access',
-      'Dalry / West Edinburgh Location',
-      'Close to Haymarket and Tram Links'
+      'Fast Unlimited WiFi Included',
+      'Five Minutes from Haymarket'
     ],
     locationFacts: [
       'Situated in Dalry, west of Edinburgh city centre, with a quick commute into central business districts.',
       'Well placed for Haymarket Station, tram connections and regular bus routes across the city.',
       'Straightforward access to Edinburgh Airport via tram, road links or rail connections from Haymarket.',
-      'Close to everyday amenities including local shops, supermarkets, cafés and restaurants.',
-      'Near the Union Canal for waterside walks, running routes and cycle connections.'
+      'Fountain Park leisure complex is directly nearby, with cinema, bowling, gym, restaurants and everyday amenities.',
+      'Local cafés include Pour Boy and Throat Punch Coffee, with restaurants, bars and shops along Dalry Road.'
     ],
-    suitability: 'Professional couples, two professionals sharing, and city-based tenants seeking more space with strong amenities.',
+    suitability: 'Professionals, couples, or small families seeking central Edinburgh living with private outdoor space and leisure facilities.',
     whoItSuits:
-      'This home is particularly well suited to professional couples, two professionals sharing, and city-based tenants who want more space without sacrificing convenience. It also appeals to renters who value access to amenities such as a pool, gym and sauna while staying within easy reach of major transport links and central Edinburgh.',
+      'This home is particularly well suited to professionals, couples, or small families who want generous space, private outdoor access, secure parking, and strong transport links close to Haymarket and the city centre.',
     additionalInformation: [
-      'Rent: £1,655 pcm',
-      '2 bedrooms',
-      'Ground floor flat',
-      'Electric heating',
-      'Double glazing',
-      'Secure entry',
-      'Mains services',
-      'On-street parking nearby'
+      'Monthly rent: £1,695 pcm',
+      'Deposit: £1,695',
+      'Available from September 2026 onwards',
+      'Flexible tenancy length, long-term preferred',
+      'Council Tax Band: E',
+      'Fully furnished throughout',
+      'Pets may be considered on request',
+      'Preferably no smokers'
+    ],
+    advertSections: [
+      {
+        title: 'Accommodation',
+        body: ['The property is accessed via its own private front door, leading into a welcoming hallway with neutral decor and wooden flooring.'],
+        items: [
+          'Spacious, light-filled living room with French doors opening directly onto a private rear garden.',
+          'Well-appointed galley kitchen with garden outlook, fitted units, washing machine, fridge-freezer, microwave, electric oven and hob.',
+          'Principal double bedroom with built-in open wardrobe storage.',
+          'Second double bedroom of similar proportions, suitable as a guest room or home office.',
+          'Modern shower room with WC and washbasin, recently upgraded with a new shower.',
+          'Electric heating with storage heaters and double glazing throughout.'
+        ]
+      },
+      {
+        title: 'Outdoor Space & Parking',
+        items: [
+          'Private enclosed rear garden.',
+          'Allocated private parking space within a secure gated residents’ car park with fob access, directly in front of the property.',
+          'Additional on-street visitor parking available nearby.'
+        ]
+      },
+      {
+        title: 'Development Features',
+        body: ['Residents of James Square enjoy access to private leisure facilities, with factoring costs and garden maintenance included within the rent.'],
+        items: ['Private swimming pool.', 'Gym.', 'Sauna.']
+      },
+      {
+        title: 'Location',
+        body: [
+          'Dalry is a vibrant and well-connected area, positioned around a five-minute walk from Haymarket Station for rail and tram links, including direct access to Edinburgh Airport.',
+          'Fountain Park is directly nearby, with cinema, bowling, gym, restaurants and leisure facilities. Nuffield Health Fitness & Wellbeing Gym is also within walking distance.'
+        ],
+        items: [
+          'Popular local cafés include Pour Boy and Throat Punch Coffee.',
+          'Restaurants, bars, and shops are available along Dalry Road.',
+          'Frequent bus routes run from Dalry Road, Western Approach Road, and Dundee Street.'
+        ]
+      },
+      {
+        title: 'Rental Details',
+        items: [
+          'Monthly Rent: £1,695 per calendar month.',
+          'Deposit: £1,695.',
+          'Available from: September 2026 onwards.',
+          'Tenancy length: Flexible, long-term preferred.',
+          'Council Tax Band: E.',
+          'EPC Rating: To be confirmed.',
+          'Landlord Registration Number: To be confirmed.'
+        ]
+      },
+      {
+        title: 'Additional Information',
+        items: [
+          'Fully furnished throughout.',
+          'Fast unlimited WiFi included in the rent.',
+          'Factoring fees included, covering leisure facilities and communal maintenance.',
+          'Pets may be considered upon request.',
+          'Preferably no smokers.',
+          'References and identification required.'
+        ]
+      }
     ],
     closingValueStatement:
-      'At £1,655 per month, this is a compelling long-term rental opportunity in Edinburgh, offering a rare blend of ground floor practicality, private garden access, on-site leisure facilities and excellent local connectivity, all within a well-established residential setting in Dalry.',
+      'This is a rare opportunity to secure a well-located main door apartment with private outdoor space, secure parking, and excellent on-site leisure facilities. Viewings are highly recommended.',
     images: caledonianImages
+  },
+  {
+    id: 'montgomery-street',
+    slug: 'montgomery-street',
+    featured: false,
+    title: 'Sunny & Spacious One-Bedroom Flat – Montgomery Street, Edinburgh',
+    addressLine1: 'Montgomery Street',
+    city: 'Edinburgh',
+    monthlyRent: 0,
+    monthlyRentDisplay: 'Currently let and unavailable',
+    availabilityDisplay: 'Currently let and unavailable',
+    propertyType: '1 bedroom second floor flat',
+    status: 'Currently Let',
+    summary:
+      'A bright and generously proportioned one-bedroom apartment in Edinburgh city centre, extending to approximately 80 square metres.',
+    description:
+      'Situated a short walk from Princes Street and George Street, this spacious city centre flat offers excellent natural light, generous room sizes, and convenient access to shops, transport links, restaurants, bars, and cafés.',
+    overview:
+      'This one-bedroom flat offers significantly more space than a typical city centre one-bedroom property, making it an excellent choice for a professional individual or couple seeking comfortable Edinburgh living.',
+    fullDescription:
+      'Located on the second floor, the property includes a large welcoming entrance hall, a bright south-facing living room with open views towards Calton Hill, a useful box room off the living room, a double bedroom, a spacious dining kitchen, and a bathroom with both bath and shower.',
+    outdoorAndFacilities:
+      'The property is positioned in the heart of Edinburgh’s city centre, around five minutes from Princes Street and George Street, with the Edinburgh Playhouse Theatre just around the corner.',
+    keyFeatures: [
+      '1 Bedroom',
+      'Approx. 80 sq m',
+      'Second Floor',
+      'South-Facing Living Room',
+      'Box Room / Study',
+      'Spacious Dining Kitchen',
+      'City Centre Location',
+      'On-Street Parking'
+    ],
+    locationFacts: [
+      'Located on Montgomery Street in Edinburgh city centre.',
+      'Around five minutes’ walk from Princes Street and George Street.',
+      'Close to Edinburgh Playhouse Theatre.',
+      'Well positioned for restaurants, bars, cafés, shops, and transport links.'
+    ],
+    suitability: 'Professional individual or couple seeking a spacious central Edinburgh flat.',
+    whoItSuits:
+      'This flat is ideally suited to a professional individual or couple who want more space than a typical one-bedroom city centre property, with excellent access to Edinburgh amenities and transport links.',
+    additionalInformation: [
+      'Currently let and unavailable',
+      'Council Tax Band: C',
+      'EPC Rating: Band F',
+      'Landlord Registration Number: 18199/230/05010',
+      'No smokers',
+      'No pets',
+      'References and identification required'
+    ],
+    advertSections: [
+      {
+        title: 'Accommodation',
+        body: ['Located on the second floor, the property comprises generously proportioned rooms throughout.'],
+        items: [
+          'Large welcoming entrance hall measuring approximately 4.00m x 2.60m.',
+          'Bright, south-facing living room with open views towards Calton Hill, approximately 5.75m x 3.55m.',
+          'Useful box room off the living room, ideal as a study or occasional guest room, approximately 1.95m x 1.37m.',
+          'Well-proportioned double bedroom measuring approximately 3.84m x 3.26m.',
+          'Spacious dining kitchen suitable for cooking and entertaining, approximately 5.65m x 3.55m.',
+          'Bathroom with both bath and shower, approximately 3.20m x 1.50m.'
+        ]
+      },
+      {
+        title: 'Key Features',
+        items: [
+          'Exceptionally spacious one-bedroom layout of approximately 80 sq m.',
+          'South-facing living room with excellent natural light.',
+          'Central location within walking distance of key amenities.',
+          'On-street parking available.',
+          'Free parking between 5:30pm and 8:30am, and all weekend.'
+        ]
+      },
+      {
+        title: 'Rental Details',
+        items: [
+          'Currently let and unavailable.',
+          'Rent payable by standing order.',
+          'Council Tax Band: C.',
+          'EPC Rating: Band F.',
+          'Landlord Registration Number: 18199/230/05010.'
+        ]
+      },
+      {
+        title: 'Tenant Information',
+        items: [
+          'Ideal for a professional individual or couple.',
+          'No smokers.',
+          'No pets.',
+          'References and identification required.',
+          'Applicants are asked to include details of their employment when enquiring.'
+        ]
+      }
+    ],
+    closingValueStatement:
+      'This is a rare opportunity to secure a spacious and well-located flat in Edinburgh’s city centre, with generous proportions, excellent natural light, and prime access to city amenities.',
+    images: montgomeryStreetImages
+  },
+  {
+    id: 'royal-crescent',
+    slug: 'royal-crescent',
+    featured: false,
+    title: 'Two-Bedroom Georgian Apartment – Royal Crescent, Edinburgh',
+    addressLine1: 'Royal Crescent',
+    city: 'Edinburgh',
+    monthlyRent: 0,
+    monthlyRentDisplay: 'Currently let and unavailable',
+    availabilityDisplay: 'Currently let and unavailable',
+    propertyType: '2 bedroom Georgian apartment',
+    status: 'Currently Let',
+    summary:
+      'A beautifully presented two-bedroom apartment in a classic Georgian building on Royal Crescent in Edinburgh’s New Town.',
+    description:
+      'This bright and spacious third-floor flat combines period charm with modern living, offering open views across the Firth of Forth towards Fife and excellent access to Princes Street and Stockbridge.',
+    overview:
+      'Set within one of Edinburgh’s most desirable residential addresses, this fully furnished two-bedroom Georgian apartment offers a rare balance of quiet New Town living and easy access to central amenities.',
+    fullDescription:
+      'The third-floor accommodation includes a generous living room with dining area and impressive views, a modern well-equipped kitchen, two double bedrooms, a bathroom with bath and separate shower, and two walk-in storage cupboards.',
+    outdoorAndFacilities:
+      'Royal Crescent offers a quiet residential setting within walking distance of Princes Street and Stockbridge, with independent shops, cafés, restaurants, and the weekend market nearby.',
+    keyFeatures: [
+      '2 Double Bedrooms',
+      'Third Floor Georgian Apartment',
+      'Fully Furnished',
+      'Open Firth of Forth Views',
+      'Gas Central Heating',
+      'HIVE Controls',
+      'Approx. 83 sq m / 893 sq ft',
+      'Resident Parking Permits Available'
+    ],
+    locationFacts: [
+      'Located on Royal Crescent in Edinburgh’s New Town.',
+      'Within walking distance of Princes Street.',
+      'Close to Stockbridge and its independent shops, cafes, and weekend market.',
+      'Quiet residential setting with strong city centre access.'
+    ],
+    suitability: 'Professionals, couples, or small families looking for a high-quality central Edinburgh home.',
+    whoItSuits:
+      'The property is ideally suited to professionals, couples, or small families seeking a spacious, characterful apartment in a prime New Town location.',
+    additionalInformation: [
+      'Fully furnished throughout',
+      'Gas central heating with combi boiler',
+      'Heating controlled via HIVE',
+      'Gross internal floor area: approx. 83 sq m / 893 sq ft',
+      'Currently let and unavailable',
+      'Council Tax Band: E',
+      'EPC Rating: Band E',
+      'Landlord Registration Number: 18199/230/05010'
+    ],
+    advertSections: [
+      {
+        title: 'Accommodation',
+        body: ['The property is fully furnished and comprises generous, well-balanced accommodation.'],
+        items: [
+          'Generous living room with dining area, excellent natural light, and impressive views across the Forth, approximately 5.36m x 3.86m.',
+          'Modern, well-equipped kitchen with fridge, freezer, and dishwasher, approximately 4.00m x 2.18m.',
+          'Large double bedroom to the front of the property, approximately 5.61m x 2.82m.',
+          'Second comfortable double bedroom to the rear, approximately 4.60m x 3.73m.',
+          'Bathroom with both bath and separate shower.',
+          'Two walk-in storage cupboards, one housing a Bosch automatic washing machine.'
+        ]
+      },
+      {
+        title: 'Key Features',
+        items: [
+          'Fully furnished throughout.',
+          'Gas central heating with combi boiler, controlled via HIVE.',
+          'Gross internal floor area of approximately 83 sq m / 893 sq ft.',
+          'On-street parking available.',
+          'Free parking between 5:30pm and 8:30am, and all weekend.',
+          'Resident parking permits available.'
+        ]
+      },
+      {
+        title: 'Additional Information',
+        items: [
+          'Currently let and unavailable.',
+          'Council Tax Band: E.',
+          'EPC Rating: Band E.',
+          'Landlord Registration Number: 18199/230/05010.'
+        ]
+      },
+      {
+        title: 'Location',
+        body: [
+          'Royal Crescent is one of Edinburgh’s most desirable residential addresses, offering a quiet setting while remaining within easy reach of the city centre.',
+          'Stockbridge is nearby, known for independent shops, cafes, and its weekend market, making the location ideal for city living with neighbourhood character.'
+        ]
+      }
+    ],
+    closingValueStatement:
+      'This is a rare opportunity to rent a spacious and characterful apartment in a prime New Town location. Viewings are highly recommended.',
+    images: royalCrescentImages
   }
 ];
 

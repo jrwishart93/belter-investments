@@ -17,12 +17,16 @@ export function SiteHeader() {
 
   return (
     <header className={`site-header${isScrolled ? ' is-scrolled' : ''}`}>
-      <NavLink className="brand" to="/" aria-label="Go to Belter Investments homepage" onClick={closeMenu}>
-        <span className="brand__mark" aria-hidden="true">
-          BI
-        </span>
-        <span>
-          <strong>Belter Investments</strong>
+      <NavLink className="brand" to="/" aria-label="Go to Belter homepage" onClick={closeMenu}>
+        <img
+          className="brand__logo"
+          src="/images/logo/belter-wordmark-transparent.png"
+          alt=""
+          width="776"
+          height="312"
+          aria-hidden="true"
+        />
+        <span className="brand__copy">
           <small>{siteConfig.tagline}</small>
         </span>
       </NavLink>

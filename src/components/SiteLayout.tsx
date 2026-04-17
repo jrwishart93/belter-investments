@@ -14,10 +14,11 @@ export function SiteLayout({ children }: SiteLayoutProps) {
       <main>{children}</main>
       <footer className="site-footer">
         <p>
-          {siteConfig.companyName} · {siteConfig.city}
+          {siteConfig.companyName} · Properties, Investments & Enquiries · {siteConfig.city}
         </p>
         <p>
-          Contact: <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
+          Contact: <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> ·{' '}
+          <a href={`tel:${siteConfig.contactPhone.replace(/[^+\d]/g, '')}`}>{siteConfig.contactPhone}</a>
         </p>
       </footer>
       <StickyCtaBar />

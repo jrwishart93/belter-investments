@@ -1,28 +1,25 @@
 export type QuickMessagePayload = {
   name: string;
   email: string;
+  contactNumber: string;
   message: string;
+};
+
+export type EnquiryField = {
+  label: string;
+  value: string;
+};
+
+export type EnquirySection = {
+  title: string;
+  fields: EnquiryField[];
 };
 
 export type DetailedEnquiryPayload = {
   fullName: string;
   email: string;
   contactNumber: string;
-  rentalPeriod: string;
-  employed: 'Yes' | 'No';
-  student: 'Yes' | 'No';
-  occupants: string;
-  pets: 'Yes' | 'No';
-  petsNotes?: string;
-  smoking: 'Yes' | 'No';
-  locationStatus: string;
-  viewingPreference: 'In-person viewing' | 'Virtual viewing';
-  viewingInformation?: string;
-  moveInDate: string;
-  references: 'Yes' | 'No';
-  furtherQuestions?: string;
-  leadSource: string;
-  leadSourceOther?: string;
+  sections: EnquirySection[];
 };
 
 async function postForm(path: '/api/quick-message' | '/api/detailed-enquiry', payload: QuickMessagePayload | DetailedEnquiryPayload) {

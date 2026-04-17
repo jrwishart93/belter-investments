@@ -8,16 +8,16 @@ export default async function handler(req: Request, res: Response) {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { name, email, message } = req.body ?? {};
+  const { name, email, contactNumber, message } = req.body ?? {};
 
-  if (!name || !email || !message) {
+  if (!name || !email || !contactNumber || !message) {
     return res.status(400).json({ message: 'Missing required fields.' });
   }
 
   try {
     await sendWithResend({
-      subject: 'Belter Investments · Quick Message Enquiry',
-      html: `<h2>Quick Message</h2><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong> ${message}</p>`
+      subject: 'Belter Enquiries · Quick Message',
+      html: `<h2>Quick Message</h2><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Contact Number:</strong> ${contactNumber}</p><p><strong>Message:</strong> ${message}</p>`
     });
     return res.status(200).json({ ok: true });
   } catch (error) {
