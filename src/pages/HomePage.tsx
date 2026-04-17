@@ -6,98 +6,84 @@ import { PropertyPreviewCard } from '../components/PropertyPreviewCard';
 import { Section } from '../components/Section';
 import { featuredProperty } from '../data/property';
 
+const featuredHighlights = [
+  'Long-term let in west Edinburgh city centre setting',
+  'Near Fountain Park leisure and retail destination',
+  'Close to Haymarket train station and tram links',
+  'Suitable for professionals or students seeking strong connectivity'
+];
+
 export function HomePage() {
-  const whatWeDoRef = useScrollReveal<HTMLDivElement>();
-  const exploreRef = useScrollReveal<HTMLDivElement>();
+  const pathwaysRef = useScrollReveal<HTMLDivElement>();
 
   return (
     <>
       <PageHero
-        eyebrow="Belter Investments Ltd · Edinburgh"
-        title="Edinburgh property, expertly curated."
-        subtitle="Long-term investment and dependable letting — quality homes across Edinburgh's most livable neighbourhoods."
+        className="hero--landing"
+        eyebrow="Belter Investments"
+        title="Premium long-term rental property in Edinburgh."
+        subtitle="Featured Property: 61/1 Caledonian Crescent, Edinburgh"
+        details={
+          <>
+            <p className="hero__price-block">
+              <span className="hero__price">£1,655 per month</span>
+            </p>
+            <p className="hero__supporting">Long-term rental in a well-connected west city centre location</p>
+          </>
+        }
         actions={
           <>
-            <CtaButton to={`/property/${featuredProperty.slug}`}>View featured property</CtaButton>
+            <CtaButton to={`/property/${featuredProperty.slug}`}>View Property Details</CtaButton>
             <CtaButton to="/enquiry" variant="secondary">
-              Make an enquiry
+              Make an Enquiry
             </CtaButton>
           </>
         }
-        aside={<div className="image-block image-block--hero" role="img" aria-label="Belter Investments Edinburgh property" />}
+        aside={<div className="image-block image-block--hero image-block--hero-landing" role="img" aria-label="Featured flat at 61/1 Caledonian Crescent in Edinburgh" />}
       />
 
-      <Section title="What we do" intro="Simple, focused services delivered with care.">
-        <div ref={whatWeDoRef} className="cards-grid cards-grid--three reveal">
-          <article className="info-card reveal-child">
-            <h3>Property Acquisition</h3>
-            <p>Well-located Edinburgh homes selected for long-term value.</p>
-          </article>
-          <article className="info-card reveal-child">
-            <h3>Renovation</h3>
-            <p>Practical improvements that keep properties bright, calm, and durable.</p>
-          </article>
-          <article className="info-card reveal-child">
-            <h3>Letting</h3>
-            <p>Straightforward tenancy management with clear communication.</p>
-          </article>
+      <Section
+        title="Family-run, professionally managed"
+        intro="Belter Investments is an Edinburgh-based family business focused on high-standard, long-term residential property. We combine hands-on management with a clear, dependable service for tenants."
+      >
+        <div className="panel">
+          <p>Our approach is intentionally focused: quality homes, careful upkeep, and clear communication throughout the tenancy journey.</p>
         </div>
       </Section>
 
       <Section
-        title="Edinburgh focus"
-        intro="Rooted locally, with properties chosen for strong location and day-to-day livability."
+        title="Featured property preview"
+        intro="A concise snapshot of our current highlighted home, with full details available on the property page."
       >
-        <div className="location-feature">
-          <div className="image-block image-block--location" role="img" aria-label="Canal-side walkway in Edinburgh" />
-          <p>Properties in and around Edinburgh's established neighbourhoods, with reliable access to transport and amenities.</p>
-        </div>
+        <PropertyPreviewCard property={featuredProperty} highlights={featuredHighlights} />
       </Section>
 
-      <Section title="Featured property" intro="Current listing from our portfolio.">
-        <PropertyPreviewCard property={featuredProperty} />
-      </Section>
-
-      <Section title="About Belter Investments" intro="A calm, hands-on approach to property investment and letting.">
-        <div className="panel">
-          <p>
-            We are a small Edinburgh property business focused on sensible acquisitions, good upkeep, and dependable letting. We keep
-            things straightforward for tenants and manage properties to a consistent standard.
-          </p>
-        </div>
-      </Section>
-
-      <Section title="Explore the website" intro="Find what you need quickly.">
-        <div ref={exploreRef} className="cards-grid cards-grid--three reveal">
+      <Section title="Explore Belter Investments" intro="Use these pathways to move directly to the section you need.">
+        <div ref={pathwaysRef} className="cards-grid cards-grid--three reveal">
           <NavigationCard
             className="reveal-child"
             title="Property Details"
-            description="View the full listing profile, key features, and location details."
+            description="Review full specifications, gallery imagery, and location information for 61/1 Caledonian Crescent."
             to={`/property/${featuredProperty.slug}`}
           />
           <NavigationCard
             className="reveal-child"
-            title="Enquiry Page"
-            description="Send a quick message or complete a detailed rental enquiry form."
+            title="Enquiry"
+            description="Contact us to discuss availability, suitability, and next steps for this long-term let."
             to="/enquiry"
           />
           <NavigationCard
             className="reveal-child"
             title="About Us"
-            description="Learn about Belter Investments and our professional approach."
+            description="Read about our family-run background and our professional investment and letting approach."
             to="/about"
           />
         </div>
       </Section>
 
-      <Section title="Enquiry" intro="If you're interested in a property, send a quick message or complete a full enquiry form.">
-        <div className="panel">
-          <div className="hero__actions">
-            <CtaButton to="/enquiry">Start enquiry</CtaButton>
-            <CtaButton to="/enquiry" variant="secondary">
-              Detailed form
-            </CtaButton>
-          </div>
+      <Section title="Growing portfolio" intro="Belter Investments is structured for future expansion across additional high-quality Edinburgh homes.">
+        <div className="panel portfolio-placeholder">
+          <p>Additional properties will be introduced here as the portfolio grows, with the same emphasis on quality, location, and long-term tenancy standards.</p>
         </div>
       </Section>
     </>
