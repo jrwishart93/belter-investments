@@ -1,4 +1,4 @@
-import { getAdminServices } from './firebase-admin';
+import { getAdminServices } from './firebase-admin.js';
 
 type EnquiryField = { label?: string; value?: string };
 type EnquirySection = { title?: string; fields?: EnquiryField[] };

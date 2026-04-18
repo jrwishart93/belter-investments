@@ -1,5 +1,5 @@
-import { sendWithResend } from './resend';
-import { storeEnquiry } from './enquiry-store';
+import { sendWithResend } from './resend.js';
+import { storeEnquiry } from './enquiry-store.js';
 
 type EnquiryField = { label?: string; value?: string };
 type EnquirySection = { title?: string; fields?: EnquiryField[] };

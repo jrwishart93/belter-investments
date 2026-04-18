@@ -1,4 +1,4 @@
-import { sendWithResend } from './resend';
+import { sendWithResend } from './resend.js';
 
 type ContactBody = {
   name?: unknown;

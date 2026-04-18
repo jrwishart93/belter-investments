@@ -1,5 +1,5 @@
-import { sendWithResend } from './resend';
-import { storeEnquiry } from './enquiry-store';
+import { sendWithResend } from './resend.js';
+import { storeEnquiry } from './enquiry-store.js';
 
 type Request = { method?: string; body?: Record<string, string | boolean | undefined> };
 type Response = { status: (code: number) => { json: (body: unknown) => void } };
