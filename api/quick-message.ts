@@ -27,16 +27,36 @@ export default async function handler(req: Request, res: Response) {
       phone: contactNumber,
       enquiryType: ['Quick message'],
       message,
+      formKind: 'quick_message',
+      formVersion: '2026-04-quick-message-v1',
       accountCreated: Boolean(body.accountCreated),
       businessLead: /business|investment|management|website|owner/i.test(message),
-      portfolioOpportunity: /property|portfolio|advertise|management/i.test(message)
+      portfolioOpportunity: /property|portfolio|advertise|management/i.test(message),
+      sections: [
+        {
+          title: 'Quick Message',
+          fields: [
+            { label: 'Full Name', value: name },
+            { label: 'Email Address', value: email },
+            { label: 'Contact Number', value: contactNumber },
+            { label: 'Message', value: message }
+          ]
+        }
+      ]
     });
 
-    await sendWithResend({
-      subject: 'Belter Enquiries · Quick Message',
-      html: `<h2>Quick Message</h2><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Contact Number:</strong> ${contactNumber}</p><p><strong>Message:</strong> ${message}</p>${enquiryId ? `<p><strong>Firestore enquiry:</strong> ${enquiryId}</p>` : '<p><strong>Firestore:</strong> Not configured for this environment.</p>'}`
-    });
-    return res.status(200).json({ ok: true, enquiryId });
+    let emailSent = true;
+    try {
+      await sendWithResend({
+        subject: 'Belter Enquiries · Quick Message',
+        replyTo: email,
+        html: `<h2>Quick Message</h2><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Contact Number:</strong> ${contactNumber}</p><p><strong>Message:</strong> ${message}</p><p><strong>Firestore enquiry:</strong> ${enquiryId}</p>`
+      });
+    } catch {
+      emailSent = false;
+    }
+
+    return res.status(200).json({ ok: true, enquiryId, emailSent });
   } catch (error) {
     return res.status(500).json({ message: error instanceof Error ? error.message : 'Unexpected error' });
   }

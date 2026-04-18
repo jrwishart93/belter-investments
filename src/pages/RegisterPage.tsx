@@ -6,6 +6,7 @@ export function RegisterPage() {
   const { configured, register, signInWithApple, user } = useAuth();
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [message, setMessage] = useState('');
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const navigate = useNavigate();
 
   if (user) {
@@ -31,7 +32,8 @@ export function RegisterPage() {
         email: String(form.get('email') ?? ''),
         phone: String(form.get('phone') ?? ''),
         password,
-        marketingConsent: form.get('marketingConsent') === 'on'
+        marketingConsent,
+        marketingConsentSource: 'register'
       });
       navigate('/portal', { replace: true });
     } catch {
@@ -82,9 +84,18 @@ export function RegisterPage() {
           <label htmlFor="register-confirmPassword">Confirm Password</label>
           <input id="register-confirmPassword" name="confirmPassword" type="password" autoComplete="new-password" required minLength={8} />
         </div>
-        <label className="choice-option choice-option--single">
-          <input type="checkbox" name="marketingConsent" />
-          <span>Send me relevant property updates and availability alerts.</span>
+        <label className={`consent-option${marketingConsent ? ' is-selected' : ''}`}>
+          <input
+            type="checkbox"
+            name="marketingConsent"
+            checked={marketingConsent}
+            onChange={(event) => setMarketingConsent(event.target.checked)}
+          />
+          <span className="consent-option__control" aria-hidden="true" />
+          <span className="consent-option__copy">
+            <strong>Send me future property updates</strong>
+            <small>You can opt in to relevant availability alerts, property updates, and Belter news. This is optional and can be changed from your profile later.</small>
+          </span>
         </label>
         <button className="cta-button" type="submit" disabled={!configured || status === 'loading'}>
           {status === 'loading' ? 'Creating account...' : 'Create account'}

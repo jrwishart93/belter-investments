@@ -26,6 +26,8 @@ export type UserProfile = {
   profileCompleted: boolean;
   contactPreference: string;
   marketingConsent: boolean;
+  marketingConsentAt?: unknown;
+  marketingConsentSource: string;
   address: string;
   city: string;
   postcode: string;
@@ -96,6 +98,8 @@ export async function getUserProfile(uid: string) {
     profileCompleted: Boolean(data.profileCompleted),
     contactPreference: String(data.contactPreference ?? 'Email'),
     marketingConsent: Boolean(data.marketingConsent),
+    marketingConsentAt: data.marketingConsentAt,
+    marketingConsentSource: String(data.marketingConsentSource ?? ''),
     address: String(data.address ?? ''),
     city: String(data.city ?? ''),
     postcode: String(data.postcode ?? ''),
@@ -131,6 +135,8 @@ export async function createUserProfile(uid: string, values: Partial<UserProfile
       profileCompleted,
       contactPreference: values.contactPreference ?? 'Email',
       marketingConsent: Boolean(values.marketingConsent),
+      marketingConsentAt: values.marketingConsent ? serverTimestamp() : null,
+      marketingConsentSource: values.marketingConsent ? values.marketingConsentSource ?? 'register' : '',
       address: values.address ?? '',
       city: values.city ?? '',
       postcode: values.postcode ?? '',

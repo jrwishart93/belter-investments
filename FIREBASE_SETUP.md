@@ -53,5 +53,8 @@ After that, the portal admin area can be used as the basis for role and enquiry 
 ## Notes
 
 - Guest enquiries are written through `/api/quick-message` and `/api/detailed-enquiry`.
-- The API routes also keep the existing Resend email notifications.
+- Firestore is now required for successful enquiry submission. If Firebase Admin env vars are missing, the form returns an error instead of silently skipping the database record.
+- Each enquiry document stores grouped `sections` plus a flattened `answers` array so every submitted question and answer can be reviewed later.
+- The API routes also keep the existing Resend email notifications, but email delivery does not block a successfully saved Firestore record.
+- Resend uses `RESEND_API_KEY`, `BELTER_ENQUIRY_TO`, and `BELTER_FROM_EMAIL`. Replies go to the submitter through `replyTo`.
 - Do not store bank details, card details, or direct debit details in Firestore.

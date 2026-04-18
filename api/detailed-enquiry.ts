@@ -48,22 +48,30 @@ export default async function handler(req: Request, res: Response) {
       phone: body.contactNumber,
       enquiryType: ['Detailed rental enquiry'],
       message: propertyField?.value ? `Property enquiry: ${propertyField.value}` : 'Detailed rental enquiry',
+      formKind: 'detailed_rental_enquiry',
+      formVersion: '2026-04-detailed-rental-v1',
       accountCreated: Boolean(body.accountCreated),
       businessLead: false,
       portfolioOpportunity: false,
       sections: body.sections
     });
 
-    await sendWithResend({
-      subject: 'Belter Enquiries · Property Enquiry',
-      html: `
-        <h2>Detailed Rental Enquiry</h2>
-        ${body.sections.map(renderSection).join('')}
-        ${enquiryId ? `<p><strong>Firestore enquiry:</strong> ${escapeHtml(enquiryId)}</p>` : '<p><strong>Firestore:</strong> Not configured for this environment.</p>'}
-      `
-    });
+    let emailSent = true;
+    try {
+      await sendWithResend({
+        subject: 'Belter Enquiries · Property Enquiry',
+        replyTo: body.email,
+        html: `
+          <h2>Detailed Rental Enquiry</h2>
+          ${body.sections.map(renderSection).join('')}
+          <p><strong>Firestore enquiry:</strong> ${escapeHtml(enquiryId)}</p>
+        `
+      });
+    } catch {
+      emailSent = false;
+    }
 
-    return res.status(200).json({ ok: true, enquiryId });
+    return res.status(200).json({ ok: true, enquiryId, emailSent });
   } catch (error) {
     return res.status(500).json({ message: error instanceof Error ? error.message : 'Unexpected error' });
   }

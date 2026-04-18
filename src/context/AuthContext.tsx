@@ -28,6 +28,7 @@ type RegisterValues = {
   phone?: string;
   password: string;
   marketingConsent?: boolean;
+  marketingConsentSource?: string;
 };
 
 type AuthContextValue = {
@@ -139,6 +140,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           fullName: values.fullName,
           phone: values.phone ?? '',
           marketingConsent: Boolean(values.marketingConsent),
+          marketingConsentSource: values.marketingConsentSource ?? 'register',
           role: defaultUserRole,
           status: 'active'
         });

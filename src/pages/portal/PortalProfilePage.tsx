@@ -15,6 +15,7 @@ export function PortalProfilePage() {
         phone: String(form.get('phone') ?? ''),
         contactPreference: String(form.get('contactPreference') ?? 'Email'),
         marketingConsent: form.get('marketingConsent') === 'on',
+        marketingConsentSource: 'profile',
         address: String(form.get('address') ?? ''),
         city: String(form.get('city') ?? ''),
         postcode: String(form.get('postcode') ?? ''),
@@ -81,9 +82,13 @@ export function PortalProfilePage() {
         <label htmlFor="profile-notes">Helpful notes for Belter</label>
         <textarea id="profile-notes" name="notesVisibleToAdmin" rows={4} defaultValue={profile?.notesVisibleToAdmin} />
       </div>
-      <label className="choice-option choice-option--single">
+      <label className="consent-option">
         <input type="checkbox" name="marketingConsent" defaultChecked={profile?.marketingConsent} />
-        <span>Send me relevant property updates and availability alerts.</span>
+        <span className="consent-option__control" aria-hidden="true" />
+        <span className="consent-option__copy">
+          <strong>Send me future property updates</strong>
+          <small>Receive relevant availability alerts, property updates, and Belter news.</small>
+        </span>
       </label>
       <button className="cta-button" disabled={status === 'loading'}>{status === 'loading' ? 'Saving...' : 'Save profile'}</button>
       {status === 'success' ? <p className="success-text">Profile updated.</p> : null}

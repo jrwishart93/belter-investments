@@ -38,6 +38,8 @@ async function postForm(path: '/api/quick-message' | '/api/detailed-enquiry', pa
     const message = response.status === 400 && typeof errorBody?.message === 'string' ? errorBody.message : 'Unable to send form right now.';
     throw new Error(message);
   }
+
+  return response.json() as Promise<{ ok: true; enquiryId: string; emailSent: boolean }>;
 }
 
 export function submitQuickMessage(payload: QuickMessagePayload) {
