@@ -8,10 +8,12 @@ export type HomePathway = {
 };
 
 export const featuredHighlights = [
-  'Main door apartment with private garden',
-  'Allocated secure parking',
+  'Secure entry apartment within a gated development',
+  'Private garden with direct access from the living space',
+  'Fully furnished throughout',
+  'Allocated private parking',
   'Residents’ pool, gym and sauna',
-  'Five minutes from Haymarket'
+  'Excellent links to Haymarket and the city centre'
 ];
 
 export function getHomePathways(): HomePathway[] {

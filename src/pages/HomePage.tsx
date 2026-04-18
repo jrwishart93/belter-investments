@@ -20,7 +20,6 @@ export function HomePage() {
     <>
       <PageHero
         className="hero--landing"
-        eyebrow="Family-run Edinburgh property"
         brandMark={
           <img
             className="hero__brand-logo"
@@ -30,21 +29,18 @@ export function HomePage() {
             height="312"
           />
         }
-        title="Edinburgh residential property, handled with care."
-        subtitle="Well presented homes in Edinburgh, managed properly."
+        title="Edinburgh homes, managed properly."
+        subtitle="We offer a professional and responsive service with clear communication throughout."
         details={
           <>
             <p className="hero__supporting">
-              We provide a professional and responsive service with clear communication throughout. As we are based locally, we are on hand to deal with any queries or issues quickly.
+              Based locally in Edinburgh, we are on hand to deal with any queries or issues quickly.
             </p>
           </>
         }
         actions={
           <>
-            <CtaButton to={`/properties/${featuredProperty.slug}`}>View Featured Property</CtaButton>
-            <CtaButton to="/properties" variant="secondary">
-              Browse Properties
-            </CtaButton>
+            <CtaButton to={`/properties/${featuredProperty.slug}`}>View Available Property</CtaButton>
             <CtaButton to="/enquiries" variant="secondary">
               Make an Enquiry
             </CtaButton>
@@ -83,7 +79,7 @@ export function HomePage() {
 
       <Section
         title="Featured property"
-        intro="61/1 Caledonian Crescent is the current main listing: a bright main door apartment with private garden, secure parking, and residents’ leisure facilities."
+        intro="The current available listing is a fully furnished two bedroom apartment within James Square, a secure gated development in Edinburgh’s West End."
       >
         <PropertyPreviewGrid
           properties={[featuredProperty]}

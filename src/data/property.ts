@@ -186,37 +186,33 @@ export const propertyListings: PropertyListing[] = [
     id: 'caledonian-crescent-61-1',
     slug: '61-1-caledonian-crescent',
     featured: true,
-    title: 'Two-Bedroom Main Door Apartment – Caledonian Crescent, Edinburgh',
+    title: 'Two Bedroom Apartment in James Square, West End Edinburgh',
     addressLine1: '61/1 Caledonian Crescent',
     city: 'Edinburgh',
     monthlyRent: 1695,
     monthlyRentDisplay: '£1,695 per month',
-    propertyType: '2 bedroom main door apartment',
+    propertyType: '2 bedroom fully furnished apartment',
     status: 'Available from September 2026',
     summary:
-      'A bright and spacious two-bedroom main door apartment in the James Square development, with private garden, allocated parking, and residents’ leisure facilities.',
+      'A bright and spacious two bedroom apartment set within the sought-after James Square development in Edinburgh’s West End.',
     description:
-      'Set within the popular James Square development in Dalry, this well-presented ground floor apartment offers generous internal space, private outdoor space, allocated parking, and exclusive access to a swimming pool, gym, and sauna.',
+      'The property is fully furnished and benefits from direct access to a private garden through double French doors, creating a rare outdoor space within a secure city setting.',
     overview:
-      'This is a bright and spacious two-bedroom main door apartment within the popular James Square development in Dalry. The home combines generous internal space with a convenient central location, making it an excellent choice for professionals, couples, or small families.',
+      'Set within James Square, a secure gated development in Edinburgh’s West End, this fully furnished two bedroom apartment combines generous internal space with private allocated parking and residents only leisure facilities.',
     fullDescription:
-      'The property is accessed through its own private front door into a welcoming hallway with neutral decor and wooden flooring. The spacious living room opens directly to the private rear garden, while the galley kitchen, two double bedrooms, and upgraded shower room create a practical, well-balanced home.',
+      'The apartment opens into a welcoming hallway with neutral decor and wooden flooring. The spacious living room has double French doors leading directly to the private garden, while the galley kitchen, two double bedrooms, and shower room create a practical, well-balanced home.',
     outdoorAndFacilities:
-      'The apartment includes a private enclosed rear garden and an allocated private parking space within a secure gated residents’ car park. Residents also enjoy access to private leisure facilities including a swimming pool, gym, and sauna, with factoring costs and garden maintenance included in the rent.',
+      'The apartment includes a private enclosed garden and an allocated private parking space within the secure gated residents’ car park. Residents also have access to private leisure facilities including a swimming pool, gym, and sauna, with factoring costs and garden maintenance included in the rent.',
     keyFeatures: [
-      '2 Double Bedrooms',
-      'Main Door Ground Floor Apartment',
-      'Private Enclosed Garden',
-      'Allocated Secure Parking',
-      'Bright Living Room',
-      'Galley Kitchen',
-      'Recently Upgraded Shower Room',
-      'Pool, Gym & Sauna Access',
-      'Fast Unlimited WiFi Included',
-      'Five Minutes from Haymarket'
+      'Secure entry apartment within a gated development',
+      'Private garden with direct access from the living space',
+      'Fully furnished throughout',
+      'Allocated private parking',
+      'Residents’ pool, gym and sauna',
+      'Excellent transport links and easy walking distance to the city centre'
     ],
     locationFacts: [
-      'Situated in Dalry, west of Edinburgh city centre, with a quick commute into central business districts.',
+      'James Square is well placed for Haymarket, the city centre, and a wide range of nearby amenities including restaurants, leisure facilities, cinema, gym, Dalry Leisure Centre, and excellent transport links.',
       'Well placed for Haymarket Station, tram connections and regular bus routes across the city.',
       'Straightforward access to Edinburgh Airport via tram, road links or rail connections from Haymarket.',
       'Fountain Park leisure complex is directly nearby, with cinema, bowling, gym, restaurants and everyday amenities.',
@@ -238,13 +234,13 @@ export const propertyListings: PropertyListing[] = [
     advertSections: [
       {
         title: 'Accommodation',
-        body: ['The property is accessed via its own private front door, leading into a welcoming hallway with neutral decor and wooden flooring.'],
+        body: ['The property forms part of James Square, a secure gated development in Edinburgh’s West End, and opens into a welcoming hallway with neutral decor and wooden flooring.'],
         items: [
           'Spacious, light-filled living room with French doors opening directly onto a private rear garden.',
-          'Well-appointed galley kitchen with garden outlook, fitted units, washing machine, fridge-freezer, microwave, electric oven and hob.',
+          'Galley kitchen with garden outlook, fitted units, washing machine, fridge-freezer, microwave, electric oven and hob.',
           'Principal double bedroom with built-in open wardrobe storage.',
           'Second double bedroom of similar proportions, suitable as a guest room or home office.',
-          'Modern shower room with WC and washbasin, recently upgraded with a new shower.',
+          'Shower room with WC and washbasin.',
           'Electric heating with storage heaters and double glazing throughout.'
         ]
       },
@@ -264,8 +260,8 @@ export const propertyListings: PropertyListing[] = [
       {
         title: 'Location',
         body: [
-          'Dalry is a vibrant and well-connected area, positioned around a five-minute walk from Haymarket Station for rail and tram links, including direct access to Edinburgh Airport.',
-          'Fountain Park is directly nearby, with cinema, bowling, gym, restaurants and leisure facilities. Nuffield Health Fitness & Wellbeing Gym is also within walking distance.'
+          'James Square is well placed for Haymarket, the city centre, and everyday access across Edinburgh.',
+          'Nearby amenities include restaurants, leisure facilities, cinema, gym, transport links and Dalry Leisure Centre.'
         ],
         items: [
           'Popular local cafés include Pour Boy and Throat Punch Coffee.',
@@ -298,7 +294,7 @@ export const propertyListings: PropertyListing[] = [
       }
     ],
     closingValueStatement:
-      'This is a rare opportunity to secure a well-located main door apartment with private outdoor space, secure parking, and excellent on-site leisure facilities. Viewings are highly recommended.',
+      'This is a strong opportunity to secure a well-located apartment within James Square, with private outdoor space, allocated parking, and residents only leisure facilities.',
     images: caledonianImages
   },
   {
