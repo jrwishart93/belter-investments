@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { CtaButton } from '../components/CtaButton';
@@ -7,6 +8,16 @@ import { propertyListings } from '../data/property';
 export function PropertyDetailsPage() {
   const { slug } = useParams<{ slug: string }>();
   const property = propertyListings.find((item) => item.slug === slug);
+  const [activeImage, setActiveImage] = useState<{ src: string; alt: string } | null>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!activeImage) return;
+    closeBtnRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setActiveImage(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [activeImage]);
 
   const featuresStripRef = useScrollReveal<HTMLDivElement>();
   const galleryRef = useScrollReveal<HTMLDivElement>();
@@ -67,7 +78,15 @@ export function PropertyDetailsPage() {
       <Section title="Property gallery" intro="A clear view of the space, finish, and setting.">
         <div ref={galleryRef} className="property-gallery reveal" role="list" aria-label="Property image gallery">
           {property.images.slice(0, 6).map((image) => (
-            <figure className="property-gallery__item reveal-child" role="listitem" key={image.src}>
+            <figure
+              className="property-gallery__item reveal-child"
+              role="button"
+              aria-label={`View ${image.alt} full size`}
+              tabIndex={0}
+              key={image.src}
+              onClick={() => setActiveImage(image)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveImage(image); } }}
+            >
               <img src={image.src} alt={image.alt} loading="lazy" />
             </figure>
           ))}
@@ -105,6 +124,30 @@ export function PropertyDetailsPage() {
           </div>
         </div>
       </Section>
+
+      {activeImage ? (
+        <div
+          className="lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Expanded property photo"
+          onClick={() => setActiveImage(null)}
+        >
+          <figure className="lightbox__panel" onClick={(e) => e.stopPropagation()}>
+            <img src={activeImage.src} alt={activeImage.alt} />
+            <figcaption className="lightbox__meta">
+              <button
+                ref={closeBtnRef}
+                type="button"
+                className="cta-button cta-button--secondary"
+                onClick={() => setActiveImage(null)}
+              >
+                Close
+              </button>
+            </figcaption>
+          </figure>
+        </div>
+      ) : null}
     </>
   );
 }

@@ -1311,6 +1311,49 @@ p {
   display: block;
 }
 
+.property-gallery__item[role="button"] {
+  cursor: pointer;
+}
+
+.property-gallery__item[role="button"]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ── Lightbox ─────────────────────────────────────────────────────────────── */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.lightbox__panel {
+  margin: 0;
+  max-width: min(90vw, 72rem);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lightbox__panel img {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 0.5rem;
+}
+
+.lightbox__meta {
+  display: flex;
+  justify-content: flex-end;
+}
+
 /* ── Features strip ──────────────────────────────────────────────────────── */
 
 .features-strip {
