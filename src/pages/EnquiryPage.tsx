@@ -681,8 +681,8 @@ export function EnquiryPage() {
           <button type="submit" className="cta-button reveal-child" disabled={quickStatus === 'loading'}>
             {quickStatus === 'loading' ? 'Sending...' : 'Send message'}
           </button>
-          {quickStatus === 'success' ? <p className="success-text">Thanks, we'll be in touch shortly.</p> : null}
-          {quickStatus === 'error' ? <p className="error-text">Unable to send right now. Please try again shortly.</p> : null}
+          {quickStatus === 'success' ? <p className="success-text" role="status" aria-live="polite">Thanks, we'll be in touch shortly.</p> : null}
+          {quickStatus === 'error' ? <p className="error-text" role="alert" aria-live="assertive">Unable to send right now. Please try again shortly.</p> : null}
         </form>
       </Section>
 
@@ -952,8 +952,8 @@ export function EnquiryPage() {
           <button type="submit" className="cta-button reveal-child" disabled={detailedStatus === 'loading'}>
             {detailedStatus === 'loading' ? 'Sending...' : 'Submit Detailed Rental Enquiry'}
           </button>
-          {detailedStatus === 'success' ? <p className="success-text">Thanks, we'll be in touch shortly.</p> : null}
-          {detailedStatus === 'error' ? <p className="error-text">{detailedError || 'Unable to send right now. Please try again shortly.'}</p> : null}
+          {detailedStatus === 'success' ? <p className="success-text" role="status" aria-live="polite">Thanks, we'll be in touch shortly.</p> : null}
+          {detailedStatus === 'error' ? <p className="error-text" role="alert" aria-live="assertive">{detailedError || 'Unable to send right now. Please try again shortly.'}</p> : null}
         </form>
       </Section>
     </>
