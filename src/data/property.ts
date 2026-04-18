@@ -42,8 +42,8 @@ export type PropertyListing = {
 const caledonianImages: PropertyImage[] = [
   // ── Hero ─────────────────────────────────────────────────────────────────
   {
-    src: '/images/properties/caledonian-crescent/front-exterior.jpg',
-    alt: 'Front exterior of 61/1 Caledonian Crescent in Edinburgh',
+    src: '/images/properties/caledonian-crescent/Main%20Entrance.jpeg',
+    alt: 'Main entrance to James Square in Edinburgh',
     category: 'hero'
   },
   // ── Gallery-first six (indices 1–6 feed the 6-image gallery) ─────────────
@@ -53,8 +53,29 @@ const caledonianImages: PropertyImage[] = [
     category: 'interior'
   },
   {
+    src: '/images/properties/caledonian-crescent/private-garden-1.jpg',
+    alt: 'Private garden area accessed by French doors from the living room',
+    category: 'outdoor'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/Pool.jpg',
+    alt: 'Residents only swimming pool within the James Square development',
+    category: 'amenity'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/gym_2.jpg',
+    alt: 'Residents only gym within the James Square development',
+    category: 'amenity'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/Sauna.png',
+    alt: 'Residents only sauna within the James Square development',
+    category: 'amenity'
+  },
+  // ── Supporting images ────────────────────────────────────────────────────
+  {
     src: '/images/properties/caledonian-crescent/kitchen.jpg',
-    alt: 'Separate fitted kitchen with worktops and storage',
+    alt: 'Separate galley kitchen with fitted units and garden outlook',
     category: 'interior'
   },
   {
@@ -62,22 +83,6 @@ const caledonianImages: PropertyImage[] = [
     alt: 'Well-proportioned bedroom suitable for double bed furniture',
     category: 'interior'
   },
-  {
-    src: '/images/properties/caledonian-crescent/private-garden-1.jpg',
-    alt: 'Private garden area accessed by French doors from the living room',
-    category: 'outdoor'
-  },
-  {
-    src: '/images/properties/caledonian-crescent/swimming-pool.jpg',
-    alt: 'Residents leisure facility including swimming pool access',
-    category: 'amenity'
-  },
-  {
-    src: '/images/properties/caledonian-crescent/building-exterior.jpg',
-    alt: 'Exterior view of the modern four-storey residential block',
-    category: 'outdoor'
-  },
-  // ── Supporting images ────────────────────────────────────────────────────
   {
     src: '/images/properties/caledonian-crescent/hallway.jpg',
     alt: 'Entrance hallway giving access to the main rooms',
@@ -99,13 +104,28 @@ const caledonianImages: PropertyImage[] = [
     category: 'outdoor'
   },
   {
-    src: '/images/properties/caledonian-crescent/leisure-facilities.jpg',
-    alt: 'Communal leisure and wellness facilities within the development',
+    src: '/images/properties/caledonian-crescent/Shared%20Garden.jpeg',
+    alt: 'Shared landscaped garden within the James Square development',
+    category: 'outdoor'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/gym_1.png',
+    alt: 'Additional residents only gym equipment within James Square',
     category: 'amenity'
   },
   {
-    src: '/images/properties/caledonian-crescent/gym.jpg',
-    alt: 'On-site resident gym and wellness facilities',
+    src: '/images/properties/caledonian-crescent/front-exterior.jpg',
+    alt: 'Exterior of the James Square residential development',
+    category: 'outdoor'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/building-exterior.jpg',
+    alt: 'Exterior view of the residential block within James Square',
+    category: 'outdoor'
+  },
+  {
+    src: '/images/properties/caledonian-crescent/swimming-pool.jpg',
+    alt: 'Additional view of the residents only swimming pool',
     category: 'amenity'
   },
   {
@@ -248,13 +268,14 @@ export const propertyListings: PropertyListing[] = [
         title: 'Outdoor Space & Parking',
         items: [
           'Private enclosed rear garden.',
+          'Shared landscaped grounds within the James Square development.',
           'Allocated private parking space within a secure gated residents’ car park with fob access, directly in front of the property.',
           'Additional on-street visitor parking available nearby.'
         ]
       },
       {
         title: 'Development Features',
-        body: ['Residents of James Square enjoy access to private leisure facilities, with factoring costs and garden maintenance included within the rent.'],
+        body: ['Residents of James Square enjoy access to private leisure facilities, with factoring costs, shared grounds, and garden maintenance included within the rent.'],
         items: ['Private swimming pool.', 'Gym.', 'Sauna.']
       },
       {
