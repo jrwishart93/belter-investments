@@ -1,4 +1,4 @@
-import { sendWithResend } from './resend.js';
+import { sendWithResend, confirmationHtml } from './resend.js';
 import { storeEnquiry } from './enquiry-store.js';
 
 type Request = { method?: string; body?: Record<string, string | boolean | undefined> };
@@ -20,7 +20,7 @@ export default async function handler(req: Request, res: Response) {
   }
 
   try {
-    const enquiryId = await storeEnquiry({
+    const stored = await storeEnquiry({
       authIdToken: typeof body.authIdToken === 'string' ? body.authIdToken : undefined,
       fullName: name,
       email,
@@ -50,13 +50,18 @@ export default async function handler(req: Request, res: Response) {
       await sendWithResend({
         subject: 'Belter Enquiries · Quick Message',
         replyTo: email,
-        html: `<h2>Quick Message</h2><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Contact Number:</strong> ${contactNumber}</p><p><strong>Message:</strong> ${message}</p><p><strong>Firestore enquiry:</strong> ${enquiryId}</p>`
+        html: `<h2>Quick Message</h2><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Contact Number:</strong> ${contactNumber}</p><p><strong>Message:</strong> ${message}</p><p><strong>Firestore enquiry:</strong> ${stored.enquiryId}</p>`
+      });
+      await sendWithResend({
+        subject: "We've received your enquiry – Belter Investments",
+        to: email,
+        html: confirmationHtml(name, 'quick message')
       });
     } catch {
       emailSent = false;
     }
 
-    return res.status(200).json({ ok: true, enquiryId, emailSent });
+    return res.status(200).json({ ok: true, enquiryId: stored.enquiryId, businessLeadId: stored.businessLeadId, emailSent });
   } catch (error) {
     return res.status(500).json({ message: error instanceof Error ? error.message : 'Unexpected error' });
   }

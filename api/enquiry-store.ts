@@ -8,6 +8,24 @@ type EnquiryAnswer = {
   value: string;
 };
 
+export type BusinessLeadSummary = {
+  serviceInterest: string[];
+  propertyCount?: string;
+  areasCovered?: string;
+  needsLicensingHelp?: boolean;
+  needsWebsiteHelp?: boolean;
+  needsManagementHelp?: boolean;
+  websiteGoals?: string[];
+  propertyAddressOrArea?: string;
+  propertyType?: string;
+  bedrooms?: string;
+  letType?: string;
+  timeline?: string;
+  goals?: string[];
+  ownerUid?: string | null;
+  companyName?: string;
+};
+
 export type StoreEnquiryInput = {
   authIdToken?: string;
   fullName: string;
@@ -15,12 +33,13 @@ export type StoreEnquiryInput = {
   phone: string;
   enquiryType: string[];
   message: string;
-  formKind: 'quick_message' | 'detailed_rental_enquiry';
+  formKind: 'quick_message' | 'detailed_rental_enquiry' | 'investment_business_enquiry';
   formVersion: string;
   accountCreated?: boolean;
   businessLead?: boolean;
   portfolioOpportunity?: boolean;
   sections?: EnquirySection[];
+  businessLeadSummary?: BusinessLeadSummary;
 };
 
 const normaliseText = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
@@ -75,18 +94,18 @@ export async function storeEnquiry(input: StoreEnquiryInput) {
     email: input.email,
     phone: input.phone,
     enquiryType: input.enquiryType,
-    propertyAddressOrArea: '',
-    propertyType: '',
-    bedrooms: '',
+    propertyAddressOrArea: input.businessLeadSummary?.propertyAddressOrArea ?? '',
+    propertyType: input.businessLeadSummary?.propertyType ?? '',
+    bedrooms: input.businessLeadSummary?.bedrooms ?? '',
     ownershipStatus: '',
-    letType: input.enquiryType.includes('Detailed rental enquiry') ? 'long_term' : '',
+    letType: input.businessLeadSummary?.letType ?? (input.enquiryType.includes('Detailed rental enquiry') ? 'long_term' : ''),
     currentlyAdvertised: '',
     advertisingPlatforms: [],
-    needsWebsite: false,
-    websiteGoals: [],
-    investmentInterestType: '',
-    timeline: '',
-    goals: [],
+    needsWebsite: Boolean(input.businessLeadSummary?.needsWebsiteHelp),
+    websiteGoals: input.businessLeadSummary?.needsWebsiteHelp ? input.businessLeadSummary.websiteGoals ?? [] : [],
+    investmentInterestType: input.formKind === 'investment_business_enquiry' ? input.enquiryType.join(', ') : '',
+    timeline: input.businessLeadSummary?.timeline ?? '',
+    goals: input.businessLeadSummary?.goals ?? [],
     message: input.message,
     status: 'new',
     accountCreated: Boolean(input.accountCreated || submittedByUid),
@@ -109,5 +128,25 @@ export async function storeEnquiry(input: StoreEnquiryInput) {
     );
   }
 
-  return docRef.id;
+  let businessLeadId: string | null = null;
+  if (input.businessLeadSummary) {
+    const leadRef = await services.db.collection('businessLeads').add({
+      ownerUid: input.businessLeadSummary.ownerUid ?? submittedByUid,
+      enquiryId: docRef.id,
+      companyName: input.businessLeadSummary.companyName ?? '',
+      serviceInterest: input.businessLeadSummary.serviceInterest,
+      propertyCount: input.businessLeadSummary.propertyCount ?? '',
+      areasCovered: input.businessLeadSummary.areasCovered ?? input.businessLeadSummary.propertyAddressOrArea ?? '',
+      needsLicensingHelp: Boolean(input.businessLeadSummary.needsLicensingHelp),
+      needsWebsiteHelp: Boolean(input.businessLeadSummary.needsWebsiteHelp),
+      needsManagementHelp: Boolean(input.businessLeadSummary.needsManagementHelp),
+      status: 'new',
+      createdAt: now,
+      updatedAt: now,
+      notes: input.message
+    });
+    businessLeadId = leadRef.id;
+  }
+
+  return { enquiryId: docRef.id, businessLeadId };
 }

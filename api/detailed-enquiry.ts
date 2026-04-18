@@ -1,4 +1,4 @@
-import { sendWithResend } from './resend.js';
+import { sendWithResend, confirmationHtml } from './resend.js';
 import { storeEnquiry } from './enquiry-store.js';
 
 type EnquiryField = { label?: string; value?: string };
@@ -41,7 +41,7 @@ export default async function handler(req: Request, res: Response) {
     const propertyField = body.sections
       .flatMap((section) => section.fields ?? [])
       .find((field) => field.label === 'Which property are you enquiring about?');
-    const enquiryId = await storeEnquiry({
+    const stored = await storeEnquiry({
       authIdToken: body.authIdToken,
       fullName: body.fullName,
       email: body.email,
@@ -64,14 +64,19 @@ export default async function handler(req: Request, res: Response) {
         html: `
           <h2>Detailed Rental Enquiry</h2>
           ${body.sections.map(renderSection).join('')}
-          <p><strong>Firestore enquiry:</strong> ${escapeHtml(enquiryId)}</p>
+          <p><strong>Firestore enquiry:</strong> ${escapeHtml(stored.enquiryId)}</p>
         `
+      });
+      await sendWithResend({
+        subject: "We've received your enquiry – Belter Investments",
+        to: body.email,
+        html: confirmationHtml(body.fullName, 'property enquiry')
       });
     } catch {
       emailSent = false;
     }
 
-    return res.status(200).json({ ok: true, enquiryId, emailSent });
+    return res.status(200).json({ ok: true, enquiryId: stored.enquiryId, businessLeadId: stored.businessLeadId, emailSent });
   } catch (error) {
     return res.status(500).json({ message: error instanceof Error ? error.message : 'Unexpected error' });
   }

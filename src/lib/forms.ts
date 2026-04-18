@@ -26,7 +26,40 @@ export type DetailedEnquiryPayload = {
   accountCreated?: boolean;
 };
 
-async function postForm(path: '/api/quick-message' | '/api/detailed-enquiry', payload: QuickMessagePayload | DetailedEnquiryPayload) {
+export type InvestmentEnquiryPayload = {
+  fullName: string;
+  email: string;
+  phone: string;
+  preferredContact: string;
+  serviceInterest: string[];
+  propertyOwnership: string;
+  propertyAddressOrArea: string;
+  propertyType: string;
+  bedrooms: string;
+  occupied: string;
+  letType: string;
+  shortTermOperated: string;
+  shortTermLicenceStatus: string;
+  platforms: string[];
+  currentlyRented: string;
+  managementType: string;
+  advertisingHelp: string;
+  advertisedWhere: string[];
+  websiteHelp: string;
+  websiteGoals: string[];
+  investmentInterest: string;
+  estimatedValue: string;
+  timeline: string;
+  goals: string[];
+  message: string;
+  moveForward: string;
+  sections: EnquirySection[];
+};
+
+type FormPath = '/api/quick-message' | '/api/detailed-enquiry' | '/api/investment-enquiry';
+type FormPayload = QuickMessagePayload | DetailedEnquiryPayload | InvestmentEnquiryPayload;
+
+async function postForm(path: FormPath, payload: FormPayload) {
   const response = await fetch(path, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -39,7 +72,7 @@ async function postForm(path: '/api/quick-message' | '/api/detailed-enquiry', pa
     throw new Error(message);
   }
 
-  return response.json() as Promise<{ ok: true; enquiryId: string; emailSent: boolean }>;
+  return response.json() as Promise<{ ok: true; enquiryId: string; businessLeadId?: string | null; emailSent: boolean }>;
 }
 
 export function submitQuickMessage(payload: QuickMessagePayload) {
@@ -48,4 +81,8 @@ export function submitQuickMessage(payload: QuickMessagePayload) {
 
 export function submitDetailedEnquiry(payload: DetailedEnquiryPayload) {
   return postForm('/api/detailed-enquiry', payload);
+}
+
+export function submitInvestmentEnquiry(payload: InvestmentEnquiryPayload) {
+  return postForm('/api/investment-enquiry', payload);
 }
