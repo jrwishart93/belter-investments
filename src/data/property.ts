@@ -201,6 +201,44 @@ const royalCrescentImages: PropertyImage[] = [
   }
 ];
 
+const albanyStreetImages: PropertyImage[] = [
+  {
+    src: '/images/properties/albany-st/hero_1_albany_front.jpg',
+    alt: 'Albany Street New Town building exterior',
+    category: 'hero'
+  },
+  {
+    src: '/images/properties/albany-st/hero_3_albany_living.jpg',
+    alt: 'Stylish lounge at the Albany Street short-term let',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/albany-st/hero_5_albany_fireplace.jpg',
+    alt: 'Real gas fireplace in the Albany Street lounge',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/albany-st/albany_bedroom_1.jpg',
+    alt: 'Bedroom at the Albany Street short-term let',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/albany-st/albany_bath.jpg',
+    alt: 'Recently updated bathroom at Albany Street',
+    category: 'interior'
+  },
+  {
+    src: '/images/properties/albany-st/hero_2_albany_front.jpg',
+    alt: 'Traditional New Town frontage on Albany Street',
+    category: 'outdoor'
+  },
+  {
+    src: '/images/properties/albany-st/4_albany_fire_castle.png',
+    alt: 'Character fireplace detail at Albany Street',
+    category: 'interior'
+  }
+];
+
 export const propertyListings: PropertyListing[] = [
   {
     id: 'caledonian-crescent-61-1',
@@ -317,6 +355,110 @@ export const propertyListings: PropertyListing[] = [
     closingValueStatement:
       'This is a strong opportunity to secure a well-located apartment within James Square, with private outdoor space, allocated parking, and residents only leisure facilities.',
     images: caledonianImages
+  },
+  {
+    id: 'albany-street-short-term-let',
+    slug: 'albany-street',
+    featured: false,
+    title: 'Two-Bedroom Short-Term Let in Edinburgh’s New Town',
+    addressLine1: 'Albany Street',
+    city: 'Edinburgh',
+    monthlyRent: 0,
+    monthlyRentDisplay: 'Short-term rates by enquiry',
+    propertyType: '2 bedroom short-term let',
+    status: 'Short-Term Let',
+    summary:
+      'A beautifully presented two-bedroom short-term let in the heart of Edinburgh’s New Town, offering a stylish and comfortable base for city stays.',
+    description:
+      'Located on Albany Street, this recently renovated ground-floor apartment blends traditional Edinburgh character with thoughtful modern updates, including a striking real gas fireplace and a traditionally styled updated bathroom.',
+    overview:
+      'This two-bedroom short-term let offers a tasteful mix of old and new, combining period charm with modern comfort in one of Edinburgh’s most desirable central locations.',
+    fullDescription:
+      'The property is arranged as a spacious ground-floor apartment with a welcoming lounge, a large real gas fireplace, two well-presented bedrooms sleeping up to four guests, a recently updated bathroom, and a fully equipped kitchen suitable for short stays and extended visits.',
+    outdoorAndFacilities:
+      'Set within the Classical New Town, the apartment is a short walk from Princes Street, St James Quarter, restaurants, cafés, bars, shops, and key visitor attractions.',
+    keyFeatures: [
+      'Short-term let in Edinburgh New Town',
+      'Ground-floor apartment',
+      'Sleeps up to 4 guests',
+      'Two bedrooms and one bathroom',
+      'One king bed and one double bed',
+      'Fully furnished and equipped',
+      'Wi-Fi and TV included',
+      'Washing machine and tumble dryer',
+      'Self check-in with smart lock'
+    ],
+    locationFacts: [
+      'Located on Albany Street in Edinburgh’s historic New Town.',
+      'A short walk from Princes Street and St James Quarter.',
+      'Well placed for restaurants, pubs, shops, cafés, visitor attractions, and city centre transport links.',
+      'A strong base for city breaks, festival stays, business trips, or longer short-term visits.'
+    ],
+    suitability: 'Visitors seeking a high-quality short-term stay in central Edinburgh.',
+    whoItSuits:
+      'The apartment is well suited to city breaks, festival stays, business trips, and longer short-term visits for guests who want a comfortable New Town base within easy walking distance of central Edinburgh.',
+    additionalInformation: [
+      'Short-term let rather than a long-term tenancy',
+      'Maximum occupancy: 4 guests',
+      'One king bed and one double bed',
+      'Check-in is typically from 4:00pm to 8:00pm',
+      'Check-out is before 11:00am',
+      'Airbnb rating: 4.96/5 from 171 reviews',
+      'Marked as a Guest Favourite on Airbnb',
+      'The Edinburgh Visitor Levy of 5% applies to bookings for stays on or after 24 July 2026'
+    ],
+    advertSections: [
+      {
+        title: 'Accommodation',
+        body: ['The property is arranged as a spacious ground-floor apartment with a warm, characterful feel.'],
+        items: [
+          'Welcoming lounge with a large real gas fireplace.',
+          'Two well-presented bedrooms, sleeping up to four guests.',
+          'Recently updated bathroom with traditional styling and modern practicality.',
+          'Fully equipped kitchen suitable for short stays and extended visits.'
+        ]
+      },
+      {
+        title: 'Features',
+        items: [
+          'Short-term let in Edinburgh New Town.',
+          'Ground-floor apartment.',
+          'Sleeps up to 4 guests.',
+          'One king bed and one double bed.',
+          'Fully furnished and equipped to a high standard.',
+          'Wi-Fi and TV included.',
+          'Washing machine and tumble dryer.',
+          'Self check-in with smart lock.'
+        ]
+      },
+      {
+        title: 'Location',
+        body: [
+          'Albany Street is superbly positioned within Edinburgh’s historic New Town, placing guests within easy walking distance of the city centre.',
+          'Princes Street, St James Quarter, restaurants, pubs, shops, and key attractions are all close by, making this an excellent base for enjoying Edinburgh on foot.'
+        ]
+      },
+      {
+        title: 'Guest Experience',
+        body: [
+          'The property has proven especially popular with guests thanks to its location, presentation, and reliability.',
+          'The Airbnb listing is rated 4.96/5 from 171 reviews, is marked as a Guest Favourite, and is described as being in the top 5% of homes based on ratings, reviews, and reliability.'
+        ]
+      },
+      {
+        title: 'Important Information',
+        items: [
+          'This property is offered as a short-term let rather than a long-term tenancy.',
+          'Check-in is typically from 4:00pm to 8:00pm.',
+          'Check-out is before 11:00am.',
+          'Maximum occupancy: 4 guests.',
+          'The Edinburgh Visitor Levy of 5% applies to bookings for stays on or after 24 July 2026.'
+        ]
+      }
+    ],
+    closingValueStatement:
+      'Albany Street Short-Term Let offers a beautifully updated New Town apartment that balances classic Edinburgh character with modern comfort, central access, and excellent guest feedback.',
+    images: albanyStreetImages
   },
   {
     id: 'montgomery-street',

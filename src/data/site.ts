@@ -18,5 +18,6 @@ export const mainNavigation = [
   { label: 'Home', href: '/' },
   { label: 'Properties', href: '/properties' },
   { label: 'Investments', href: '/investments' },
-  { label: 'Enquiries', href: '/enquiries' }
+  { label: 'Enquiries', href: '/enquiries' },
+  { label: 'Portal', href: '/portal' }
 ];

@@ -3,6 +3,8 @@ export type QuickMessagePayload = {
   email: string;
   contactNumber: string;
   message: string;
+  authIdToken?: string;
+  accountCreated?: boolean;
 };
 
 export type EnquiryField = {
@@ -20,6 +22,8 @@ export type DetailedEnquiryPayload = {
   email: string;
   contactNumber: string;
   sections: EnquirySection[];
+  authIdToken?: string;
+  accountCreated?: boolean;
 };
 
 async function postForm(path: '/api/quick-message' | '/api/detailed-enquiry', payload: QuickMessagePayload | DetailedEnquiryPayload) {

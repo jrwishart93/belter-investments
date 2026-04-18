@@ -1,0 +1,107 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc(uid) {
+      return get(/databases/$(database)/documents/users/$(uid));
+    }
+
+    function role() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        ? userDoc(request.auth.uid).data.role
+        : null;
+    }
+
+    function isAdmin() {
+      return role() == 'admin';
+    }
+
+    function isStaff() {
+      return role() in ['admin', 'staff'];
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    match /users/{uid} {
+      allow create: if isOwner(uid)
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.role == 'enquiry';
+
+      allow read: if isOwner(uid) || isStaff();
+
+      allow update: if isOwner(uid)
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'status', 'promoCodeAssigned'])
+        || isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    match /enquiries/{enquiryId} {
+      allow create: if false;
+      allow read: if isStaff()
+        || (signedIn() && resource.data.submittedByUid == request.auth.uid);
+      allow update: if isStaff()
+        || (signedIn()
+          && resource.data.submittedByUid == request.auth.uid
+          && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['status', 'assignedToUid', 'internalLeadScore']));
+      allow delete: if isAdmin();
+    }
+
+    match /tenancies/{tenancyId} {
+      allow read: if isStaff()
+        || (signedIn() && resource.data.tenantUid == request.auth.uid);
+      allow write: if isStaff();
+    }
+
+    match /issues/{issueId} {
+      allow create: if signedIn()
+        && request.resource.data.tenantUid == request.auth.uid;
+      allow read: if isStaff()
+        || (signedIn() && resource.data.tenantUid == request.auth.uid);
+      allow update: if isStaff()
+        || (signedIn()
+          && resource.data.tenantUid == request.auth.uid
+          && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['status', 'adminAssignedUid', 'resolutionNotes']));
+      allow delete: if isAdmin();
+    }
+
+    match /businessLeads/{leadId} {
+      allow read: if isStaff()
+        || (signedIn() && resource.data.ownerUid == request.auth.uid);
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid;
+      allow update, delete: if isStaff();
+    }
+
+    match /properties/{propertyId} {
+      allow read: if resource.data.publicVisible == true || isStaff();
+      allow write: if isStaff();
+    }
+
+    match /promoCodes/{promoId} {
+      allow read: if isStaff()
+        || (signedIn() && resource.data.uid == request.auth.uid);
+      allow write: if isAdmin();
+    }
+
+    match /adminNotes/{noteId} {
+      allow read, write: if isStaff();
+    }
+
+    match /activityLogs/{logId} {
+      allow read: if isStaff();
+      allow create: if isStaff();
+      allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

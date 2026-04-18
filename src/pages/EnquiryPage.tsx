@@ -1,6 +1,8 @@
 import { FormEvent, useState } from 'react';
 import type { ReactNode } from 'react';
 import { ClipboardList, MessageCircle } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { PageHero } from '../components/PageHero';
 import { Section } from '../components/Section';
@@ -188,7 +190,7 @@ const initialDetailedState: DetailedFormState = {
 };
 
 const yesNoOptions = ['Yes', 'No'];
-const propertyOptions = ['61/1 Caledonian Crescent', 'Royal Crescent', 'Montgomery Street'];
+const propertyOptions = ['61/1 Caledonian Crescent', 'Albany Street Short-Term Let', 'Royal Crescent', 'Montgomery Street'];
 const rentalPeriods = ['1 to 3 months', '3 to 6 months', '6 to 12 months', '1 to 2 years', '2 years or longer'];
 const occupants = ['1 person', '2 persons', '3 persons', '4 persons', 'More than 4'];
 const leadSources = ['Facebook', 'Instagram', 'Gumtree', 'OpenRent', 'Zoopla', 'Word of mouth', 'Other'];
@@ -367,10 +369,80 @@ function CheckboxGroup({
   );
 }
 
+function AccountUpgradePrompt({
+  id,
+  checked,
+  password,
+  onCheckedChange,
+  onPasswordChange,
+  disabled,
+  signedIn
+}: {
+  id: string;
+  checked: boolean;
+  password: string;
+  onCheckedChange: (checked: boolean) => void;
+  onPasswordChange: (password: string) => void;
+  disabled: boolean;
+  signedIn: boolean;
+}) {
+  if (signedIn) {
+    return (
+      <div className="account-upgrade-box">
+        <p className="eyebrow">Signed in</p>
+        <h3>This enquiry will be saved to your portal account.</h3>
+        <p>You will be able to track the enquiry status and keep your profile details up to date.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="account-upgrade-box">
+      <p className="eyebrow">Optional account</p>
+      <h3>Save and track your enquiry</h3>
+      <p>
+        Create an account to save your enquiry, edit your details later, track updates, and receive future property alerts.
+        Complete profiles may be reviewed for £100 off a first month&apos;s rent, subject to approval and future tenancy terms.
+      </p>
+      <label className="choice-option choice-option--single">
+        <input type="checkbox" checked={checked} onChange={(event) => onCheckedChange(event.target.checked)} disabled={disabled} />
+        <span>Submit and create a Belter account</span>
+      </label>
+      {checked ? (
+        <div className="field-group">
+          <label htmlFor={id}>Create Password <span aria-hidden="true">*</span></label>
+          <input
+            id={id}
+            type="password"
+            value={password}
+            minLength={8}
+            onChange={(event) => onPasswordChange(event.target.value)}
+            autoComplete="new-password"
+            required
+          />
+          <p className="form-helper">Use at least 8 characters. You can reset this later if needed.</p>
+        </div>
+      ) : (
+        <p className="form-helper">Prefer not to create an account? You can still submit the enquiry as a guest.</p>
+      )}
+      <p className="form-helper">
+        Already have an account? <Link to="/login">Sign in before submitting</Link>.
+      </p>
+    </div>
+  );
+}
+
 export function EnquiryPage() {
+  const { configured, register, user } = useAuth();
+  const navigate = useNavigate();
   const [quickStatus, setQuickStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [detailedStatus, setDetailedStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [quickError, setQuickError] = useState('');
   const [detailedError, setDetailedError] = useState('');
+  const [quickCreateAccount, setQuickCreateAccount] = useState(false);
+  const [detailedCreateAccount, setDetailedCreateAccount] = useState(false);
+  const [quickPassword, setQuickPassword] = useState('');
+  const [detailedPassword, setDetailedPassword] = useState('');
   const [detailedForm, setDetailedForm] = useState<DetailedFormState>(initialDetailedState);
 
   const quickFormRef = useScrollReveal<HTMLFormElement>();
@@ -426,18 +498,42 @@ export function EnquiryPage() {
   async function handleQuickMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setQuickStatus('loading');
+    setQuickError('');
     const form = new FormData(event.currentTarget);
+    const name = String(form.get('name') ?? '');
+    const email = String(form.get('email') ?? '');
+    const contactNumber = String(form.get('contactNumber') ?? '');
+    const message = String(form.get('message') ?? '');
+
+    if (quickCreateAccount && !user && quickPassword.length < 8) {
+      setQuickStatus('error');
+      setQuickError('Please add a password with at least 8 characters, or submit as a guest.');
+      return;
+    }
 
     try {
+      const accountUser = quickCreateAccount && !user
+        ? await register({ fullName: name, email, phone: contactNumber, password: quickPassword })
+        : user;
+      const authIdToken = accountUser ? await accountUser.getIdToken() : undefined;
+
       await submitQuickMessage({
-        name: String(form.get('name') ?? ''),
-        email: String(form.get('email') ?? ''),
-        contactNumber: String(form.get('contactNumber') ?? ''),
-        message: String(form.get('message') ?? '')
+        name,
+        email,
+        contactNumber,
+        message,
+        authIdToken,
+        accountCreated: Boolean(quickCreateAccount || user)
       });
       event.currentTarget.reset();
       setQuickStatus('success');
+      setQuickPassword('');
+      setQuickCreateAccount(false);
+      if (quickCreateAccount && !user) {
+        navigate('/portal');
+      }
     } catch {
+      setQuickError('Unable to send right now. Please try again shortly.');
       setQuickStatus('error');
     }
   }
@@ -603,18 +699,41 @@ export function EnquiryPage() {
       return;
     }
 
+    if (detailedCreateAccount && !user && detailedPassword.length < 8) {
+      setDetailedStatus('error');
+      setDetailedError('Please add a password with at least 8 characters, or submit as a guest.');
+      return;
+    }
+
     setDetailedStatus('loading');
     setDetailedError('');
 
     try {
+      const accountUser = detailedCreateAccount && !user
+        ? await register({
+            fullName: detailedForm.fullName,
+            email: detailedForm.email,
+            phone: detailedForm.contactNumber,
+            password: detailedPassword
+          })
+        : user;
+      const authIdToken = accountUser ? await accountUser.getIdToken() : undefined;
+
       await submitDetailedEnquiry({
         fullName: detailedForm.fullName,
         email: detailedForm.email,
         contactNumber: detailedForm.contactNumber,
-        sections: buildDetailedSections()
+        sections: buildDetailedSections(),
+        authIdToken,
+        accountCreated: Boolean(detailedCreateAccount || user)
       });
       setDetailedForm(initialDetailedState);
+      setDetailedPassword('');
+      setDetailedCreateAccount(false);
       setDetailedStatus('success');
+      if (detailedCreateAccount && !user) {
+        navigate('/portal');
+      }
     } catch (error) {
       setDetailedError(error instanceof Error ? error.message : 'Unable to send right now. Please try again shortly.');
       setDetailedStatus('error');
@@ -678,11 +797,21 @@ export function EnquiryPage() {
             <textarea id="quick-message" name="message" rows={5} required />
           </div>
 
+          <AccountUpgradePrompt
+            id="quick-account-password"
+            checked={quickCreateAccount}
+            password={quickPassword}
+            onCheckedChange={setQuickCreateAccount}
+            onPasswordChange={setQuickPassword}
+            disabled={!configured}
+            signedIn={Boolean(user)}
+          />
+
           <button type="submit" className="cta-button reveal-child" disabled={quickStatus === 'loading'}>
             {quickStatus === 'loading' ? 'Sending...' : 'Send message'}
           </button>
           {quickStatus === 'success' ? <p className="success-text" role="status" aria-live="polite">Thanks, we'll be in touch shortly.</p> : null}
-          {quickStatus === 'error' ? <p className="error-text" role="alert" aria-live="assertive">Unable to send right now. Please try again shortly.</p> : null}
+          {quickStatus === 'error' ? <p className="error-text" role="alert" aria-live="assertive">{quickError || 'Unable to send right now. Please try again shortly.'}</p> : null}
         </form>
       </Section>
 
@@ -948,6 +1077,16 @@ export function EnquiryPage() {
               </ConditionalBlock>
             ) : null}
           </FieldGroup>
+
+          <AccountUpgradePrompt
+            id="detailed-account-password"
+            checked={detailedCreateAccount}
+            password={detailedPassword}
+            onCheckedChange={setDetailedCreateAccount}
+            onPasswordChange={setDetailedPassword}
+            disabled={!configured}
+            signedIn={Boolean(user)}
+          />
 
           <button type="submit" className="cta-button reveal-child" disabled={detailedStatus === 'loading'}>
             {detailedStatus === 'loading' ? 'Sending...' : 'Submit Detailed Rental Enquiry'}

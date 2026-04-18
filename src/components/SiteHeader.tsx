@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { mainNavigation, siteConfig } from '../data/site';
+import { useAuth } from '../context/AuthContext';
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { user } = useAuth();
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen((isOpen) => !isOpen);
@@ -59,6 +61,11 @@ export function SiteHeader() {
             {item.label}
           </NavLink>
         ))}
+        {!user ? (
+          <NavLink to="/login" onClick={closeMenu} className="nav-auth-link">
+            Sign In
+          </NavLink>
+        ) : null}
       </nav>
     </header>
   );

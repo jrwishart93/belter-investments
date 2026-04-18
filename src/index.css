@@ -42,6 +42,7 @@
   --color-section-band: rgba(255, 255, 255, 0.62);
   --color-subtle-fill: rgba(255, 255, 255, 0.62);
   --color-control-bg: rgba(255, 255, 255, 0.82);
+  --color-card-bg: rgba(255, 255, 255, 0.82);
   --color-field-bg: #ffffff;
   --color-fieldset-bg: #fbfbfd;
   --color-nav-hover-bg: rgba(0, 0, 0, 0.05);
@@ -59,6 +60,7 @@
   --color-glass-button-secondary-bg-hover: rgba(255, 255, 255, 0.96);
   --shadow-header: 0 8px 28px rgba(0, 0, 0, 0.06);
   --shadow-hover: 0 22px 45px rgba(0, 0, 0, 0.09);
+  --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.07);
   --shadow-image: 0 22px 50px rgba(0, 0, 0, 0.12);
   --shadow-image-hero: 0 30px 70px rgba(0, 0, 0, 0.14);
   --shadow-gallery: 0 16px 30px rgba(31, 53, 99, 0.16);
@@ -120,6 +122,7 @@
     --color-section-band: rgba(255, 255, 255, 0.03);
     --color-subtle-fill: rgba(255, 255, 255, 0.07);
     --color-control-bg: rgba(255, 255, 255, 0.08);
+    --color-card-bg: rgba(28, 28, 30, 0.72);
     --color-field-bg: #1c1c1e;
     --color-fieldset-bg: rgba(255, 255, 255, 0.04);
     --color-nav-hover-bg: rgba(255, 255, 255, 0.08);
@@ -137,6 +140,7 @@
     --color-glass-button-secondary-bg-hover: rgba(122, 183, 255, 0.24);
     --shadow-header: 0 8px 28px rgba(0, 0, 0, 0.34);
     --shadow-hover: 0 22px 45px rgba(0, 0, 0, 0.28);
+    --shadow-card: 0 18px 42px rgba(0, 0, 0, 0.34);
     --shadow-image: 0 18px 42px rgba(0, 0, 0, 0.28);
     --shadow-image-hero: 0 26px 60px rgba(0, 0, 0, 0.34);
     --shadow-gallery: 0 14px 28px rgba(0, 0, 0, 0.28);
@@ -751,6 +755,62 @@ p {
 
 .cards-grid--three {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.cards-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.investment-copy-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.investment-copy-panel p {
+  margin: 0;
+  max-width: 66rem;
+  color: var(--color-text);
+}
+
+.investment-list {
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+  list-style: none;
+}
+
+.investment-list li {
+  position: relative;
+  padding-left: 1.15rem;
+  color: var(--color-text);
+}
+
+.investment-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: var(--color-muted-gold);
+}
+
+.investment-list--split {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.investment-contact-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.investment-contact-panel p {
+  margin-bottom: 0;
+  color: var(--color-text-muted);
 }
 
 
@@ -1418,6 +1478,356 @@ p {
   font-weight: 600;
 }
 
+.auth-shell,
+.portal-shell {
+  width: min(100%, 76rem);
+  margin: 0 auto;
+  padding: clamp(6rem, 12vw, 8rem) clamp(1rem, 4vw, 2rem) clamp(3rem, 8vw, 5rem);
+}
+
+.auth-card,
+.portal-card,
+.account-upgrade-box {
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: var(--color-card-bg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+.auth-card {
+  width: min(100%, 31rem);
+  margin: 0 auto;
+  padding: clamp(1.35rem, 4vw, 2.1rem);
+  display: grid;
+  gap: 0.85rem;
+}
+
+.auth-card h1,
+.portal-header h1,
+.portal-card h2,
+.portal-card h3,
+.account-upgrade-box h3 {
+  color: var(--color-heading);
+}
+
+.auth-card h1,
+.portal-header h1,
+.portal-card h2 {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.auth-card p,
+.portal-header p,
+.portal-card p,
+.account-upgrade-box p {
+  color: var(--color-text-muted);
+}
+
+.auth-card input,
+.auth-card textarea,
+.auth-card select,
+.portal-card input,
+.portal-card textarea,
+.portal-card select,
+.account-upgrade-box input,
+.account-upgrade-box textarea,
+.account-upgrade-box select {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--color-border-strong);
+  padding: 0.72rem 0.8rem;
+  background: var(--color-field-bg);
+  color: var(--color-charcoal);
+  font: inherit;
+  box-shadow: var(--glass-inset);
+}
+
+.auth-card input:focus,
+.auth-card textarea:focus,
+.auth-card select:focus,
+.portal-card input:focus,
+.portal-card textarea:focus,
+.portal-card select:focus,
+.account-upgrade-box input:focus {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 1px;
+}
+
+.auth-card label,
+.portal-card label,
+.account-upgrade-box label {
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.auth-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.apple-auth-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 2.85rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  padding: 0.72rem 1rem;
+  background: var(--color-heading);
+  color: var(--color-bg-alt);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-glass-button);
+}
+
+.apple-auth-button:hover {
+  transform: translateY(-1px);
+}
+
+.apple-auth-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+  transform: none;
+}
+
+.apple-auth-button span {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.notice-text,
+.promo-callout,
+.account-upgrade-box {
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-subtle-fill);
+}
+
+.choice-option--single {
+  width: 100%;
+}
+
+.portal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: clamp(1.35rem, 4vw, 2.4rem);
+}
+
+.portal-header h1 {
+  font-size: clamp(2.4rem, 7vw, 4rem);
+}
+
+.portal-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.62rem 0.9rem;
+  background: var(--color-glass-button-secondary-bg);
+  color: var(--color-heading);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: minmax(10rem, 13rem) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 1.5rem);
+  align-items: start;
+}
+
+.portal-sidebar {
+  position: sticky;
+  top: 6rem;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: var(--color-card-bg);
+  box-shadow: var(--shadow-card);
+}
+
+.portal-sidebar a {
+  border-radius: 999px;
+  padding: 0.7rem 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 650;
+}
+
+.portal-sidebar a:hover,
+.portal-sidebar a.is-active {
+  background: var(--color-subtle-fill);
+  color: var(--color-heading);
+}
+
+.portal-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.portal-card {
+  padding: clamp(1rem, 3vw, 1.45rem);
+}
+
+.portal-card--hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.portal-card-grid,
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.portal-action-card {
+  display: grid;
+  gap: 0.55rem;
+  min-height: 10rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: var(--color-card-bg);
+  color: inherit;
+  box-shadow: var(--shadow-card);
+}
+
+.portal-action-card svg {
+  color: var(--color-accent);
+}
+
+.portal-action-card h3,
+.portal-action-card p {
+  margin: 0;
+}
+
+.role-badge,
+.status-pill,
+.admin-metrics span {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+  background: var(--color-subtle-fill);
+  color: var(--color-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.portal-muted {
+  color: var(--color-text-muted);
+}
+
+.portal-form {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.profile-progress {
+  height: 0.65rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-subtle-fill);
+}
+
+.profile-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-accent);
+}
+
+.enquiry-summary,
+.admin-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.admin-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin-metrics {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.admin-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(8rem, 1fr));
+  gap: 0.65rem;
+  align-items: end;
+  min-width: min(100%, 30rem);
+}
+
+.admin-controls label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+}
+
+.portal-loading {
+  padding: 8rem 1rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .site-footer {
   margin-top: auto;
   text-align: center;
@@ -1762,11 +2172,21 @@ p {
   }
   .details-grid,
   .cards-grid,
+  .cards-grid--two,
   .cards-grid--three,
   .advert-details-grid,
   .enquiry-steps,
   .property-preview-grid--compact {
     grid-template-columns: 1fr;
+  }
+
+  .investment-list--split {
+    grid-template-columns: 1fr;
+  }
+
+  .investment-contact-panel {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
@@ -1992,6 +2412,25 @@ p {
 
   .enquiry-form fieldset {
     padding: 0.85rem 0.75rem 0.6rem;
+  }
+
+  .portal-header,
+  .portal-card--hero,
+  .enquiry-summary,
+  .admin-row {
+    flex-direction: column;
+  }
+
+  .portal-grid,
+  .portal-card-grid,
+  .form-grid,
+  .admin-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-sidebar {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
