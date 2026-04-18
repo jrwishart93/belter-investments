@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import type { CSSProperties } from 'react';
 import { ArrowRight, CalendarCheck, FileText, MessageCircle } from 'lucide-react';
 import type { PropertyListing } from '../data/property';
 
@@ -10,12 +11,35 @@ type PropertyPreviewCardProps = {
 
 export function PropertyPreviewCard({ property, highlights = [], variant = 'feature' }: PropertyPreviewCardProps) {
   const image = property.images[1] ?? property.images[0];
+  const slideshowImages = property.images.filter((propertyImage) => propertyImage.src);
   const isAvailable = property.status.toLowerCase().startsWith('available');
   const priceOrAvailability = property.availabilityDisplay ?? property.monthlyRentDisplay;
 
   return (
     <article className={`panel property-preview-card property-preview-card--${variant}`}>
-      {image ? <img className="property-preview-card__media" src={image.src} alt={image.alt} /> : null}
+      {variant === 'feature' && slideshowImages.length > 0 ? (
+        <figure
+          className="property-preview-card__media property-preview-card__slideshow"
+          aria-label={`${property.title} image slideshow`}
+        >
+          {slideshowImages.map((slide, index) => (
+            <img
+              key={slide.src}
+              src={slide.src}
+              alt=""
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              style={{
+                '--slide-index': index,
+                '--slide-count': slideshowImages.length
+              } as CSSProperties}
+              aria-hidden="true"
+            />
+          ))}
+        </figure>
+      ) : image ? (
+        <img className="property-preview-card__media" src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+      ) : null}
       <div className="property-preview-card__content">
         <p className="eyebrow">{property.featured ? 'Featured property' : 'Portfolio property'}</p>
         <span className={`status-tag${isAvailable ? ' status-tag--available' : ''}`}>

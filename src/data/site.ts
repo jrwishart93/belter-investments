@@ -1,7 +1,7 @@
 export const siteConfig = {
   companyName: 'Belter',
   city: 'Edinburgh',
-  tagline: 'Homes, thoughtfully held',
+  tagline: 'Properties & Investments Ltd',
   contactEmail: 'hello@belterinvestments.co.uk',
   contactPhone: '+44 (0)131 000 0000'
 };

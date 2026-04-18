@@ -293,7 +293,12 @@ p {
 
 .brand small {
   color: var(--color-text-muted);
-  font-size: 0.78rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
 }
 
 .site-nav {
@@ -347,6 +352,47 @@ p {
   overflow: hidden;
 }
 
+.hero--landing {
+  max-width: none;
+  width: 100%;
+  min-height: min(84vh, 56rem);
+  grid-template-columns: minmax(0, 48rem) 1fr;
+  padding-block: clamp(6rem, 10vw, 9rem);
+  padding-inline: clamp(1.5rem, 6vw, 6rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero--landing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 24%, rgba(255, 255, 255, 0.58), transparent 22rem),
+    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.02), transparent 17rem),
+    linear-gradient(90deg, rgba(248, 249, 251, 0.90) 0%, rgba(248, 249, 251, 0.66) 34%, rgba(248, 249, 251, 0.10) 58%, rgba(248, 249, 251, 0) 100%),
+    linear-gradient(180deg, rgba(248, 249, 251, 0) 0%, rgba(248, 249, 251, 0) 62%, var(--color-bg) 100%);
+}
+
+.hero--landing .hero__content {
+  z-index: 2;
+  max-width: 48rem;
+}
+
+.hero--landing .hero__aside {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+}
+
+.hero--landing .hero__aside > * {
+  width: 100%;
+  height: 100%;
+}
+
 .hero--properties::before {
   content: '';
   position: absolute;
@@ -394,6 +440,14 @@ p {
 }
 
 @media (prefers-color-scheme: dark) {
+  .hero--landing::before {
+    background:
+      radial-gradient(circle at 17% 24%, rgba(0, 0, 0, 0.64), transparent 24rem),
+      radial-gradient(circle at 82% 18%, rgba(255, 225, 160, 0.12), transparent 17rem),
+      linear-gradient(90deg, rgba(9, 10, 13, 0.88) 0%, rgba(9, 10, 13, 0.66) 36%, rgba(9, 10, 13, 0.18) 62%, rgba(9, 10, 13, 0) 100%),
+      linear-gradient(180deg, rgba(9, 10, 13, 0) 0%, rgba(9, 10, 13, 0) 62%, var(--color-bg) 100%);
+  }
+
   .hero--properties::before {
     background:
       radial-gradient(circle at 14% 14%, rgba(255, 255, 255, 0.09), transparent 28rem),
@@ -450,6 +504,16 @@ p {
   animation-delay: 260ms;
 }
 
+.hero--landing .hero__subtitle {
+  max-width: 35rem;
+  color: var(--color-heading);
+  font-size: clamp(1.28rem, 2.05vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: 0;
+  text-shadow: 0 1px 20px rgba(255, 255, 255, 0.72), 0 1px 1px rgba(255, 255, 255, 0.46);
+}
+
 .hero__content .hero__details {
   animation: fadeSlideUp 600ms ease both;
   animation-delay: 320ms;
@@ -503,8 +567,24 @@ p {
 
 .hero__supporting {
   margin: 0;
-  color: var(--color-text-muted);
-  max-width: 44ch;
+  color: var(--color-heading);
+  max-width: 56ch;
+  font-size: clamp(1.02rem, 1.35vw, 1.18rem);
+  font-weight: 500;
+  line-height: 1.58;
+  text-shadow: 0 1px 16px rgba(255, 255, 255, 0.64), 0 1px 1px rgba(255, 255, 255, 0.42);
+}
+
+@media (prefers-color-scheme: dark) {
+  .hero--landing .hero__subtitle {
+    color: rgba(255, 255, 255, 0.96);
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.82), 0 1px 2px rgba(0, 0, 0, 0.72);
+  }
+
+  .hero__supporting {
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75), 0 1px 2px rgba(0, 0, 0, 0.7);
+  }
 }
 
 .hero__actions {
@@ -726,6 +806,51 @@ p {
   display: block;
 }
 
+.property-preview-card__slideshow {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  isolation: isolate;
+}
+
+.property-preview-card__slideshow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.10));
+}
+
+.property-preview-card__slideshow img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transform: scale(1.04) translate3d(0, 0, 0);
+  animation-name: propertyKenBurns;
+  animation-duration: calc(var(--slide-count) * 5s);
+  animation-delay: calc(var(--slide-index) * 5s);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  will-change: opacity, transform;
+}
+
+.property-preview-card__slideshow img:nth-child(odd) {
+  transform-origin: 42% 48%;
+}
+
+.property-preview-card__slideshow img:nth-child(even) {
+  transform-origin: 58% 52%;
+}
+
 .property-preview-card--compact .property-preview-card__media {
   height: 14.5rem;
   min-height: 0;
@@ -891,8 +1016,70 @@ p {
   border-color: var(--color-image-border);
 }
 
-.hero--landing {
-  min-height: min(82vh, 54rem);
+.image-block--home-hero {
+  min-height: 100%;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-surface);
+}
+
+.image-block--home-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.005), rgba(0, 0, 0, 0.03));
+  pointer-events: none;
+}
+
+.image-block--home-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: url('/images/Home_images/Day-drone-js.png');
+  background-size: cover;
+  background-position: 58% center;
+  filter: saturate(1.18) contrast(1.14) brightness(1.08);
+  opacity: 0.54;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at 82% 18%, #000 0 11rem, rgba(0, 0, 0, 0.58) 16rem, transparent 24rem);
+  -webkit-mask-image: radial-gradient(circle at 82% 18%, #000 0 11rem, rgba(0, 0, 0, 0.58) 16rem, transparent 24rem);
+}
+
+.image-block--home-hero img {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 23rem;
+  object-fit: cover;
+  object-position: 58% center;
+  filter: saturate(1.08) contrast(1.06) brightness(1.04);
+  opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .image-block--home-hero::before {
+    background-image: url('/images/Home_images/Night-drone-js.png');
+    filter: saturate(1.14) contrast(1.16) brightness(1.12);
+    opacity: 0.42;
+  }
+
+  .image-block--home-hero::after {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.08));
+  }
+
+  .image-block--home-hero img {
+    filter: saturate(1.08) contrast(1.08) brightness(1.06);
+    opacity: 1;
+  }
 }
 
 .image-block--location {
@@ -1188,10 +1375,17 @@ p {
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .reveal-child {
+  .reveal-child,
+  .property-preview-card__slideshow img {
     opacity: 1 !important;
     translate: none !important;
     transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .property-preview-card__slideshow img:not(:first-child) {
+    display: none;
   }
 }
 
@@ -1204,6 +1398,31 @@ p {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes propertyKenBurns {
+  0% {
+    opacity: 0;
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+
+  3% {
+    opacity: 1;
+  }
+
+  13% {
+    opacity: 1;
+  }
+
+  19% {
+    opacity: 0;
+    transform: scale(1.13) translate3d(-1.8%, -1.2%, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.13) translate3d(-1.8%, -1.2%, 0);
   }
 }
 
@@ -1452,8 +1671,38 @@ p {
     min-height: auto;
   }
 
+  .hero--landing {
+    min-height: min(84vh, 48rem);
+  }
+
+  .hero--landing::before {
+    background:
+      radial-gradient(circle at 36% 22%, rgba(255, 255, 255, 0.38), transparent 18rem),
+      radial-gradient(circle at 78% 20%, rgba(255, 255, 255, 0.02), transparent 14rem),
+      linear-gradient(180deg, rgba(248, 249, 251, 0.84) 0%, rgba(248, 249, 251, 0.58) 46%, rgba(248, 249, 251, 0.12) 72%, var(--color-bg) 100%);
+  }
+
+  .image-block--home-hero img {
+    object-position: 62% center;
+  }
+
+  .image-block--home-hero::before {
+    background-position: 62% center;
+    mask-image: radial-gradient(circle at 78% 20%, #000 0 9rem, rgba(0, 0, 0, 0.58) 14rem, transparent 21rem);
+    -webkit-mask-image: radial-gradient(circle at 78% 20%, #000 0 9rem, rgba(0, 0, 0, 0.58) 14rem, transparent 21rem);
+  }
+
   .image-block--hero {
     min-height: 26rem;
+  }
+}
+
+@media (max-width: 900px) and (prefers-color-scheme: dark) {
+  .hero--landing::before {
+    background:
+      radial-gradient(circle at 36% 22%, rgba(0, 0, 0, 0.44), transparent 18rem),
+      radial-gradient(circle at 78% 20%, rgba(255, 225, 160, 0.14), transparent 14rem),
+      linear-gradient(180deg, rgba(9, 10, 13, 0.84) 0%, rgba(9, 10, 13, 0.58) 46%, rgba(9, 10, 13, 0.18) 72%, var(--color-bg) 100%);
   }
 }
 

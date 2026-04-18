@@ -31,11 +31,11 @@ export function HomePage() {
           />
         }
         title="Edinburgh residential property, handled with care."
-        subtitle="A family-run property business focused on well-presented homes, long-term standards, and clear communication."
+        subtitle="Well presented homes in Edinburgh, managed properly."
         details={
           <>
             <p className="hero__supporting">
-              Explore the current featured listing, browse the wider portfolio, or get in touch about a property enquiry.
+              We provide a professional and responsive service with clear communication throughout. As we are based locally, we are on hand to deal with any queries or issues quickly.
             </p>
           </>
         }
@@ -50,7 +50,20 @@ export function HomePage() {
             </CtaButton>
           </>
         }
-        aside={<div className="image-block image-block--hero image-block--hero-landing" role="img" aria-label="Edinburgh residential property" />}
+        aside={
+          <picture className="image-block image-block--home-hero">
+            <source srcSet="/images/Home_images/Night-drone-js.png" media="(prefers-color-scheme: dark)" />
+            <img
+              src="/images/Home_images/Day-drone-js.png"
+              alt="Aerial view of Edinburgh residential property"
+              width="1536"
+              height="1024"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
+          </picture>
+        }
       />
 
       <Section title="A considered property portfolio" intro={brandPositioning.shortStatement}>
