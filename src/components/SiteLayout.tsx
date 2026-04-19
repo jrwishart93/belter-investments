@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { siteConfig } from '../data/site';
+import { ScrollToTop } from './ScrollToTop';
 import { SiteHeader } from './SiteHeader';
 import { StickyCtaBar } from './StickyCtaBar';
 
@@ -10,6 +11,7 @@ type SiteLayoutProps = {
 export function SiteLayout({ children }: SiteLayoutProps) {
   return (
     <div className="page-shell">
+      <ScrollToTop />
       <SiteHeader />
       <main>{children}</main>
       <footer className="site-footer">

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import type { EnquirySection } from '../lib/forms';
 
 type WizardReviewScreenProps = {
@@ -67,6 +67,12 @@ export function MultiStepFormWrapper({
   submitLabel = 'Submit',
   submitDisabled = false
 }: MultiStepFormWrapperProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    containerRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' });
+  }, [currentStep, isReviewing]);
+
   const isLastContentStep = currentStep === totalSteps - 1;
   const showBack = isReviewing || currentStep > 0;
 
@@ -77,7 +83,7 @@ export function MultiStepFormWrapper({
       : 'Next';
 
   return (
-    <div className="wizard-container">
+    <div className="wizard-container" ref={containerRef}>
       <div
         className="wizard-step"
         key={isReviewing ? 'review' : String(currentStep)}
