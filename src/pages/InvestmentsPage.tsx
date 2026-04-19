@@ -307,6 +307,7 @@ export function InvestmentsPage() {
   const [form, setForm] = useState<InvestmentFormState>(initialInvestmentForm);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [investCreateAccount, setInvestCreateAccount] = useState(false);
   const [investPassword, setInvestPassword] = useState('');
 
@@ -359,6 +360,7 @@ export function InvestmentsPage() {
     event.preventDefault();
     setStatus('loading');
     setErrorMessage('');
+    setSuccessMessage('');
 
     if (investCreateAccount && !user && investPassword.length < 8) {
       setErrorMessage('Password must be at least 8 characters.');
@@ -372,13 +374,18 @@ export function InvestmentsPage() {
         : user;
       const authIdToken = accountUser ? await accountUser.getIdToken() : undefined;
 
-      await submitInvestmentEnquiry({
+      const result = await submitInvestmentEnquiry({
         ...form,
         sections: buildSections(form),
         authIdToken,
         accountCreated: Boolean(investCreateAccount || user)
       });
       setForm(initialInvestmentForm);
+      setSuccessMessage(
+        result.applicantEmailSent === false
+          ? 'Thanks, your enquiry has been received. We could not send the confirmation email, so please check the email address you entered or contact us if you need a copy.'
+          : 'Thanks, we will be in touch shortly. A copy of your enquiry has been sent to your email.'
+      );
       setStatus('success');
       if (investCreateAccount && !user) navigate('/portal');
     } catch (error) {
@@ -482,7 +489,12 @@ export function InvestmentsPage() {
         intro="If you are looking for support with a property, or want to explore working with us, fill in the form below and we will come back to you as soon as we can."
       >
         {status === 'success' ? (
-          <p className="success-text" role="status">Thanks, we will be in touch shortly.</p>
+          <p
+            className={successMessage.includes('could not send') ? 'warning-text' : 'success-text'}
+            role="status"
+          >
+            {successMessage || 'Thanks, we will be in touch shortly.'}
+          </p>
         ) : (
           <form className="enquiry-form enquiry-form--detailed investment-enquiry-form" onSubmit={handleSubmit} noValidate>
             <MultiStepFormWrapper

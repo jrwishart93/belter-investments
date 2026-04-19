@@ -210,7 +210,7 @@ function ConditionalBlock({ children }: { children: ReactNode }) {
 
 function FieldGroup({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <fieldset className="reveal-child form-section-group">
+    <fieldset className="form-section-group">
       <legend>{title}</legend>
       {children}
     </fieldset>
@@ -389,6 +389,7 @@ export function EnquiryPage() {
   // Detailed Rental state
   const [detailedStatus, setDetailedStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [detailedError, setDetailedError] = useState('');
+  const [detailedSuccessMessage, setDetailedSuccessMessage] = useState('');
   const [detailedCreateAccount, setDetailedCreateAccount] = useState(false);
   const [detailedPassword, setDetailedPassword] = useState('');
   const [detailedForm, setDetailedForm] = useState<DetailedFormState>(initialDetailedState);
@@ -690,6 +691,7 @@ export function EnquiryPage() {
 
     setDetailedStatus('loading');
     setDetailedError('');
+    setDetailedSuccessMessage('');
 
     try {
       const accountUser = detailedCreateAccount && !user
@@ -702,7 +704,7 @@ export function EnquiryPage() {
         : user;
       const authIdToken = accountUser ? await accountUser.getIdToken() : undefined;
 
-      await submitDetailedEnquiry({
+      const result = await submitDetailedEnquiry({
         fullName: detailedForm.fullName,
         email: detailedForm.email,
         contactNumber: detailedForm.contactNumber,
@@ -713,6 +715,11 @@ export function EnquiryPage() {
       setDetailedForm(initialDetailedState);
       setDetailedPassword('');
       setDetailedCreateAccount(false);
+      setDetailedSuccessMessage(
+        result.applicantEmailSent === false
+          ? 'Thanks, your detailed enquiry has been received. We could not send the confirmation email, so please check the email address you entered or contact us if you need a copy.'
+          : "Thanks, we'll be in touch shortly. A copy of your enquiry has been sent to your email."
+      );
       setDetailedStatus('success');
       if (detailedCreateAccount && !user) {
         navigate('/portal');
@@ -840,7 +847,13 @@ export function EnquiryPage() {
       >
         <span id="property-enquiry" className="anchor-offset" aria-hidden="true" />
         {detailedStatus === 'success' ? (
-          <p className="success-text" role="status" aria-live="polite">Thanks, we'll be in touch shortly.</p>
+          <p
+            className={detailedSuccessMessage.includes('could not send') ? 'warning-text' : 'success-text'}
+            role="status"
+            aria-live="polite"
+          >
+            {detailedSuccessMessage || "Thanks, we'll be in touch shortly."}
+          </p>
         ) : (
           <form className="enquiry-form enquiry-form--detailed" onSubmit={handleDetailedEnquiry} noValidate>
             <MultiStepFormWrapper

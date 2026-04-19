@@ -109,8 +109,9 @@ export default async function handler(req: Request, res: Response) {
         to: email,
         html: detailedConfirmationWithCopyHtml(fullName, sections)
       });
-    } catch {
+    } catch (error) {
       applicantEmailSent = false;
+      console.error('Detailed rental applicant confirmation email failed:', error instanceof Error ? error.message : error);
     }
 
     return res.status(200).json({

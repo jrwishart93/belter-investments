@@ -29,6 +29,7 @@
   --glass-saturate: 180%;
 
   --color-success: #1f6a41;
+  --color-warning: #8a5a00;
   --color-error: #8d2338;
   --color-accent-hover: #004f9f;
   --color-button-primary: rgba(29, 29, 31, 0.92);
@@ -110,6 +111,7 @@
     --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
     --color-success: #7ee2a8;
+    --color-warning: #ffd166;
     --color-error: #ff9aa8;
     --color-button-primary: rgba(245, 245, 247, 0.18);
     --color-button-primary-hover: rgba(245, 245, 247, 0.26);
@@ -1484,6 +1486,11 @@ p {
 
 .success-text {
   color: var(--color-success);
+  font-weight: 600;
+}
+
+.warning-text {
+  color: var(--color-warning);
   font-weight: 600;
 }
 

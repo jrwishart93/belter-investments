@@ -1,5 +1,5 @@
 import { storeEnquiry } from './enquiry-store.js';
-import { sendWithResend, confirmationHtml } from './resend.js';
+import { groupedEnquiryConfirmationHtml, renderEnquirySectionsHtml, sendWithResend } from './resend.js';
 
 type EnquiryField = { label?: string; value?: string };
 type EnquirySection = { title?: string; fields?: EnquiryField[] };
@@ -91,15 +91,6 @@ function normaliseSections(value: unknown): EnquirySection[] {
   return sections;
 }
 
-function renderSection(section: EnquirySection) {
-  return `
-    <h3>${escapeHtml(section.title ?? '')}</h3>
-    ${(section.fields ?? [])
-      .map((field) => `<p><strong>${escapeHtml(field.label ?? '')}:</strong> ${escapeHtml(field.value ?? '')}</p>`)
-      .join('')}
-  `;
-}
-
 export default async function handler(req: Request, res: Response) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -159,28 +150,40 @@ export default async function handler(req: Request, res: Response) {
       }
     });
 
-    let emailSent = true;
+    await sendWithResend({
+      subject: 'Belter Enquiries · Investment / Business Enquiry',
+      replyTo: email,
+      html: `
+        <h2>Investment / Business Enquiry</h2>
+        <p><strong>Name:</strong> ${escapeHtml(fullName)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+        ${renderEnquirySectionsHtml(sections)}
+        <p><strong>Firestore enquiry:</strong> ${escapeHtml(stored.enquiryId)}</p>
+        ${stored.businessLeadId ? `<p><strong>Business lead:</strong> ${escapeHtml(stored.businessLeadId)}</p>` : ''}
+      `
+    });
+
+    let applicantEmailSent = true;
     try {
       await sendWithResend({
-        subject: 'Belter Enquiries · Investment / Business Enquiry',
-        replyTo: email,
-        html: `
-          <h2>Investment / Business Enquiry</h2>
-          ${sections.map(renderSection).join('')}
-          <p><strong>Firestore enquiry:</strong> ${escapeHtml(stored.enquiryId)}</p>
-          ${stored.businessLeadId ? `<p><strong>Business lead:</strong> ${escapeHtml(stored.businessLeadId)}</p>` : ''}
-        `
-      });
-      await sendWithResend({
-        subject: "We've received your enquiry – Belter Investments",
+        subject: "We've received your investment enquiry – Belter Investments",
         to: email,
-        html: confirmationHtml(fullName, 'investment / business enquiry')
+        html: groupedEnquiryConfirmationHtml(fullName, 'investment / business enquiry', sections)
       });
-    } catch {
-      emailSent = false;
+    } catch (error) {
+      applicantEmailSent = false;
+      console.error('Investment enquiry applicant confirmation email failed:', error instanceof Error ? error.message : error);
     }
 
-    return res.status(200).json({ ok: true, enquiryId: stored.enquiryId, businessLeadId: stored.businessLeadId, emailSent });
+    return res.status(200).json({
+      ok: true,
+      enquiryId: stored.enquiryId,
+      businessLeadId: stored.businessLeadId,
+      emailSent: true,
+      companyEmailSent: true,
+      applicantEmailSent
+    });
   } catch (error) {
     return res.status(500).json({ message: error instanceof Error ? error.message : 'Unable to submit investment enquiry right now.' });
   }

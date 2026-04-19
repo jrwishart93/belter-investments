@@ -78,8 +78,12 @@ export function renderEnquirySectionsHtml(sections: EnquirySection[]) {
 }
 
 export function detailedConfirmationWithCopyHtml(name: string, sections: EnquirySection[]) {
+  return groupedEnquiryConfirmationHtml(name, 'detailed rental enquiry', sections);
+}
+
+export function groupedEnquiryConfirmationHtml(name: string, enquiryLabel: string, sections: EnquirySection[]) {
   return `
-    ${confirmationHtml(name, 'detailed rental enquiry')}
+    ${confirmationHtml(name, enquiryLabel)}
     <hr style="border: 0; border-top: 1px solid #e5e5e5; margin: 24px 0;" />
     <h2 style="margin: 0 0 16px;">Copy of your submitted enquiry</h2>
     ${renderEnquirySectionsHtml(sections)}
