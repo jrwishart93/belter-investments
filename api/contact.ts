@@ -1,4 +1,4 @@
-import { sendWithResend } from './resend.js';
+import { confirmationHtml, sendWithResend } from './resend.js';
 
 type ContactBody = {
   name?: unknown;
@@ -59,7 +59,19 @@ export default async function handler(req: Request, res: Response) {
       `
     });
 
-    return res.status(200).json({ ok: true });
+    let applicantEmailSent = true;
+    try {
+      await sendWithResend({
+        subject: "We've received your enquiry – Belter Investments",
+        to: email,
+        html: confirmationHtml(name, enquiryType)
+      });
+    } catch (error) {
+      applicantEmailSent = false;
+      console.error('Contact applicant confirmation email failed:', error instanceof Error ? error.message : error);
+    }
+
+    return res.status(200).json({ ok: true, applicantEmailSent });
   } catch (error) {
     console.error('Contact email failed', error);
     return res.status(500).json({ message: 'Unable to send your message right now.' });
