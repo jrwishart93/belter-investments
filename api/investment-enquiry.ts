@@ -31,6 +31,8 @@ type InvestmentEnquiryBody = {
   message?: unknown;
   moveForward?: unknown;
   sections?: unknown;
+  authIdToken?: unknown;
+  accountCreated?: unknown;
 };
 type Request = { method?: string; body?: InvestmentEnquiryBody };
 type Response = { status: (code: number) => { json: (body: unknown) => void } };
@@ -125,7 +127,10 @@ export default async function handler(req: Request, res: Response) {
   }
 
   try {
+    const authIdToken = typeof body.authIdToken === 'string' ? body.authIdToken : undefined;
+
     const stored = await storeEnquiry({
+      authIdToken,
       fullName,
       email,
       phone,
@@ -133,7 +138,7 @@ export default async function handler(req: Request, res: Response) {
       message,
       formKind: 'investment_business_enquiry',
       formVersion: '2026-04-investment-business-v1',
-      accountCreated: false,
+      accountCreated: Boolean(body.accountCreated || authIdToken),
       businessLead: true,
       portfolioOpportunity: /sell|portfolio|investment|introduc|opportunity|property/i.test(`${serviceInterest.join(' ')} ${investmentInterest}`),
       sections,

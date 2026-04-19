@@ -1,8 +1,9 @@
 import { FormEvent, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { ClipboardList, MessageCircle } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { AccountUpgradePrompt } from '../components/AccountUpgradePrompt';
 import { MultiStepFormWrapper, WizardReviewScreen } from '../components/MultiStepFormWrapper';
 import { PageHero } from '../components/PageHero';
 import { Section } from '../components/Section';
@@ -370,68 +371,6 @@ function CheckboxGroup({
   );
 }
 
-function AccountUpgradePrompt({
-  id,
-  checked,
-  password,
-  onCheckedChange,
-  onPasswordChange,
-  disabled,
-  signedIn
-}: {
-  id: string;
-  checked: boolean;
-  password: string;
-  onCheckedChange: (checked: boolean) => void;
-  onPasswordChange: (password: string) => void;
-  disabled: boolean;
-  signedIn: boolean;
-}) {
-  if (signedIn) {
-    return (
-      <div className="account-upgrade-box">
-        <p className="eyebrow">Signed in</p>
-        <h3>This enquiry will be saved to your portal account.</h3>
-        <p>You will be able to track the enquiry status and keep your profile details up to date.</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="account-upgrade-box">
-      <p className="eyebrow">Optional account</p>
-      <h3>Save and track your enquiry</h3>
-      <p>
-        Create an account to save your enquiry, edit your details later, track updates, and receive future property alerts.
-        Complete profiles may be reviewed for £100 off a first month&apos;s rent, subject to approval and future tenancy terms.
-      </p>
-      <label className="choice-option choice-option--single">
-        <input type="checkbox" checked={checked} onChange={(event) => onCheckedChange(event.target.checked)} disabled={disabled} />
-        <span>Submit and create a Belter account</span>
-      </label>
-      {checked ? (
-        <div className="field-group">
-          <label htmlFor={id}>Create Password <span aria-hidden="true">*</span></label>
-          <input
-            id={id}
-            type="password"
-            value={password}
-            minLength={8}
-            onChange={(event) => onPasswordChange(event.target.value)}
-            autoComplete="new-password"
-            required
-          />
-          <p className="form-helper">Use at least 8 characters. You can reset this later if needed.</p>
-        </div>
-      ) : (
-        <p className="form-helper">Prefer not to create an account? You can still submit the enquiry as a guest.</p>
-      )}
-      <p className="form-helper">
-        Already have an account? <Link to="/login">Sign in before submitting</Link>.
-      </p>
-    </div>
-  );
-}
 
 export function EnquiryPage() {
   const { configured, register, user } = useAuth();
@@ -779,7 +718,11 @@ export function EnquiryPage() {
         navigate('/portal');
       }
     } catch (error) {
-      setDetailedError(error instanceof Error ? error.message : 'Unable to send right now. Please try again shortly.');
+      setDetailedError(
+        error instanceof Error
+          ? error.message
+          : 'Unable to send your detailed enquiry right now. Please check your details and try again shortly.'
+      );
       setDetailedStatus('error');
     }
   }
@@ -875,6 +818,7 @@ export function EnquiryPage() {
               {quickWizard.isReviewing ? (
                 <AccountUpgradePrompt
                   id="quick-account-password"
+                  email={quickEmail}
                   checked={quickCreateAccount}
                   password={quickPassword}
                   onCheckedChange={setQuickCreateAccount}
@@ -922,6 +866,7 @@ export function EnquiryPage() {
                   />
                   <AccountUpgradePrompt
                     id="detailed-account-password"
+                    email={detailedForm.email}
                     checked={detailedCreateAccount}
                     password={detailedPassword}
                     onCheckedChange={setDetailedCreateAccount}
@@ -1188,7 +1133,11 @@ export function EnquiryPage() {
                 </FieldGroup>
               )}
             </MultiStepFormWrapper>
-            {detailedStatus === 'error' ? <p className="error-text" role="alert" aria-live="assertive" style={{ marginTop: '0.75rem' }}>{detailedError || 'Unable to send right now. Please try again shortly.'}</p> : null}
+            {detailedStatus === 'error' ? (
+              <p className="error-text" role="alert" aria-live="assertive" style={{ marginTop: '0.75rem' }}>
+                {detailedError || 'Unable to send your detailed enquiry right now. Please check your details and try again shortly.'}
+              </p>
+            ) : null}
           </form>
         )}
       </Section>

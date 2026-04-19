@@ -54,6 +54,8 @@ export type InvestmentEnquiryPayload = {
   message: string;
   moveForward: string;
   sections: EnquirySection[];
+  authIdToken?: string;
+  accountCreated?: boolean;
 };
 
 type FormPath = '/api/quick-message' | '/api/detailed-enquiry' | '/api/investment-enquiry';
@@ -68,11 +70,18 @@ async function postForm(path: FormPath, payload: FormPayload) {
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => null);
-    const message = response.status === 400 && typeof errorBody?.message === 'string' ? errorBody.message : 'Unable to send form right now.';
+    const message = typeof errorBody?.message === 'string' ? errorBody.message : 'Unable to send form right now.';
     throw new Error(message);
   }
 
-  return response.json() as Promise<{ ok: true; enquiryId: string; businessLeadId?: string | null; emailSent: boolean }>;
+  return response.json() as Promise<{
+    ok: true;
+    enquiryId: string;
+    businessLeadId?: string | null;
+    emailSent: boolean;
+    companyEmailSent?: boolean;
+    applicantEmailSent?: boolean;
+  }>;
 }
 
 export function submitQuickMessage(payload: QuickMessagePayload) {

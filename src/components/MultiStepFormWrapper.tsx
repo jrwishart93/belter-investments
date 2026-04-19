@@ -116,7 +116,12 @@ export function MultiStepFormWrapper({
       </nav>
 
       <div className="wizard-progress" aria-hidden="true">
-        <div className="wizard-progress__bar" style={{ width: `${progress}%` }} />
+        <div className="wizard-progress__label">
+          {isReviewing ? 'Review' : `Step ${currentStep + 1} of ${totalSteps}`}
+        </div>
+        <div className="wizard-progress__track">
+          <div className="wizard-progress__bar" style={{ width: `${progress}%` }} />
+        </div>
       </div>
     </div>
   );

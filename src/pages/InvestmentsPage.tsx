@@ -1,4 +1,7 @@
 import { FormEvent, useMemo, useState, type ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { AccountUpgradePrompt } from '../components/AccountUpgradePrompt';
 import { CtaButton } from '../components/CtaButton';
 import { MultiStepFormWrapper, WizardReviewScreen } from '../components/MultiStepFormWrapper';
 import { PageHero } from '../components/PageHero';
@@ -299,9 +302,13 @@ function buildSections(form: InvestmentFormState): EnquirySection[] {
 }
 
 export function InvestmentsPage() {
+  const { configured, register, user } = useAuth();
+  const navigate = useNavigate();
   const [form, setForm] = useState<InvestmentFormState>(initialInvestmentForm);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [investCreateAccount, setInvestCreateAccount] = useState(false);
+  const [investPassword, setInvestPassword] = useState('');
 
   const setField = <K extends keyof InvestmentFormState>(field: K, value: InvestmentFormState[K]) => {
     setForm((current) => ({ ...current, [field]: value }));
@@ -353,13 +360,27 @@ export function InvestmentsPage() {
     setStatus('loading');
     setErrorMessage('');
 
+    if (investCreateAccount && !user && investPassword.length < 8) {
+      setErrorMessage('Password must be at least 8 characters.');
+      setStatus('error');
+      return;
+    }
+
     try {
+      const accountUser = investCreateAccount && !user
+        ? await register({ fullName: form.fullName, email: form.email, phone: form.phone, password: investPassword })
+        : user;
+      const authIdToken = accountUser ? await accountUser.getIdToken() : undefined;
+
       await submitInvestmentEnquiry({
         ...form,
-        sections: buildSections(form)
+        sections: buildSections(form),
+        authIdToken,
+        accountCreated: Boolean(investCreateAccount || user)
       });
       setForm(initialInvestmentForm);
       setStatus('success');
+      if (investCreateAccount && !user) navigate('/portal');
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Unable to submit investment enquiry right now.');
       setStatus('error');
@@ -479,11 +500,23 @@ export function InvestmentsPage() {
               submitDisabled={status === 'loading'}
             >
               {wizard.isReviewing ? (
-                <WizardReviewScreen
-                  sections={buildSections(form)}
-                  onEdit={wizard.editStep}
-                  stepTitles={investmentStepTitles}
-                />
+                <>
+                  <WizardReviewScreen
+                    sections={buildSections(form)}
+                    onEdit={wizard.editStep}
+                    stepTitles={investmentStepTitles}
+                  />
+                  <AccountUpgradePrompt
+                    id="invest-account-password"
+                    email={form.email}
+                    checked={investCreateAccount}
+                    password={investPassword}
+                    onCheckedChange={setInvestCreateAccount}
+                    onPasswordChange={setInvestPassword}
+                    disabled={!configured}
+                    signedIn={Boolean(user)}
+                  />
+                </>
               ) : wizard.currentStep === 0 ? (
                 <InvestmentFieldset title="Basic Details">
                   <InvestmentTextInput id="investment-fullName" label="Full Name" value={form.fullName} onChange={(value) => { setField('fullName', value); wizard.clearError(); }} required autoComplete="name" />
