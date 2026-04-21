@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { CtaButton } from '../components/CtaButton';
 import { NavigationCard } from '../components/NavigationCard';
@@ -12,6 +15,7 @@ const homePathways = getHomePathways();
 const portfolioProperties = propertyListings.filter((property) => !property.featured);
 
 export function HomePage() {
+  const [showAgmDetails, setShowAgmDetails] = useState(false);
   const pathwaysRef = useScrollReveal<HTMLDivElement>();
   const trustRef = useScrollReveal<HTMLDivElement>();
   const portfolioRef = useScrollReveal<HTMLDivElement>();
@@ -63,6 +67,36 @@ export function HomePage() {
       />
 
       <Section title="A considered property portfolio" intro={brandPositioning.shortStatement}>
+        <article className="panel agm-announcement">
+          <h3>AGM Thursday 4th June for owners</h3>
+          <p>
+            The James Square AGM is approaching. Owners can review updates and vote on plans for improvements. If
+            you are a tenant, please make your owner aware.
+          </p>
+
+          {showAgmDetails ? (
+            <div className="agm-announcement__details">
+              <p>
+                The Annual General Meeting gives owners the opportunity to find out what has been happening at James
+                Square and to vote on plans for improvements going forward. This will be our first AGM with Myreside
+                Management as factors, taking place on Thursday 4th June 2026 via Microsoft Teams.
+              </p>
+              <p>
+                For more information, and to leave suggestions on what you would like discussed, please visit the AGM
+                page.
+              </p>
+              <Link className="text-link" to="/AGM">
+                Visit AGM page
+                <ArrowRight className="link-icon" size={16} strokeWidth={1.9} aria-hidden="true" />
+              </Link>
+            </div>
+          ) : null}
+
+          <button className="announcement-toggle" type="button" onClick={() => setShowAgmDetails((current) => !current)}>
+            {showAgmDetails ? 'Show less' : 'Read more'}
+          </button>
+        </article>
+
         <div ref={trustRef} className="details-grid reveal">
           <article className="panel reveal-child">
             <p>{brandPositioning.supportingStatement}</p>
